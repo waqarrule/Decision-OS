@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#16a34a;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--green);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.25)}
+.tab.on {color:var(--green);border-bottom-color:var(--green);background:var(--green-soft)}
+.sh h2 em {font-style:italic;color:var(--green)}
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+.btn-p {background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 2px 8px rgba(22,163,74,.25)}
+.story {background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(22,163,74,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--green)}
+.story .s-body strong {color:var(--green-text);font-weight:600}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:var(--green-soft);border-color:rgba(22,163,74,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(22,163,74,.25)}
+.pb-step.done .pb-num {background:var(--green)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CRO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html" class="on">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('command',this)">Command</button>
+  <button class="tab" onclick="show('pipeline',this)">Pipeline</button>
+  <button class="tab" onclick="show('churn',this)">Churn Intel</button>
+  <button class="tab" onclick="show('expansion',this)">Expansion</button>
+  <button class="tab" onclick="show('winloss',this)">Win/Loss</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- COMMAND -->
+<div id="s-command" class="scr on">
+  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Command</div><h2>Pipeline reality, <em>not fiction.</em></h2><div class="sh-sub">Quality-adjusted pipeline, NRR health, and the gap between what Salesforce says and what will actually close.</div></div>
+  <div class="story"><div class="s-num">$1.6M</div><div class="s-label">The Hope Gap</div><div class="s-title">CRM reports $4.8M. Reality is $3.2M.</div><div class="s-body">Your Salesforce pipeline looks healthy at <strong>$4.8M</strong>. But after quality-adjusting for historical close rates by stage, real expected revenue is <strong>$3.2M</strong> — a <strong>$1.6M hope gap</strong>. Stage 2 deals close at 34%, not the 60% reps think. Stage 3 deals average 72 days, not 45. The raw numbers create false confidence. This screen shows the truth.</div><button class="s-cta" onclick="show('pipeline',document.querySelector('.tab:nth-child(2)'))">Drill into pipeline →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-green"><div class="kl">Quality-Adjusted Pipeline</div><div class="kv">$3.2M</div><div class="ks"><span class="dn">↓ $1.6M</span> vs raw $4.8M</div></div>
+    <div class="kc accent-blue"><div class="kl">Net Revenue Retention</div><div class="kv">103%</div><div class="ks">Enterprise: <span class="up">112%</span> · SMB: <span class="dn">96%</span></div></div>
+    <div class="kc accent-red"><div class="kl">At-Risk ARR</div><div class="kv">$1.3M</div><div class="ks">16 accounts · 90-day window</div></div>
+    <div class="kc accent-purple"><div class="kl">Expansion Opportunity</div><div class="kv">$483K</div><div class="ks">24 accounts showing intent signals</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Pipeline: raw vs adjusted <span>— by stage</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Stage</th><th>Deals</th><th>Raw $</th><th>Close %</th><th>Adjusted $</th><th>Avg Days</th></tr></thead>
+      <tbody><tr><td class="fw6">Stage 1 — Discovery</td><td>34</td><td>$2.1M</td><td>12%</td><td class="cgry">$252K</td><td>18</td></tr>
+      <tr><td class="fw6">Stage 2 — Qualification</td><td>22</td><td>$1.4M</td><td>34%</td><td class="cgry">$476K</td><td>32</td></tr>
+      <tr><td class="fw6">Stage 3 — Proposal</td><td>14</td><td>$890K</td><td>58%</td><td class="cgry">$516K</td><td>72</td></tr>
+      <tr><td class="fw6">Stage 4 — Negotiation</td><td>8</td><td>$380K</td><td>76%</td><td class="cgry">$289K</td><td>54</td></tr>
+      <tr class="good"><td class="fw6">Stage 5 — Verbal</td><td>4</td><td>$38K</td><td>92%</td><td class="cgrn fw6">$35K</td><td>8</td></tr>
+      <tr style="border-top:2px solid var(--border)"><td class="fw6">Total</td><td class="fw6">82</td><td class="fw6">$4.8M</td><td></td><td class="fw6">$1.57M</td><td></td></tr></tbody></table>
+      <div class="cl cl-amber mt8">Stage 2 is the bottleneck. Deals linger 32 days at qualification with only 34% close rate. Either qualify harder or accelerate.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Pipeline trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-pipeline"></canvas></div></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Discount impact analysis</span></div><div class="cd-b">
+      <table><thead><tr><th>Discount Range</th><th>Win Rate</th><th>Margin</th><th>Net Effect</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">0%</td><td>42%</td><td class="cgrn fw6">78%</td><td class="cgrn fw6">Best</td></tr>
+      <tr><td class="fw6">1–10%</td><td>51%</td><td>72%</td><td class="cgrn">Good</td></tr>
+      <tr><td class="fw6">11–20%</td><td>58%</td><td>64%</td><td class="camb">Neutral</td></tr>
+      <tr class="alert"><td class="fw6">21–30%</td><td>61%</td><td class="cred">54%</td><td class="cred">Negative</td></tr>
+      <tr class="alert"><td class="fw6">30%+</td><td>64%</td><td class="cred">42%</td><td class="cred fw6">Destructive</td></tr></tbody></table>
+      <div class="cl cl-red mt8">Deals above 20% discount destroy unit economics. 7 deals last quarter closed at >25% discount — that's $89K in lost margin.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Lead source ROI</span></div><div class="cd-b">
+      <table><thead><tr><th>Source</th><th>Leads</th><th>Close Rate</th><th>CAC</th><th>Pipeline $</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Referral</td><td>48</td><td class="cgrn fw6">32%</td><td class="cgrn">$180</td><td>$1.2M</td></tr>
+      <tr><td class="fw6">LinkedIn Outbound</td><td>120</td><td>18%</td><td>$420</td><td>$1.8M</td></tr>
+      <tr><td class="fw6">Content / SEO</td><td>210</td><td>8%</td><td>$280</td><td>$940K</td></tr>
+      <tr><td class="fw6">Events</td><td>85</td><td>14%</td><td>$640</td><td>$520K</td></tr>
+      <tr class="alert"><td class="fw6">Paid Ads</td><td>340</td><td class="cred">4%</td><td class="cred fw6">$890</td><td>$380K</td></tr></tbody></table>
+      <div class="cl cl-blue mt8">Referral converts at 32% with $180 CAC. Paid ads convert at 4% with $890 CAC. Reallocate $45K/quarter from paid to referral program.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div id="s-pipeline" class="scr">  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Pipeline</div><h2>Stage by stage, <b>the truth.</b></h2><div class="sh-sub">Funnel velocity, deal aging, and conversion rates. Everything Salesforce doesn't calculate for you.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Total Pipeline</div><div class="kv">$4.8M</div><div class="ks">82 deals across 5 stages</div></div>
+    <div class="kc accent-blue"><div class="kl">Avg Deal Velocity</div><div class="kv">45<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks"><span class="up">↓ 3 days</span> vs last quarter</div></div>
+    <div class="kc accent-amber"><div class="kl">Weighted Close Rate</div><div class="kv">28%</div><div class="ks">Across all active deals</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Funnel visualization <span>— stage conversion</span></span></div><div class="cd-b">
+    <div style="display:flex;flex-direction:column;gap:4px;margin:12px 0">
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:100px;font-size:11px;font-weight:600;text-align:right">Discovery</span><div style="flex:1;height:32px;background:var(--green);border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600">34 deals · $2.1M</div></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 65% qualify</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:100px;font-size:11px;font-weight:600;text-align:right">Qualification</span><div style="flex:1;height:28px;background:var(--green);opacity:.85;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:65%"></div><span style="font-size:11px;color:var(--ink3)">22 · $1.4M</span></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 64% propose</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:100px;font-size:11px;font-weight:600;text-align:right">Proposal</span><div style="flex:1;height:24px;background:var(--green);opacity:.7;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:42%"></div><span style="font-size:11px;color:var(--ink3)">14 · $890K</span></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 57% negotiate</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:100px;font-size:11px;font-weight:600;text-align:right">Negotiation</span><div style="flex:1;height:20px;background:var(--green);opacity:.55;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:24%"></div><span style="font-size:11px;color:var(--ink3)">8 · $380K</span></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 50% verbal</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:100px;font-size:11px;font-weight:600;text-align:right">Verbal</span><div style="flex:1;height:18px;background:var(--green);opacity:.4;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:12%"></div><span style="font-size:11px;color:var(--ink3)">4 · $38K</span></div>
+    </div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Deal velocity <span>— target vs actual</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Stage</th><th>Target Days</th><th>Actual Days</th><th>Status</th></tr></thead>
+      <tbody><tr><td class="fw6">Discovery → Qual</td><td>14</td><td>18</td><td><span class="bdg bdg-red">+4 days</span></td></tr>
+      <tr><td class="fw6">Qual → Proposal</td><td>10</td><td>14</td><td><span class="bdg bdg-amber">+4 days</span></td></tr>
+      <tr class="alert"><td class="fw6">Proposal → Negotiation</td><td>12</td><td>40</td><td><span class="bdg bdg-red">+28 days</span></td></tr>
+      <tr><td class="fw6">Negotiation → Verbal</td><td>8</td><td>12</td><td><span class="bdg bdg-amber">+4 days</span></td></tr>
+      <tr class="good"><td class="fw6">Verbal → Close</td><td>5</td><td>4</td><td><span class="bdg bdg-green">On target</span></td></tr></tbody></table>
+      <div class="cl cl-red mt8">Proposal → Negotiation is <strong>28 days over target</strong>. Legal review and procurement are the blockers. Consider pre-approved contract templates for deals <$100K.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Conversion trend <span>— 6 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-conv"></canvas></div></div></div>
+  </div>
+</div>
+
+<!-- CHURN INTEL -->
+<div id="s-churn" class="scr">  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Churn Intel</div><h2>The accounts <em>leaving.</em></h2><div class="sh-sub">90-day at-risk watchlist. Health scores. Login decay. The signals that predict churn before it happens.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-red"><div class="kl">At-Risk ARR</div><div class="kv">$1.3M</div><div class="ks">16 accounts in 90-day window</div></div>
+    <div class="kc accent-amber"><div class="kl">Logo Churn Rate</div><div class="kv">1.5%<span style="font-size:16px;color:var(--ink4)">/mo</span></div><div class="ks">Target: <1%/mo</div></div>
+    <div class="kc accent-green"><div class="kl">Save Rate</div><div class="kv">62%</div><div class="ks">When playbook triggered within 7 days</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">90-day at-risk watchlist</span></div><div class="cd-b">
+    <table><thead><tr><th>Account</th><th>ARR</th><th>Health</th><th>Days Since Login</th><th>Open Tickets</th><th>Risk</th></tr></thead>
+    <tbody><tr class="alert"><td class="fw6">Kellerman Group</td><td class="fw6">$84K</td><td><span class="bdg bdg-red">31</span></td><td class="cred fw6">22</td><td class="cred">7</td><td><span class="bdg bdg-red">Critical</span></td></tr>
+    <tr class="alert"><td class="fw6">Turner Construction</td><td class="fw6">$72K</td><td><span class="bdg bdg-red">38</span></td><td class="cred">18</td><td class="cred">5</td><td><span class="bdg bdg-red">Critical</span></td></tr>
+    <tr><td class="fw6">Pinnacle Builders</td><td>$56K</td><td><span class="bdg bdg-amber">44</span></td><td class="camb">14</td><td>3</td><td><span class="bdg bdg-amber">High</span></td></tr>
+    <tr><td class="fw6">Ridgeline Dev</td><td>$48K</td><td><span class="bdg bdg-amber">52</span></td><td class="camb">11</td><td>2</td><td><span class="bdg bdg-amber">High</span></td></tr>
+    <tr><td class="fw6">Summit Partners</td><td>$41K</td><td><span class="bdg bdg-amber">55</span></td><td>9</td><td>1</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
+    <tr><td class="fw6">Crestline Homes</td><td>$38K</td><td><span class="bdg bdg-blue">62</span></td><td>7</td><td>2</td><td><span class="bdg bdg-blue">Watch</span></td></tr></tbody></table>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Health score distribution</span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-health"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Save playbook</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node no"><span class="df-tag n">1</span><strong>Detect</strong> — Health drops below 40 OR login decay >14 days</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">2</span><strong>Intervene</strong> — CSM outreach within 24hrs, exec sponsor call within 72hrs</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">3</span><strong>Monitor</strong> — Weekly health check for 30 days, escalation if no improvement</div>
+      </div>
+      <div class="cl cl-green mt8">Save rate is <strong>62% when triggered within 7 days</strong>. After 14 days, save rate drops to 23%. Speed matters.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">At-risk by segment</span></div><div class="cd-b"><div class="g3">
+    <div style="text-align:center;padding:16px;background:var(--red-soft);border-radius:6px"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Enterprise</div><div style="font-size:22px;font-weight:700;margin:4px 0" class="cred">$420K</div><div style="font-size:11px;color:var(--ink3)">3 accounts</div></div>
+    <div style="text-align:center;padding:16px;background:var(--amber-soft);border-radius:6px"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Mid-Market</div><div style="font-size:22px;font-weight:700;margin:4px 0" class="camb">$548K</div><div style="font-size:11px;color:var(--ink3)">7 accounts</div></div>
+    <div style="text-align:center;padding:16px;background:var(--blue-soft);border-radius:6px"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">SMB</div><div style="font-size:22px;font-weight:700;margin:4px 0" class="cb">$332K</div><div style="font-size:11px;color:var(--ink3)">6 accounts</div></div>
+  </div></div></div>
+</div>
+
+<!-- EXPANSION -->
+<div id="s-expansion" class="scr">  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Expansion</div><h2>Where the <em>growth is.</em></h2><div class="sh-sub">NRR by segment, expansion signals, and the accounts ready to spend more.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Expansion Pipeline</div><div class="kv">$483K</div><div class="ks">24 accounts with intent signals</div></div>
+    <div class="kc accent-blue"><div class="kl">NRR (Overall)</div><div class="kv">103%</div><div class="ks">Target: >105%</div></div>
+    <div class="kc accent-purple"><div class="kl">Expansion Win Rate</div><div class="kv">72%</div><div class="ks"><span class="up">↑ from 64%</span></div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">NRR by segment</span></div><div class="cd-b">
+    <div class="g3">
+      <div style="text-align:center;padding:20px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Enterprise</div><div style="font-size:28px;font-weight:800;margin:6px 0" class="cgrn">112%</div><div style="font-size:11px;color:var(--ink3)"><span class="up">↑ expanding</span></div></div>
+      <div style="text-align:center;padding:20px;background:var(--blue-soft);border-radius:6px;border:1px solid rgba(59,130,246,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Mid-Market</div><div style="font-size:28px;font-weight:800;margin:6px 0" class="cb">106%</div><div style="font-size:11px;color:var(--ink3)">Healthy</div></div>
+      <div style="text-align:center;padding:20px;background:var(--red-soft);border-radius:6px;border:1px solid rgba(220,38,38,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">SMB</div><div style="font-size:28px;font-weight:800;margin:6px 0" class="cred">96%</div><div style="font-size:11px;color:var(--ink3)"><span class="dn">↓ contracting</span></div></div>
+    </div>
+    <div class="cl cl-amber">SMB contracts at 96% NRR — they churn faster than they expand. Every dollar acquired in SMB leaks 4¢ per month. Fix PMF or reduce CAC.</div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Top expansion opportunities</span></div><div class="cd-b">
+    <table><thead><tr><th>Account</th><th>Current ARR</th><th>Signal</th><th>Est. Upside</th><th>Close Prob</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Meridian Holdings</td><td>$142K</td><td>Seat usage 94%</td><td class="cgrn fw6">$48K</td><td>85%</td></tr>
+    <tr class="good"><td class="fw6">Apex Development</td><td>$98K</td><td>New dept adoption</td><td class="cgrn fw6">$36K</td><td>78%</td></tr>
+    <tr><td class="fw6">Northgate Capital</td><td>$86K</td><td>Feature requests</td><td class="cgrn">$28K</td><td>72%</td></tr>
+    <tr><td class="fw6">Westfield Group</td><td>$74K</td><td>Seat usage 87%</td><td>$24K</td><td>68%</td></tr>
+    <tr><td class="fw6">Bayside Partners</td><td>$62K</td><td>API usage spike</td><td>$22K</td><td>64%</td></tr></tbody></table>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Expansion revenue trend</span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-expand"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Expansion signals</span></div><div class="cd-b">
+      <div style="padding:14px 18px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>Seat usage >80%</strong> — 18 accounts hitting limits. Natural upsell moment.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--blue);background:var(--blue-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>New department adoption</strong> — 6 accounts have users from 2+ departments. Expand pricing opportunity.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--purple);background:var(--purple-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Feature requests</strong> — 12 accounts requesting premium features (reporting, integrations). Upsell path clear.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- WIN/LOSS -->
+<div id="s-winloss" class="scr">  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Win/Loss</div><h2>Why you <b>win. Why you don't.</b></h2><div class="sh-sub">Competitive win rates, loss reasons, pricing sweet spots, and cycle analysis.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Overall Win Rate</div><div class="kv">54%</div><div class="ks"><span class="up">↑ from 48%</span> last quarter</div></div>
+    <div class="kc accent-blue"><div class="kl">Avg Deal Size</div><div class="kv">$58K</div><div class="ks">Enterprise: $142K · SMB: $16K</div></div>
+    <div class="kc accent-amber"><div class="kl">Avg Sales Cycle</div><div class="kv">45<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks">Enterprise: 68 days · SMB: 22 days</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Win rate by competitor</span></div><div class="cd-b">
+      <table><thead><tr><th>Competitor</th><th>Deals Faced</th><th>Won</th><th>Win Rate</th><th>Trend</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">vs Procore</td><td>28</td><td>18</td><td class="cgrn fw6">64%</td><td><span class="up">↑ from 58%</span></td></tr>
+      <tr><td class="fw6">vs PlanGrid</td><td>23</td><td>12</td><td class="camb fw6">52%</td><td>Stable</td></tr>
+      <tr class="alert"><td class="fw6">vs Buildertrend</td><td>18</td><td>8</td><td class="cred fw6">44%</td><td><span class="dn">↓ from 51%</span></td></tr>
+      <tr class="good"><td class="fw6">vs CoConstruct</td><td>15</td><td>10</td><td class="cgrn fw6">67%</td><td><span class="up">↑ from 60%</span></td></tr></tbody></table>
+      <div class="cl cl-red mt8">Buildertrend win rate dropped to 44%. They're winning on residential-specific features. If we don't address residential PMF, we lose that segment entirely.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top loss reasons</span></div><div class="cd-b">
+      <table><thead><tr><th>Reason</th><th>Frequency</th><th>$ Impact</th></tr></thead>
+      <tbody><tr class="alert"><td class="fw6">Missing feature (mobile offline)</td><td>32%</td><td class="cred fw6">$480K</td></tr>
+      <tr><td class="fw6">Price too high</td><td>22%</td><td class="fw6">$290K</td></tr>
+      <tr><td class="fw6">Chose "do nothing"</td><td>18%</td><td class="fw6">$240K</td></tr>
+      <tr><td class="fw6">Incumbent lock-in</td><td>14%</td><td class="fw6">$180K</td></tr>
+      <tr><td class="fw6">Implementation timeline</td><td>8%</td><td class="fw6">$95K</td></tr></tbody></table>
+      <div class="cl cl-blue mt8">Mobile offline is the #1 loss reason at 32%. Every deal lost to this feature gap represents <strong>$15K average</strong>. CTO has it flagged — 3 enterprise deals blocked.</div>
+    </div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Pricing sweet spot</span></div><div class="cd-b">
+      <table><thead><tr><th>Discount</th><th>Win Rate</th><th>Avg Margin</th><th>Net Score</th></tr></thead>
+      <tbody><tr><td class="fw6">0%</td><td>42%</td><td>78%</td><td class="fw6">32.8</td></tr>
+      <tr class="good"><td class="fw6">5–10%</td><td>54%</td><td>72%</td><td class="cgrn fw6">38.9 <svg width="10" height="10" viewBox="0 0 24 24" fill="#d97706" stroke="#d97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></td></tr>
+      <tr><td class="fw6">15%</td><td>58%</td><td>66%</td><td class="fw6">38.3</td></tr>
+      <tr class="alert"><td class="fw6">20%+</td><td>62%</td><td>54%</td><td class="cred fw6">33.5</td></tr></tbody></table>
+      <div class="cl cl-green mt8">Sweet spot: <strong>5–10% discount</strong>. Best balance of win rate and margin. Above 15%, you're buying wins with margin destruction.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Sales cycle by deal size</span></div><div class="cd-b">
+      <table><thead><tr><th>Deal Size</th><th>Avg Cycle</th><th>Win Rate</th><th>Volume</th></tr></thead>
+      <tbody><tr><td class="fw6"><$25K</td><td>22 days</td><td>62%</td><td>48 deals/qtr</td></tr>
+      <tr><td class="fw6">$25–75K</td><td>38 days</td><td>54%</td><td>28 deals/qtr</td></tr>
+      <tr><td class="fw6">$75–150K</td><td>58 days</td><td>46%</td><td>12 deals/qtr</td></tr>
+      <tr class="good"><td class="fw6">>$150K</td><td>68 days</td><td class="cgrn fw6">38%</td><td>4 deals/qtr</td></tr></tbody></table>
+      <div class="cl cl-amber mt8">Enterprise deals ($150K+) take 68 days but yield 3× the ACV. The low volume (4/qtr) suggests we need more enterprise pipeline, not more SMB deals.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">
+  <div class="sh"><div class="sh-over">CRO · Revenue Layer · Playbooks</div><h2>Pre-built <em>revenue decisions.</em></h2><div class="sh-sub">Territory planning, comp optimization, and hiring triggers with built-in decision flows.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Territory planning trigger</span><span class="bdg bdg-green">Active</span></div><div class="cd-b">
+      <div class="pbs">
+        <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Map TAM by territory</div><div class="pb-meta"><span>Complete — 4 regions mapped</span></div></div></div>
+        <div class="pb-step cur"><div class="pb-num">2</div><div class="pb-info"><div class="pb-title">Rebalance West region</div><div class="pb-meta"><span class="camb">2 AEs covering 42% of TAM</span></div><div class="pb-desc">West has 2 AEs handling 42% of total addressable market. Southeast has 3 AEs covering 18%. Rebalance to equalize quota potential.</div></div></div>
+        <div class="pb-step"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">Assign new territories</div><div class="pb-meta"><span>Waiting on Step 2</span></div></div></div>
+        <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">90-day performance review</div><div class="pb-meta"><span>Target: Q3 2026</span></div></div></div>
+      </div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Comp optimization flow</span><span class="bdg bdg-amber">Review Needed</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node"><strong>IF</strong> Rep quota attainment &lt; 70% for 2 consecutive quarters</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Check</span> Is it territory, skill, or comp plan issue?</div><div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">Territory</span> Rebalance (see Territory Playbook above)</div>
+        <div class="df-node yes"><span class="df-tag y">Skill</span> Pair with top performer, 30-day coaching plan</div>
+        <div class="df-node warn"><span class="df-tag m">Comp</span> Adjust accelerator: 1.5× commission above 90% quota</div><div class="df-arrow">↓</div>
+        <div class="df-node"><strong>IF</strong> No improvement in 60 days → PIP or reassignment</div>
+      </div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Hiring trigger</span><span class="bdg bdg-red">Blocked — CFO</span></div><div class="cd-b">
+    <div class="pbs">
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Pipeline coverage >3×</div><div class="pb-meta"><span>Hit 3.2× last month</span></div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Rep productivity >85% quota</div><div class="pb-meta"><span>Current: 91% average</span></div></div></div>
+      <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">CFO scenario check</div><div class="pb-meta"><span class="cred">BLOCKED</span></div><div class="pb-desc">Bear scenario shows 11.8mo runway with Plan hiring (1 AE + 1 CSM). Below 12mo minimum. CFO deferred 8 weeks — re-evaluate May 15.</div></div></div>
+      <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">Post roles + recruit</div><div class="pb-meta"><span>30-day search target</span></div></div></div>
+      <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Onboard + ramp</div><div class="pb-meta"><span>90-day ramp to full quota</span></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Revenue Intelligence</div>
+    <div class="rp-sub">Pipeline · Accounts · Forecasting</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-red">
+      <div class="rs-title">Pipeline Gap</div>
+      <div class="rs-val red">$1.1M+</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:62%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">Raw pipeline</span><span class="rv">$8.4M</span></div>
+      <div class="rs-row"><span class="rl">Weighted</span><span class="rv dn">$3.2M</span></div>
+      <div class="rs-row"><span class="rl">Growing by</span><span class="rv dn">$130K/mo</span></div>
+    </div>
+
+    <div class="rp-section accent-red">
+      <div class="rs-title">Revenue at Risk</div>
+      <div class="rs-val red">$1.3M</div>
+      <div class="rs-row"><span class="rl">At-risk accounts</span><span class="rv dn">16</span></div>
+      <div class="rs-row"><span class="rl">Critical (Kellerman)</span><span class="rv dn">$84K · H31</span></div>
+      <div class="rs-row"><span class="rl">Win rate</span><span class="rv">34%</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Expansion Ready</div>
+      <div class="rs-val green">$483K</div>
+      <div class="rs-row"><span class="rl">Accounts signaling</span><span class="rv up">24</span></div>
+      <div class="rs-row"><span class="rl">Meridian (top)</span><span class="rv up">$48K</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--blue)">CEO</span><span class="ra-text">Bear blocks hiring</span><span class="ra-val">11.8mo</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--amber)">CFO</span><span class="ra-text">Burn multiple</span><span class="ra-val" style="color:var(--amber-text)">2.1×</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">38 SMB leaking</span><span class="ra-val" style="color:var(--red-text)">96% NRR</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const p=document.getElementById('ch-pipeline');if(p){if(p._chart)p._chart.destroy();p._chart=new Chart(p,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Raw Pipeline',data:[3.2,3.4,3.6,3.8,4.0,4.1,4.2,4.3,4.4,4.5,4.7,4.8],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#16a34a',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Adjusted',data:[2.1,2.2,2.3,2.4,2.5,2.6,2.7,2.8,2.9,3.0,3.1,3.2],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:1.5,ticks:{callback:v=>'$'+v+'M',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const c=document.getElementById('ch-conv');if(c){if(c._chart)c._chart.destroy();c._chart=new Chart(c,{type:'bar',data:{labels:['Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Stage 1→2',data:[62,64,63,65,64,65],backgroundColor:'rgba(22,163,74,.7)',borderRadius:3},{label:'Stage 2→3',data:[56,58,55,60,62,64],backgroundColor:'rgba(22,163,74,.4)',borderRadius:3},{label:'Close Rate',data:[24,26,25,27,28,28],backgroundColor:'rgba(22,163,74,.15)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:true,max:80,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const h=document.getElementById('ch-health');if(h){if(h._chart)h._chart.destroy();h._chart=new Chart(h,{type:'doughnut',data:{labels:['Critical (<40)','At Risk (40-60)','Healthy (60-80)','Thriving (80+)'],datasets:[{data:[14,28,186,84],backgroundColor:['#dc2626','#d97706','#3b82f6','#16a34a'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:12,color:'#7a7770'}}}}})}
+  const e=document.getElementById('ch-expand');if(e){if(e._chart)e._chart.destroy();e._chart=new Chart(e,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Expansion ARR',data:[28,32,35,38,42,44,46,50,52,56,60,64],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:20,ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cro');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

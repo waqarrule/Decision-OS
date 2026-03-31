@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#d97706;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--amber);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--amber);color:#fff;box-shadow:0 2px 8px rgba(217,119,6,.25)}
+.tab.on {color:var(--amber);border-bottom-color:var(--amber);background:var(--amber-soft)}
+.sh h2 em {font-style:italic;color:var(--amber)}
+.story {background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(217,119,6,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--amber)}
+.story .s-body strong {color:var(--amber-text);font-weight:600}
+.scen-bar {display:inline-flex;background:var(--bg2);border-radius:8px;padding:3px;gap:2px;border:1px solid var(--border);margin-bottom:14px}
+.scen-btn {padding:7px 22px;border-radius:6px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--ink3);transition:all .15s}
+.scen-btn.s-bear {background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(220,38,38,.2)}
+.scen-btn.s-base {background:var(--amber);color:#fff;box-shadow:0 2px 8px rgba(217,119,6,.2)}
+.scen-btn.s-bull {background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.2)}
+.sg {display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.sg-cell {padding:20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);text-align:center;transition:all .3s;cursor:pointer;box-shadow:var(--shadow)}
+.sg-cell.sel {box-shadow:var(--shadow-hover)}
+.sg-cell.sel-base {border-color:var(--amber);background:var(--amber-soft);box-shadow:0 4px 16px rgba(217,119,6,.1)}
+.sg-cell .sg-l {font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:6px}
+.sg-cell .sg-v {font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:6px;transition:all .4s}
+.sg-cell .sg-s {font-size:10px;color:var(--ink3)}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:var(--amber-soft);border-color:rgba(217,119,6,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--amber);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(217,119,6,.25)}
+.pb-step.done .pb-num {background:var(--green)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CFO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html" class="on">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('cash',this)">Cash Position</button>
+  <button class="tab" onclick="show('unit',this)">Unit Economics</button>
+  <button class="tab" onclick="show('hiring',this)">Hiring Impact</button>
+  <button class="tab" onclick="show('cashflow',this)">Cash Flow</button>
+  <button class="tab" onclick="show('sensitivity',this)">Sensitivity</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- CASH POSITION -->
+<div id="s-cash" class="scr on">
+  <div class="sh"><div class="sh-over">CFO · Finance Layer · Cash Position</div><h2>The money. <em>The math.</em></h2><div class="sh-sub">Runway scenarios, burn trajectory, and the hiring decisions that change everything.</div></div>
+  <div class="story"><div class="s-num">0.6mo</div><div class="s-label">Runway Gap</div><div class="s-title">0.6 months behind your own target.</div><div class="s-body">You have <strong>$8.46M</strong> in the bank and burn <strong>$486K/month</strong>. That's <strong>17.4 months of runway</strong> — 0.6 months short of your 18-month target. Not dangerous, but it means every hiring decision needs scenario analysis first. The CRO wants 3 AEs. In the Bear case, that drops you to <strong>8.9 months</strong>. Not survivable.</div><button class="s-cta" onclick="show('sensitivity',document.querySelector('.tab:nth-child(5)'))">Run the scenarios →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-amber"><div class="kl">Cash Remaining</div><div class="kv" data-kpi="cashOnHand" data-kpi-src="financials.financials" data-fmt="$">$9.2M</div><div class="ks">Series B proceeds</div></div>
+    <div class="kc accent-red"><div class="kl">Monthly Burn</div><div class="kv" data-kpi="monthlyBurn" data-kpi-src="financials.financials" data-fmt="$">$529K</div><div class="ks"><span class="dn">↑ 4%</span> vs last quarter</div></div>
+    <div class="kc accent-blue"><div class="kl">Runway</div><div class="kv"><span data-scenario-kpi="runwayMonths" data-fmt="mo">17.4</span><span style="font-size:16px;color:var(--ink4)"> mo</span></div><div class="ks"><span class="dn">↓ 0.6</span> vs 18mo target</div></div>
+    <div class="kc accent-green"><div class="kl">Burn Multiple</div><div class="kv" data-scenario-kpi="burnMultiple" data-fmt="x">2.1×</div><div class="ks">Net burn / net new ARR</div></div>
+  </div>
+  <div class="sh-actions">
+    <div class="scen-bar"><button class="scen-btn" id="bear-btn" onclick="setScenario('bear',this)">Bear</button><button class="scen-btn s-base" onclick="setScenario('base',this)">Base</button><button class="scen-btn" onclick="setScenario('bull',this)">Bull</button></div>
+    <span style="font-size:11px;color:var(--ink4)">Click a scenario — runway numbers update</span>
+  </div>
+  <div class="sg">
+    <div class="sg-cell" id="sg-bear" onclick="setScenario('bear',document.getElementById('bear-btn'))"><div class="sg-l">Bear Case</div><div class="sg-v" style="color:var(--red-text)" id="sv-bear">11.8 mo</div><div class="sg-s">Revenue miss + churn spike</div></div>
+    <div class="sg-cell sel sel-base" id="sg-base"><div class="sg-l">Base Case</div><div class="sg-v" style="color:var(--amber-text)" id="sv-base">17.4 mo</div><div class="sg-s">Current trajectory</div></div>
+    <div class="sg-cell" id="sg-bull" onclick="setScenario('bull',document.querySelector('.scen-btn:last-child'))"><div class="sg-l">Bull Case</div><div class="sg-v" style="color:var(--green-text)" id="sv-bull">24.6 mo</div><div class="sg-s">Enterprise deals close early</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Scenario matrix <span>— runway by revenue × hiring plan</span></span></div><div class="cd-b">
+    <table><thead><tr><th></th><th style="color:var(--red-text)">Bear · $14.8M</th><th style="color:var(--amber-text)">Base · $17.2M</th><th style="color:var(--green-text)">Bull · $18.1M</th></tr></thead>
+    <tbody><tr><td class="fw6">Conservative<br><span style="font-size:10px;color:var(--ink4)">No new hires</span></td><td class="camb">14.2 mo</td><td class="cgrn fw6">18.8 mo</td><td class="cgrn fw6">21.1 mo</td></tr>
+    <tr id="row-plan"><td class="fw6">Plan<br><span style="font-size:10px;color:var(--ink4)">1 AE + 1 CSM</span></td><td class="cred fw6">11.8 mo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></td><td class="camb fw6">17.4 mo ◄</td><td class="cgrn">19.6 mo</td></tr>
+    <tr class="alert"><td class="fw6">Aggressive<br><span style="font-size:10px;color:var(--ink4)">+3 hires</span></td><td class="cred fw6" style="font-size:16px">8.9 mo <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg></td><td class="camb">13.2 mo</td><td class="cgrn">15.4 mo</td></tr></tbody></table>
+    <div style="font-size:10px;color:var(--ink4);margin-top:8px">◄ = current state · <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> = below 12mo minimum · <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg> = not survivable</div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Cash waterfall <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-cash"></canvas></div></div></div>
+</div>
+
+<!-- UNIT ECONOMICS -->
+<div id="s-unit" class="scr">
+  <div class="sh"><div class="sh-over">CFO · Finance Layer · Unit Economics</div><h2>The cost of <b>every dollar.</b></h2><div class="sh-sub">CAC, LTV, payback periods, and gross margin waterfall.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">LTV:CAC Ratio</div><div class="kv">4.8×</div><div class="ks"><span class="up">↑ from 4.2×</span></div></div>
+    <div class="kc accent-amber"><div class="kl">Blended CAC</div><div class="kv">$340</div><div class="ks">Target: <$400</div></div>
+    <div class="kc accent-blue"><div class="kl">Gross Margin</div><div class="kv">78%</div><div class="ks">Target: >75% <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">CAC by segment</span></div><div class="cd-b">
+      <table><thead><tr><th>Segment</th><th>CAC</th><th>LTV</th><th>LTV:CAC</th><th>Payback</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Enterprise</td><td>$2,400</td><td class="cgrn fw6">$22,800</td><td class="cgrn fw6">9.5×</td><td>4.2 mo</td></tr>
+      <tr><td class="fw6">Mid-Market</td><td>$840</td><td class="fw6">$6,720</td><td class="fw6">8.0×</td><td>3.8 mo</td></tr>
+      <tr class="alert"><td class="fw6">SMB</td><td class="cred fw6">$340</td><td class="fw6">$1,630</td><td class="cred fw6">4.8×</td><td class="cred">8.4 mo</td></tr></tbody></table>
+      <div class="cl cl-red mt8">SMB LTV:CAC at 4.8× looks healthy, but after accounting for 96% NRR (net contraction), real payback stretches to <strong>8.4 months</strong>. Enterprise pays back in 4.2 months.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Gross margin waterfall</span></div><div class="cd-b">
+      <div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span class="fw6">Revenue (ARR)</span><span class="fw6">$16.4M</span></div><div class="prog"><div class="prog-fill prog-green" style="width:100%"></div></div></div>
+      <div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span class="fw6" style="color:var(--red-text)">− COGS</span><span class="cred fw6">−$3.6M (22%)</span></div><div class="prog"><div class="prog-fill prog-red" style="width:22%"></div></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin:12px 0;padding:10px 14px;background:var(--green-soft);border-radius:6px"><span class="fw6">= Gross Profit</span><span class="cgrn fw6">$12.8M (78%)</span></div>
+      <div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span class="fw6" style="color:var(--amber-text)">− OpEx</span><span class="camb fw6">−$5.8M (35%)</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:35%"></div></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin:12px 0;padding:10px 14px;background:var(--amber-soft);border-radius:6px"><span class="fw6">= Net Burn</span><span class="camb fw6">−$5.8M/yr (−$486K/mo)</span></div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">CAC payback trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-payback"></canvas></div></div></div>
+</div>
+
+<!-- HIRING IMPACT -->
+<div id="s-hiring" class="scr">  <div class="sh"><div class="sh-over">CFO · Finance Layer · Hiring Impact</div><h2>Can you <em>afford this?</em></h2><div class="sh-sub">Cost per hire, time to productivity, and the ARR milestones that unlock each role.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-amber"><div class="kl">Fully Loaded Cost / Hire</div><div class="kv">$142K</div><div class="ks">Salary + benefits + ramp + tools</div></div>
+    <div class="kc accent-green"><div class="kl">Expected ARR Contribution</div><div class="kv">$600K</div><div class="ks">Per AE at full quota</div></div>
+    <div class="kc accent-blue"><div class="kl">Time to Quota</div><div class="kv">90<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks">Ramp period for new AEs</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Cost per hire breakdown</span></div><div class="cd-b">
+      <table><thead><tr><th>Component</th><th>AE</th><th>CSM</th><th>Eng</th></tr></thead>
+      <tbody><tr><td class="fw6">Base salary</td><td>$85K</td><td>$75K</td><td>$120K</td></tr>
+      <tr><td class="fw6">Benefits + tax (25%)</td><td>$21K</td><td>$19K</td><td>$30K</td></tr>
+      <tr><td class="fw6">Ramp cost</td><td>$28K</td><td>$19K</td><td>$30K</td></tr>
+      <tr><td class="fw6">Tools + equipment</td><td>$8K</td><td>$6K</td><td>$12K</td></tr>
+      <tr style="border-top:2px solid var(--border)"><td class="fw6">Total Year 1</td><td class="fw6 camb">$142K</td><td class="fw6">$119K</td><td class="fw6">$192K</td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Trigger thresholds</span></div><div class="cd-b">
+      <table><thead><tr><th>ARR Milestone</th><th>Unlocks</th><th>Status</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">$14M</td><td>1 CSM</td><td><span class="bdg bdg-green">Hit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td></tr>
+      <tr class="good"><td class="fw6">$15M</td><td>1 AE</td><td><span class="bdg bdg-green">Hit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td></tr>
+      <tr><td class="fw6">$17M</td><td>2nd AE + 1 Eng</td><td><span class="bdg bdg-amber">$600K away</span></td></tr>
+      <tr><td class="fw6">$19M</td><td>3rd AE + Sales Manager</td><td><span class="bdg bdg-blue">Target Q3</span></td></tr>
+      <tr><td class="fw6">$22M</td><td>VP Sales</td><td><span class="bdg bdg-blue">Target Q1 '27</span></td></tr></tbody></table>
+      <div class="cl cl-amber mt8">ARR justifies 1 AE + 1 CSM right now. The 2nd AE is $600K away — wait for $17M ARR trigger or accept the risk of early hire.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Decision flow: Can we afford this hire?</span></div><div class="cd-b">
+    <div class="dflow">
+      <div class="df-node"><strong>IF</strong> ARR milestone met AND Bear runway ≥ 12mo</div><div class="df-arrow">↓</div>
+      <div class="df-node yes"><span class="df-tag y">Green</span> Approve hire</div><div class="df-arrow">↓</div>
+      <div class="df-node"><strong>IF</strong> ARR milestone met BUT Bear runway &lt; 12mo</div><div class="df-arrow">↓</div>
+      <div class="df-node warn"><span class="df-tag m">Defer</span> Defer 8 weeks. Re-evaluate at Q2 close.</div><div class="df-arrow">↓</div>
+      <div class="df-node no"><span class="df-tag n">Block</span> If ARR milestone NOT met — no exceptions</div>
+    </div>
+  </div></div>
+</div>
+
+<!-- CASH FLOW -->
+<div id="s-cashflow" class="scr">  <div class="sh"><div class="sh-over">CFO · Finance Layer · Cash Flow</div><h2>Money <b>in. Money out.</b></h2><div class="sh-sub">Monthly cash flow waterfall, working capital, and 3-month forward projection.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Monthly Inflow</div><div class="kv">$1.37M</div><div class="ks">MRR collected</div></div>
+    <div class="kc accent-red"><div class="kl">Monthly Outflow</div><div class="kv">$1.86M</div><div class="ks">All operating expenses</div></div>
+    <div class="kc accent-amber"><div class="kl">Net Monthly Cash</div><div class="kv">−$486K</div><div class="ks"><span class="dn">Burning</span></div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Monthly cash flow <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-waterfall"></canvas></div></div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Working capital</span></div><div class="cd-b">
+      <table><thead><tr><th>Metric</th><th>Value</th><th>Status</th></tr></thead>
+      <tbody><tr><td class="fw6">DSO</td><td>32 days</td><td><span class="bdg bdg-green">Healthy</span></td></tr>
+      <tr><td class="fw6">Deferred Revenue</td><td>$2.1M</td><td><span class="bdg bdg-blue">Annual prepay</span></td></tr>
+      <tr><td class="fw6">Current Ratio</td><td>4.2×</td><td><span class="bdg bdg-green">Strong</span></td></tr>
+      <tr><td class="fw6">Quick Ratio</td><td>3.8×</td><td><span class="bdg bdg-green">Strong</span></td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">3-month forward projection</span></div><div class="cd-b">
+      <table><thead><tr><th>Month</th><th>Inflow</th><th>Outflow</th><th>Net</th><th>Cash End</th></tr></thead>
+      <tbody><tr><td class="fw6">April</td><td>$1.40M</td><td>$1.88M</td><td class="cred">−$480K</td><td class="camb">$7.98M</td></tr>
+      <tr><td class="fw6">May</td><td>$1.43M</td><td>$1.89M</td><td class="cred">−$460K</td><td class="camb">$7.52M</td></tr>
+      <tr><td class="fw6">June</td><td>$1.46M</td><td>$1.90M</td><td class="cred">−$440K</td><td class="camb">$7.08M</td></tr></tbody></table>
+      <div class="cl cl-green mt8">Burn is improving — revenue growth outpacing expense growth. If trend continues, breakeven trajectory by Q4 2026.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- SENSITIVITY -->
+<div id="s-sensitivity" class="scr">  <div class="sh"><div class="sh-over">CFO · Finance Layer · Sensitivity</div><h2>What if <em>things change?</em></h2><div class="sh-sub">Stress tests. Break-even analysis. The variables that move runway the most.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">What-if: Churn increases 0.5%?</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node no"><span class="df-tag n">Impact</span> Monthly churn 1.5% → 2.0%</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Revenue</span> ARR drops $16.4M → $15.8M (−$600K)</div><div class="df-arrow">↓</div>
+        <div class="df-node no"><span class="df-tag n">Runway</span> 17.4mo → <strong>15.1mo</strong> (−2.3 months)</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Action</span> Freeze discretionary hiring. Cut paid acquisition 40%.</div>
+      </div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">What-if: Delay hiring 8 weeks?</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node yes"><span class="df-tag y">Impact</span> Defer 1 AE + 1 CSM for 8 weeks</div><div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">Savings</span> ~$38K saved</div><div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">Runway</span> 17.4mo → <strong>17.8mo</strong> (+0.4 months)</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Cost</span> Lost pipeline: ~$120K (2 months production)</div>
+      </div>
+      <div class="cl cl-amber mt8">Net impact: +$38K cash, −$120K pipeline. Defer is the right call — AE ramp is 90 days anyway.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Sensitivity table <span>— variable changes → runway impact</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Variable Change</th><th>Runway Impact</th><th>Risk</th></tr></thead>
+    <tbody><tr class="alert"><td class="fw6">Churn +0.5%</td><td class="cred fw6">−2.3 months</td><td><span class="bdg bdg-red">High</span></td></tr>
+    <tr class="alert"><td class="fw6">Churn +1.0%</td><td class="cred fw6">−4.8 months</td><td><span class="bdg bdg-red">Critical</span></td></tr>
+    <tr><td class="fw6">Growth +5% (to 43%)</td><td class="cgrn fw6">+1.6 months</td><td><span class="bdg bdg-green">Upside</span></td></tr>
+    <tr><td class="fw6">Delay hiring 8 weeks</td><td class="cgrn">+0.4 months</td><td><span class="bdg bdg-green">Low</span></td></tr>
+    <tr><td class="fw6">Add 3 hires (Aggressive)</td><td class="cred fw6">−4.2 months</td><td><span class="bdg bdg-red">High</span></td></tr>
+    <tr><td class="fw6">Cut paid ads (−$40K/mo)</td><td class="cgrn fw6">+2.8 months</td><td><span class="bdg bdg-amber">Medium</span></td></tr></tbody></table>
+    <div class="cl cl-blue mt8">Two biggest levers: <strong>churn</strong> (−2.3mo per 0.5%) and <strong>paid ads</strong> (+2.8mo if cut). Focus on churn first — compounding effects.</div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Break-even analysis</span></div><div class="cd-b">
+    <div style="display:flex;gap:24px;flex-wrap:wrap;margin:12px 0">
+      <div style="flex:1;min-width:200px;padding:20px;background:var(--surface3);border-radius:var(--radius);text-align:center;border:1px solid var(--border)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em">Monthly break-even</div><div style="font-size:28px;font-weight:800;margin:8px 0">$1.86M</div><div style="font-size:11px;color:var(--ink3)">MRR to cover all OpEx</div></div>
+      <div style="flex:1;min-width:200px;padding:20px;background:var(--surface3);border-radius:var(--radius);text-align:center;border:1px solid var(--border)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em">ARR at break-even</div><div style="font-size:28px;font-weight:800;margin:8px 0">$22.3M</div><div style="font-size:11px;color:var(--ink3)">36% growth from current</div></div>
+      <div style="flex:1;min-width:200px;padding:20px;background:var(--green-soft);border-radius:var(--radius);text-align:center;border:1px solid rgba(22,163,74,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em">Months to break-even</div><div style="font-size:28px;font-weight:800;margin:8px 0" class="cgrn">11.4</div><div style="font-size:11px;color:var(--ink3)">At current 38% growth</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">
+  <div class="sh"><div class="sh-over">CFO · Finance Layer · Playbooks</div><h2>Financial <em>decision flows.</em></h2><div class="sh-sub">Fundraising triggers, cost-cutting levers, and pricing change impact models.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Fundraising trigger</span><span class="bdg bdg-amber">Monitor</span></div><div class="cd-b">
+      <div class="pbs">
+        <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">ARR hits $15M</div><div class="pb-meta"><span>Triggered 3 months ago</span></div></div></div>
+        <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Board approves Series C prep</div><div class="pb-meta"><span>Approved Feb 2026</span></div></div></div>
+        <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">Fix burn multiple below 2×</div><div class="pb-meta"><span class="cred">Current: 2.1×</span><span>Target: <1.8×</span></div><div class="pb-desc">Reduce SMB acquisition spend from $89K/mo to $54K/mo. Shift to enterprise where LTV:CAC is 9.5×</div></div></div>
+        <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">Build investor deck + data room</div><div class="pb-meta"><span>Not started</span></div></div></div>
+        <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Begin conversations</div><div class="pb-meta"><span>Target: Q3 2026</span></div></div></div>
+      </div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Cost-cutting levers <span>— ranked by savings</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Lever</th><th>Savings/mo</th><th>Impact</th><th>Pain</th></tr></thead>
+      <tbody><tr><td class="fw6">Cut paid ads</td><td class="cgrn fw6">$40K</td><td>Pipeline −$380K/qtr</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
+      <tr><td class="fw6">Freeze non-critical hiring</td><td class="cgrn fw6">$35K</td><td>Growth −15%</td><td><span class="bdg bdg-red">High</span></td></tr>
+      <tr><td class="fw6">Renegotiate vendors</td><td class="cgrn">$12K</td><td>Minimal</td><td><span class="bdg bdg-green">Low</span></td></tr>
+      <tr><td class="fw6">Cut events 50%</td><td class="cgrn">$8K</td><td>Pipeline −$260K/qtr</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
+      <tr><td class="fw6">Downgrade office</td><td class="cgrn">$6K</td><td>Morale risk</td><td><span class="bdg bdg-amber">Medium</span></td></tr></tbody></table>
+      <div class="cl cl-green mt8">Total available: <strong>$101K/month</strong>. Would extend runway from 17.4 to 21.6 months. Only recommended if Bear scenario materializes.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Pricing change impact</span></div><div class="cd-b">
+    <table><thead><tr><th>Change</th><th>Revenue Impact</th><th>Churn Risk</th><th>Net Effect</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">+10% new logos only</td><td class="cgrn fw6">+$1.2M ARR</td><td>Low (2%)</td><td class="cgrn fw6">+$1.0M net</td></tr>
+    <tr><td class="fw6">+5% all accounts</td><td class="cgrn">+$820K ARR</td><td>Medium (5%)</td><td class="cgrn">+$400K net</td></tr>
+    <tr class="alert"><td class="fw6">−10% save churns</td><td class="cred">−$130K ARR</td><td>Reduces churn 0.3%</td><td class="cred fw6">−$130K net</td></tr></tbody></table>
+    <div class="cl cl-blue mt8">Best move: <strong>10% increase on new logos only</strong>. Adds $1M ARR with minimal churn risk. Effective date: next quarter.</div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Financial Intelligence</div>
+    <div class="rp-sub">Cash · Burn · Unit Economics</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-red">
+      <div class="rs-title">Cost of Inaction</div>
+      <div class="rs-val red">$540K–$1.6M</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:65%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">Monthly burn</span><span class="rv dn">$529K</span></div>
+      <div class="rs-row"><span class="rl">Runway</span><span class="rv">17.4 mo</span></div>
+    </div>
+
+    <div class="rp-section accent-amber">
+      <div class="rs-title">Series C Readiness</div>
+      <div class="rs-val amber">2 / 5</div>
+      <div class="rs-dots">
+        <div class="rs-dot on-green"></div>
+        <div class="rs-dot on-green"></div>
+        <div class="rs-dot on-amber"></div>
+        <div class="rs-dot off"></div>
+        <div class="rs-dot off"></div>
+      </div>
+      <div class="rs-row"><span class="rl">Burn multiple</span><span class="rv dn">2.1× (need &lt;2×)</span></div>
+      <div class="rs-row"><span class="rl">Rule of 40</span><span class="rv up">42</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Unit Economics</div>
+      <div class="rs-val green">4.2×</div>
+      <div class="rs-row"><span class="rl">LTV / CAC</span><span class="rv up">4.2×</span></div>
+      <div class="rs-row"><span class="rl">Gross margin</span><span class="rv up">78%</span></div>
+      <div class="rs-row"><span class="rl">Payback</span><span class="rv">14 mo</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">SMB NRR leak</span><span class="ra-val" style="color:var(--red-text)">$840K</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--blue)">CEO</span><span class="ra-text">Board in 18 days</span><span class="ra-val">3/5 green</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--green)">CRO</span><span class="ra-text">Stale deals</span><span class="ra-val" style="color:var(--amber-text)">$1.2M</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function setScenario(type,btn){document.querySelectorAll('.scen-btn').forEach(b=>{b.className='scen-btn'});document.querySelectorAll('.sg-cell').forEach(c=>{c.className='sg-cell'});if(type==='bear'){btn.classList.add('s-bear');document.getElementById('sg-bear').classList.add('sel','sel-bear')}else if(type==='base'){btn.classList.add('s-base');document.getElementById('sg-base').classList.add('sel','sel-base')}else{btn.classList.add('s-bull');document.getElementById('sg-bull').classList.add('sel','sel-bull')}}
+function initCharts(){
+  const c=document.getElementById('ch-cash');if(c){if(c._chart)c._chart.destroy();c._chart=new Chart(c,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Cash Balance',data:[8.46,7.98,7.52,7.08,6.62,6.18,5.75,5.34,4.95,4.58,4.23,3.90],borderColor:'#d97706',backgroundColor:'rgba(217,119,6,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#d97706',pointBorderColor:'#fff',pointBorderWidth:2},{label:'12mo Floor',data:Array(12).fill(5.83),borderColor:'#dc2626',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:3,ticks:{callback:v=>'$'+v+'M',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const pb=document.getElementById('ch-payback');if(pb){if(pb._chart)pb._chart.destroy();pb._chart=new Chart(pb,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Enterprise',data:[5.1,4.9,4.8,4.6,4.5,4.4,4.3,4.3,4.2,4.2,4.2,4.2],borderColor:'#16a34a',tension:.35,borderWidth:2,pointRadius:2,pointBackgroundColor:'#16a34a'},{label:'Mid-Market',data:[4.4,4.3,4.2,4.1,4.0,4.0,3.9,3.9,3.8,3.8,3.8,3.8],borderColor:'#3b82f6',tension:.35,borderWidth:2,pointRadius:2,pointBackgroundColor:'#3b82f6'},{label:'SMB',data:[9.8,9.5,9.2,9.0,8.9,8.8,8.7,8.6,8.5,8.5,8.4,8.4],borderColor:'#dc2626',tension:.35,borderWidth:2,pointRadius:2,pointBackgroundColor:'#dc2626'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:3,max:11,ticks:{callback:v=>v+' mo',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const w=document.getElementById('ch-waterfall');if(w){if(w._chart)w._chart.destroy();w._chart=new Chart(w,{type:'bar',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Inflow',data:[1.37,1.40,1.43,1.46,1.49,1.52,1.55,1.58,1.62,1.65,1.69,1.73],backgroundColor:'rgba(22,163,74,.7)',borderRadius:3},{label:'Outflow',data:[-1.86,-1.88,-1.89,-1.90,-1.91,-1.92,-1.93,-1.94,-1.95,-1.96,-1.97,-1.98],backgroundColor:'rgba(220,38,38,.7)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{ticks:{callback:v=>'$'+Math.abs(v).toFixed(1)+'M',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cfo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#dc2626;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --accent:#dc2626;--accent-dark:#b91c1c;--accent-soft:#fee2e2;--accent-softer:#fef2f2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--accent);color:#fff}
+a {color:inherit}
+.hdr-r a {font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;color:var(--ink4);transition:all .15s;text-decoration:none}
+.hdr-r a.on {background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(220,38,38,.25)}
+.hdr-r .live {display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;color:var(--accent);margin-left:12px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
+.hdr-r .live i {width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite}
+.tab.on {color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-softer)}
+.sh h2 em {font-style:italic;color:var(--accent)}
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+.btn-p {background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 8px rgba(220,38,38,.25)}
+.story {background:linear-gradient(135deg,#fef2f2,#fee2e2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(220,38,38,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--accent)}
+.story .s-body strong {color:var(--accent-dark);font-weight:600}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:var(--accent-softer);border-color:rgba(220,38,38,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(220,38,38,.25)}
+.pb-step.done .pb-num {background:var(--green)}
+.heatmap-cell {padding:6px 10px;border-radius:4px;font-size:11px;font-weight:600;text-align:center}
+.q-card {padding:18px 20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface3);margin-bottom:10px;font-size:12px;line-height:1.7;font-style:italic;position:relative;box-shadow:var(--shadow)}
+.q-card .q-mark {position:absolute;top:10px;left:14px;font-size:28px;font-weight:900;color:var(--accent);opacity:.1;font-style:normal;line-height:1}
+.q-card .q-text {position:relative;padding-left:20px}
+.q-card .q-attr {font-size:10px;font-weight:600;color:var(--ink4);font-style:normal;margin-top:8px;padding-left:20px}
+.funnel-stage {display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.funnel-bar {height:28px;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.funnel-label {width:110px;font-size:11px;font-weight:600;text-align:right;color:var(--ink2);flex-shrink:0}
+.funnel-meta {font-size:11px;color:var(--ink3);margin-left:8px}
+.funnel-arrow {text-align:center;color:var(--ink5);font-size:10px;padding:2px 0}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CS Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html" class="on">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('health',this)">Health Overview</button>
+  <button class="tab" onclick="show('atrisk',this)">At-Risk</button>
+  <button class="tab" onclick="show('cohort',this)">Cohort Heatmap</button>
+  <button class="tab" onclick="show('nps',this)">NPS</button>
+  <button class="tab" onclick="show('ttv',this)">Time to Value</button>
+  <button class="tab" onclick="show('expansion',this)">Expansion</button>
+  <button class="tab" onclick="show('segments',this)">Segments</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- HEALTH OVERVIEW -->
+<div id="s-health" class="scr on">  <div class="sh"><div class="sh-over">CS · Customer Layer · Health Overview</div><h2>Save rate tells <em>the real story.</em></h2><div class="sh-sub">Health scores, churn risk, and cross-portal intelligence. The 68% save rate isn't luck — it's the playbook working.</div></div>
+  <div class="story"><div class="s-num">68%</div><div class="s-label">Save Rate</div><div class="s-title">68% of at-risk accounts saved when playbook triggers within 7 days.</div><div class="s-body">Last quarter, <strong>23 accounts</strong> hit critical health. <strong>16 were saved</strong> — a 68% save rate. But that number drops to <strong>12% after 14 days</strong>. The gap between early detection and late-stage salvage is the entire game. Every week of delay costs <strong>$42K in recoverable ARR</strong>. The accounts that churned were detected late — average 19 days after first signal. The ones saved were caught at day 3.</div><button class="s-cta" onclick="show('atrisk',document.querySelector('.tab:nth-child(2)'))">View at-risk accounts →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-red"><div class="kl">Save Rate</div><div class="kv">68%</div><div class="ks">23 flagged · 16 saved</div></div>
+    <div class="kc accent-green"><div class="kl">Health Score Avg</div><div class="kv">72</div><div class="ks"><span class="up">↑ 4pts</span> vs last quarter</div></div>
+    <div class="kc accent-amber"><div class="kl">Logo Churn Rate</div><div class="kv">1.2%<span style="font-size:16px;color:var(--ink4)">/mo</span></div><div class="ks">Target: <1%/mo</div></div>
+    <div class="kc accent-blue"><div class="kl">NRR</div><div class="kv">104%</div><div class="ks">Enterprise: <span class="up">112%</span> · SMB: <span class="dn">96%</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Health score distribution <span>— 156 accounts</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-health"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top 5 at-risk accounts</span></div><div class="cd-b">
+      <table><thead><tr><th>Account</th><th>ARR</th><th>Health</th><th>Signal</th><th>Risk</th></tr></thead>
+      <tbody><tr class="alert"><td class="fw6">Kellerman Group</td><td class="fw6">$84K</td><td><span class="bdg bdg-red">31</span></td><td class="cred">22d no login</td><td><span class="bdg bdg-red">Critical</span></td></tr>
+      <tr class="alert"><td class="fw6">Turner Construction</td><td class="fw6">$72K</td><td><span class="bdg bdg-red">38</span></td><td class="cred">7 open tickets</td><td><span class="bdg bdg-red">Critical</span></td></tr>
+      <tr><td class="fw6">Pinnacle Builders</td><td>$56K</td><td><span class="bdg bdg-amber">44</span></td><td class="camb">Feature adoption ↓30%</td><td><span class="bdg bdg-amber">High</span></td></tr>
+      <tr><td class="fw6">Ridgeline Dev</td><td>$48K</td><td><span class="bdg bdg-amber">52</span></td><td class="camb">Stakeholder left</td><td><span class="bdg bdg-amber">High</span></td></tr>
+      <tr><td class="fw6">Summit Partners</td><td>$41K</td><td><span class="bdg bdg-amber">55</span></td><td>NPS 6, declining</td><td><span class="bdg bdg-amber">Medium</span></td></tr></tbody></table>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Cross-portal intelligence alerts</span></div><div class="cd-b">
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <div class="cl cl-red" style="flex:1;min-width:250px"><span class="bdg bdg-red" style="font-size:8px;margin-bottom:6px;display:inline-block">CRO</span> <strong>Kellerman Group</strong> is on CRO's at-risk watchlist ($84K ARR). Health score 31. Joint save effort recommended — CSM + AE outreach.</div>
+      <div class="cl cl-amber" style="flex:1;min-width:250px"><span class="bdg bdg-amber" style="font-size:8px;margin-bottom:6px;display:inline-block">CFO</span> <strong>SMB NRR at 96%</strong> means $164K/yr leaking from SMB segment. CFO modeling this against burn. Fix PMF or accelerate upmarket.</div>
+      <div class="cl cl-blue" style="flex:1;min-width:250px"><span class="bdg bdg-blue" style="font-size:8px;margin-bottom:6px;display:inline-block">CTO</span> <strong>Mobile offline gap</strong> cited in 5 churn exit interviews. Product team tracking — ETA Q4. Interim workaround: field mode templates.</div>
+    </div>
+  </div></div>
+</div>
+
+<!-- AT-RISK -->
+<div id="s-atrisk" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · At-Risk</div><h2>The accounts <em>leaving.</em></h2><div class="sh-sub">90-day watchlist. Health decay signals. Save playbook status. Every day counts — after 14 days, save rate drops from 68% to 12%.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-red"><div class="kl">At-Risk ARR</div><div class="kv">$1.3M</div><div class="ks">16 accounts in 90-day window</div></div>
+    <div class="kc accent-amber"><div class="kl">Avg Days to Detect</div><div class="kv">8<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks">Saved: <span class="up">3 days</span> · Churned: 19 days</div></div>
+    <div class="kc accent-green"><div class="kl">Active Interventions</div><div class="kv">12</div><div class="ks">8 on-track · 4 escalated</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">90-day watchlist</span></div><div class="cd-b">
+    <table><thead><tr><th>Account</th><th>ARR</th><th>Health</th><th>Days Since Login</th><th>Open Tickets</th><th>Risk</th><th>Playbook</th></tr></thead>
+    <tbody><tr class="alert"><td class="fw6">Kellerman Group</td><td class="fw6">$84K</td><td><span class="bdg bdg-red">31</span></td><td class="cred fw6">22</td><td class="cred">7</td><td><span class="bdg bdg-red">Critical</span></td><td class="cred fw6">Day 14 — Escalated</td></tr>
+    <tr class="alert"><td class="fw6">Turner Construction</td><td class="fw6">$72K</td><td><span class="bdg bdg-red">38</span></td><td class="cred">18</td><td class="cred">5</td><td><span class="bdg bdg-red">Critical</span></td><td class="camb fw6">Day 7 — Exec Call</td></tr>
+    <tr><td class="fw6">Pinnacle Builders</td><td>$56K</td><td><span class="bdg bdg-amber">44</span></td><td class="camb">14</td><td>3</td><td><span class="bdg bdg-amber">High</span></td><td class="camb fw6">Day 5 — CSM Outreach</td></tr>
+    <tr><td class="fw6">Ridgeline Dev</td><td>$48K</td><td><span class="bdg bdg-amber">52</span></td><td class="camb">11</td><td>2</td><td><span class="bdg bdg-amber">High</span></td><td class="camb fw6">Day 3 — Monitoring</td></tr>
+    <tr><td class="fw6">Summit Partners</td><td>$41K</td><td><span class="bdg bdg-amber">55</span></td><td>9</td><td>1</td><td><span class="bdg bdg-amber">Medium</span></td><td class="cgrn fw6">Day 2 — Recovering</td></tr>
+    <tr><td class="fw6">Crestline Homes</td><td>$38K</td><td><span class="bdg bdg-blue">62</span></td><td>7</td><td>2</td><td><span class="bdg bdg-blue">Watch</span></td><td class="cgry">Day 1 — Monitoring</td></tr>
+    <tr><td class="fw6">Oakmont Group</td><td>$34K</td><td><span class="bdg bdg-amber">58</span></td><td>8</td><td>1</td><td><span class="bdg bdg-amber">Medium</span></td><td class="camb fw6">Day 3 — CSM Outreach</td></tr>
+    <tr><td class="fw6">Sterling Homes</td><td>$29K</td><td><span class="bdg bdg-blue">64</span></td><td>6</td><td>0</td><td><span class="bdg bdg-blue">Watch</span></td><td class="cgry">Day 1 — Monitoring</td></tr></tbody></table>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Save playbook <span>— dflow</span></span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node no"><span class="df-tag n">1</span><strong>Detect</strong> — Health drops below 40 OR login decay >14 days OR NPS ≤6</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">2</span><strong>Intervene</strong> — CSM outreach within 24hrs, exec sponsor call within 72hrs</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">3</span><strong>Monitor</strong> — Weekly health check for 30 days, escalation if no improvement</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node"><strong>IF</strong> health recovers >60 within 30 days → Close as saved</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node no"><span class="df-tag n">4</span><strong>Escalate</strong> — If no recovery in 14 days → exec-to-exec call + custom success plan</div>
+      </div>
+      <div class="cl cl-red mt8">Save rate is <strong>68% when triggered within 7 days</strong>. After 14 days, save rate drops to <strong>12%</strong>. Speed is the single biggest factor.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Intervention tracking</span></div><div class="cd-b">
+      <table><thead><tr><th>Account</th><th>Triggered</th><th>CSM Action</th><th>Status</th></tr></thead>
+      <tbody><tr class="alert"><td class="fw6">Kellerman</td><td>Mar 14</td><td>Exec call scheduled</td><td class="cred fw6">Overdue</td></tr>
+      <tr class="alert"><td class="fw6">Turner</td><td>Mar 21</td><td>Exec call done</td><td class="camb fw6">Pending plan</td></tr>
+      <tr><td class="fw6">Pinnacle</td><td>Mar 23</td><td>CSM call done</td><td class="cgrn fw6">On-track</td></tr>
+      <tr><td class="fw6">Ridgeline</td><td>Mar 25</td><td>Email sent</td><td class="camb fw6">Waiting</td></tr>
+      <tr><td class="fw6">Summit</td><td>Mar 26</td><td>Feature demo done</td><td class="cgrn fw6">Recovering</td></tr></tbody></table>
+    </div></div>
+  </div>
+</div>
+
+<!-- COHORT HEATMAP -->
+<div id="s-cohort" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · Cohort Heatmap</div><h2>Revenue retention <em>by cohort.</em></h2><div class="sh-sub">Color-coded retention by vintage. Where expansion offsets churn and where it doesn't.</div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Revenue retention table <span>— by cohort vintage</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Cohort</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th><th>Q7</th><th>Q8</th></tr></thead>
+    <tbody>
+      <tr><td class="fw6">2024 Q1</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">108%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">106%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">105%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">104%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">101%</td></tr>
+      <tr><td class="fw6">2024 Q2</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">106%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">105%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">104%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">101%</td><td>-</td></tr>
+      <tr><td class="fw6">2024 Q3</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">104%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">101%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">100%</td><td class="heatmap-cell" style="background:#fee2e2;color:#b91c1c">99%</td><td>-</td><td>-</td></tr>
+      <tr><td class="fw6">2024 Q4</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">101%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">100%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">100%</td><td class="heatmap-cell" style="background:#fee2e2;color:#b91c1c">99%</td><td>-</td><td>-</td><td>-</td></tr>
+      <tr><td class="fw6">2025 Q1</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">101%</td><td class="heatmap-cell" style="background:#fef3c7;color:#b45309">100%</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+      <tr><td class="fw6">2025 Q2</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">104%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">103%</td><td class="heatmap-cell" style="background:#dcfce7;color:#15803d">102%</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    </tbody></table>
+    <div class="cl cl-green mt8" style="display:flex;gap:20px;flex-wrap:wrap">
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#dcfce7;vertical-align:middle;margin-right:4px"></span> ≥102% — Expanding</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#fef3c7;vertical-align:middle;margin-right:4px"></span> 100–101% — Stable</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#fee2e2;vertical-align:middle;margin-right:4px"></span> <100% — Contracting</span>
+    </div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Expansion patterns</span></div><div class="cd-b">
+      <table><thead><tr><th>Pattern</th><th>Frequency</th><th>Avg Upside</th><th>Trigger</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Seat expansion</td><td>42%</td><td class="cgrn fw6">$28K</td><td>Usage >80%</td></tr>
+      <tr><td class="fw6">Tier upgrade</td><td>28%</td><td class="fw6">$44K</td><td>Feature requests</td></tr>
+      <tr><td class="fw6">New dept adoption</td><td>18%</td><td class="fw6">$36K</td><td>Multi-dept users</td></tr>
+      <tr><td class="fw6">Add-on modules</td><td>12%</td><td class="fw6">$18K</td><td>Integration needs</td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Churn patterns by segment</span></div><div class="cd-b">
+      <table><thead><tr><th>Segment</th><th>Churn Rate</th><th>Top Reason</th><th>Save Rate</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Enterprise</td><td class="cgrn fw6">0.4%/mo</td><td>Budget cuts</td><td class="cgrn fw6">82%</td></tr>
+      <tr><td class="fw6">Mid-Market</td><td class="camb fw6">1.1%/mo</td><td>Missing features</td><td class="camb fw6">64%</td></tr>
+      <tr class="alert"><td class="fw6">SMB</td><td class="cred fw6">2.8%/mo</td><td>Price / competitor</td><td class="cred fw6">48%</td></tr></tbody></table>
+      <div class="cl cl-red mt8">SMB churn at 2.8%/mo is the bleeding edge. Price sensitivity and competitor switching dominate. SMB needs a lighter tier or it becomes a churn machine.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- NPS -->
+<div id="s-nps" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · NPS</div><h2>What customers <em>actually say.</em></h2><div class="sh-sub">NPS trend, segment breakdown, verbatim quotes, and the drivers behind the score.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Overall NPS</div><div class="kv">42</div><div class="ks"><span class="up">↑ 6pts</span> vs last quarter</div></div>
+    <div class="kc accent-blue"><div class="kl">Response Rate</div><div class="kv">34%</div><div class="ks">Target: >30%</div></div>
+    <div class="kc accent-amber"><div class="kl">Detractor %</div><div class="kv">12%</div><div class="ks">19 accounts · $620K ARR</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">NPS trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-nps"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">NPS by segment</span></div><div class="cd-b">
+      <table><thead><tr><th>Segment</th><th>NPS</th><th>Promoters</th><th>Passives</th><th>Detractors</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Enterprise</td><td class="cgrn fw6">58</td><td>52%</td><td>38%</td><td class="cgrn">10%</td></tr>
+      <tr><td class="fw6">Mid-Market</td><td class="fw6">44</td><td>42%</td><td>40%</td><td>18%</td></tr>
+      <tr class="alert"><td class="fw6">SMB</td><td class="cred fw6">18</td><td>28%</td><td>42%</td><td class="cred">30%</td></tr></tbody></table>
+      <div class="cl cl-amber mt8">SMB NPS at 18 is a red flag. 30% detractor rate means nearly 1 in 3 SMB customers would not recommend. Common theme: "too complex for our size."</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Verbatim quotes <span>— recent detractors & promoters</span></span></div><div class="cd-b" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="q-card"><div class="q-mark">"</div><div class="q-text">The product is powerful but the onboarding took 3 months longer than promised. Our team was frustrated before we even started.</div><div class="q-attr">— VP Ops, Mid-Market · NPS 4</div></div>
+    <div class="q-card"><div class="q-mark">"</div><div class="q-text">Mobile app crashes weekly in the field. Our foremen stopped using it. We're paying for seats nobody touches.</div><div class="q-attr">— PM, Kellerman Group · NPS 2</div></div>
+    <div class="q-card" style="border-left:3px solid var(--green)"><div class="q-mark" style="color:var(--green)">"</div><div class="q-text">Best construction PM tool we've used. The reporting alone saved us 20 hours/week. Worth every penny.</div><div class="q-attr">— CTO, Meridian Holdings · NPS 9</div></div>
+    <div class="q-card" style="border-left:3px solid var(--green)"><div class="q-mark" style="color:var(--green)">"</div><div class="q-text">Support team went above and beyond during our migration. Even got us a custom integration within 2 weeks.</div><div class="q-attr">— COO, Apex Development · NPS 10</div></div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Driver identification <span>— impact on NPS</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Driver</th><th>Impact</th><th>Mentions</th><th>Trend</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Support responsiveness</td><td class="cgrn fw6">+8 NPS</td><td>142</td><td><span class="up">↑ improving</span></td></tr>
+    <tr class="good"><td class="fw6">Reporting quality</td><td class="cgrn fw6">+6 NPS</td><td>98</td><td><span class="up">↑ improving</span></td></tr>
+    <tr><td class="fw6">Integration ecosystem</td><td class="fw6">+3 NPS</td><td>64</td><td>Stable</td></tr>
+    <tr class="alert"><td class="fw6">Mobile reliability</td><td class="cred fw6">−7 NPS</td><td>56</td><td><span class="dn">↓ declining</span></td></tr>
+    <tr class="alert"><td class="fw6">Onboarding speed</td><td class="cred fw6">−5 NPS</td><td>38</td><td><span class="dn">↓ declining</span></td></tr></tbody></table>
+    <div class="cl cl-red mt8">Mobile reliability is the #1 NPS drag at <strong>−7 points</strong>. Every mobile crash mention drops NPS by ~0.5pts. CTO tracking in Q4 roadmap.</div>
+  </div></div>
+</div>
+
+<!-- TIME TO VALUE -->
+<div id="s-ttv" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · Time to Value</div><h2>How fast do they <em>hit value?</em></h2><div class="sh-sub">Onboarding velocity, activation milestones, and the lag that predicts churn risk.</div></div>
+  <div class="krow kr4">
+    <div class="kc accent-green"><div class="kl">Median TTFV</div><div class="kv">34<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks"><span class="up">↓ 6 days</span> vs last quarter</div></div>
+    <div class="kc accent-blue"><div class="kl">Activation Rate</div><div class="kv">78%</div><div class="ks">Within 30 days of signup</div></div>
+    <div class="kc accent-amber"><div class="kl">Onboarding NPS</div><div class="kv">38</div><div class="ks">Enterprise: <span class="up">48</span> · SMB: <span class="dn">24</span></div></div>
+    <div class="kc accent-red"><div class="kl">Stalled Onboardings</div><div class="kv">14</div><div class="ks">$380K ARR at risk</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Onboarding funnel <span>— 5 stages</span></span></div><div class="cd-b">
+    <div style="margin:12px 0">
+      <div class="funnel-stage"><span class="funnel-label">Contract Signed</span><div class="funnel-bar" style="width:100%;background:var(--accent)">156 accounts</div></div>
+      <div class="funnel-arrow">↓ 94% proceed</div>
+      <div class="funnel-stage"><span class="funnel-label">Kickoff Done</span><div class="funnel-bar" style="width:94%;background:var(--accent);opacity:.88">147 accounts</div></div>
+      <div class="funnel-arrow">↓ 88% proceed</div>
+      <div class="funnel-stage"><span class="funnel-label">Data Migrated</span><div class="funnel-bar" style="width:83%;background:var(--accent);opacity:.76">130 accounts</div></div>
+      <div class="funnel-arrow">↓ 91% proceed</div>
+      <div class="funnel-stage"><span class="funnel-label">Team Trained</span><div class="funnel-bar" style="width:75%;background:var(--accent);opacity:.64">118 accounts</div></div>
+      <div class="funnel-arrow">↓ 96% proceed</div>
+      <div class="funnel-stage"><span class="funnel-label">Activated</span><div class="funnel-bar" style="width:72%;background:var(--accent);opacity:.52">112 accounts</div></div>
+    </div>
+    <div class="cl cl-amber">Biggest drop: <strong>Data Migrated → Team Trained</strong> (88% → 75%). The migration step takes 12 days avg and blocks everything after it. Consider a dedicated migration squad.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">TTFV trend <span>— median days to first value</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-ttv"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Activation events <span>— milestone tracking</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Milestone</th><th>% Complete</th><th>Avg Days</th><th>Impact on Retention</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">First project created</td><td class="cgrn fw6">92%</td><td>4</td><td class="cgrn fw6">+22% retention</td></tr>
+      <tr class="good"><td class="fw6">3+ team members active</td><td class="cgrn fw6">86%</td><td>8</td><td class="cgrn fw6">+18% retention</td></tr>
+      <tr><td class="fw6">First report generated</td><td class="fw6">78%</td><td>14</td><td class="cgrn">+14% retention</td></tr>
+      <tr><td class="fw6">Integration connected</td><td class="fw6">62%</td><td>21</td><td class="cgrn">+12% retention</td></tr>
+      <tr class="alert"><td class="fw6">Mobile app adopted</td><td class="cred fw6">44%</td><td>28</td><td class="cgrn fw6">+24% retention</td></tr></tbody></table>
+      <div class="cl cl-red mt8">Mobile adoption at 44% has the <strong>highest retention impact (+24%)</strong> but lowest completion rate. The mobile reliability issues (NPS driver) are blocking the most valuable activation event.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- EXPANSION -->
+<div id="s-expansion" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · Expansion</div><h2>Where the <em>upsell is.</em></h2><div class="sh-sub">Expansion accounts, cross-sell signals, and the CS-sourced pipeline that beats AE cold outreach 3:1.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">CS-Sourced Pipeline</div><div class="kv">$483K</div><div class="ks">24 accounts with intent signals</div></div>
+    <div class="kc accent-blue"><div class="kl">Expansion Win Rate</div><div class="kv">72%</div><div class="ks"><span class="up">↑ from 64%</span> · vs 28% cold outbound</div></div>
+    <div class="kc accent-purple"><div class="kl">Avg Expansion Size</div><div class="kv">$20K</div><div class="ks">Enterprise: $38K · SMB: $8K</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Top expansion accounts</span></div><div class="cd-b">
+    <table><thead><tr><th>Account</th><th>Current ARR</th><th>Signal</th><th>Est. Upside</th><th>Close Prob</th><th>CSM Action</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Meridian Holdings</td><td>$142K</td><td>Seat usage 94%</td><td class="cgrn fw6">$48K</td><td>85%</td><td class="cgrn">Proposal sent</td></tr>
+    <tr class="good"><td class="fw6">Apex Development</td><td>$98K</td><td>New dept adoption</td><td class="cgrn fw6">$36K</td><td>78%</td><td class="cgrn">Demo scheduled</td></tr>
+    <tr><td class="fw6">Northgate Capital</td><td>$86K</td><td>Feature requests</td><td class="cgrn">$28K</td><td>72%</td><td class="camb">Discovery call</td></tr>
+    <tr><td class="fw6">Westfield Group</td><td>$74K</td><td>Seat usage 87%</td><td>$24K</td><td>68%</td><td class="camb">Identified</td></tr>
+    <tr><td class="fw6">Bayside Partners</td><td>$62K</td><td>API usage spike</td><td>$22K</td><td>64%</td><td class="camb">Identified</td></tr></tbody></table>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Cross-sell signals</span></div><div class="cd-b">
+    <table><thead><tr><th>Signal Type</th><th>Accounts</th><th>Combined Upside</th><th>Product</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Seat usage >80%</td><td>18</td><td class="cgrn fw6">$198K</td><td>Core Platform</td></tr>
+      <tr><td class="fw6">New dept users</td><td>6</td><td class="fw6">$144K</td><td>Enterprise License</td></tr>
+      <tr><td class="fw6">Feature requests</td><td>12</td><td class="fw6">$96K</td><td>Premium Reporting</td></tr>
+      <tr><td class="fw6">API usage spike</td><td>8</td><td class="fw6">$45K</td><td>Integration Suite</td></tr></tbody></table>
+    <div class="cl cl-green mt8">CS-sourced expansion closes at <strong>72% — nearly 3× the cold outbound rate (28%)</strong>. CSMs know who's ready. Every expansion signal should trigger a warm handoff to AE within 48hrs.</div>
+  </div></div>
+</div>
+
+<!-- SEGMENTS -->
+<div id="s-segments" class="scr">
+  <div class="sh"><div class="sh-over">CS · Customer Layer · Segments</div><h2>Enterprise is <em>the anchor.</em></h2><div class="sh-sub">Segment-level health, retention, and behavior patterns. Enterprise drives NRR; SMB is the leak.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Enterprise Health</div><div class="kv">82</div><div class="ks">NRR: <span class="up">112%</span> · Churn: 0.4%/mo</div></div>
+    <div class="kc accent-blue"><div class="kl">Mid-Market Health</div><div class="kv">71</div><div class="ks">NRR: <span class="up">106%</span> · Churn: 1.1%/mo</div></div>
+    <div class="kc accent-red"><div class="kl">SMB Health</div><div class="kv">54</div><div class="ks">NRR: <span class="dn">96%</span> · Churn: 2.8%/mo</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Segment comparison</span></div><div class="cd-b">
+    <table><thead><tr><th>Metric</th><th>Enterprise</th><th>Mid-Market</th><th>SMB</th></tr></thead>
+    <tbody>
+      <tr><td class="fw6">Accounts</td><td>24</td><td>52</td><td>80</td></tr>
+      <tr><td class="fw6">ARR</td><td class="fw6">$6.8M</td><td class="fw6">$5.6M</td><td class="fw6">$4.0M</td></tr>
+      <tr><td class="fw6">Avg Health Score</td><td class="cgrn fw6">82</td><td class="cb fw6">71</td><td class="cred fw6">54</td></tr>
+      <tr><td class="fw6">NRR</td><td class="cgrn fw6">112%</td><td class="cgrn fw6">106%</td><td class="cred fw6">96%</td></tr>
+      <tr><td class="fw6">Logo Churn</td><td class="cgrn fw6">0.4%/mo</td><td class="camb fw6">1.1%/mo</td><td class="cred fw6">2.8%/mo</td></tr>
+      <tr><td class="fw6">NPS</td><td class="cgrn fw6">58</td><td class="cb fw6">44</td><td class="cred fw6">18</td></tr>
+      <tr><td class="fw6">Save Rate</td><td class="cgrn fw6">82%</td><td class="camb fw6">64%</td><td class="cred fw6">48%</td></tr>
+      <tr><td class="fw6">TTFV (median)</td><td class="camb fw6">48 days</td><td class="cb fw6">32 days</td><td class="cgrn fw6">18 days</td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="g3">
+    <div class="cd" style="border-top:3px solid var(--green)"><div class="cd-b" style="padding:22px">
+      <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Enterprise</div>
+      <div style="font-size:14px;font-weight:700;color:var(--green-text);margin-bottom:8px">The Growth Engine</div>
+      <div style="font-size:12px;line-height:1.7;color:var(--ink2)">Enterprise accounts expand reliably — 112% NRR, 82% save rate, NPS 58. Longer onboarding (48 days) but once activated, they're locked in. Every $1 invested in enterprise CS returns $1.12 annually.</div>
+    </div></div>
+    <div class="cd" style="border-top:3px solid var(--blue)"><div class="cd-b" style="padding:22px">
+      <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Mid-Market</div>
+      <div style="font-size:14px;font-weight:700;color:var(--blue-text);margin-bottom:8px">The Steady Middle</div>
+      <div style="font-size:12px;line-height:1.7;color:var(--ink2)">Mid-market is stable but unspectacular. 106% NRR, moderate health. The risk is complacency — mid-market accounts quietly churn when feature gaps emerge. Proactive check-ins are the lever.</div>
+    </div></div>
+    <div class="cd" style="border-top:3px solid var(--red)"><div class="cd-b" style="padding:22px">
+      <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">SMB</div>
+      <div style="font-size:14px;font-weight:700;color:var(--red-text);margin-bottom:8px">The Leak</div>
+      <div style="font-size:12px;line-height:1.7;color:var(--ink2)">SMB churns at 2.8%/mo with NRR at 96% — they leak faster than they expand. NPS 18 means 30% are detractors. The product is too complex for their size. Either build a lighter SMB tier or accept this is a top-of-funnel feeder, not a retention play.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">  <div class="sh"><div class="sh-over">CS · Customer Layer · Playbooks</div><h2>Pre-built <em>CS decisions.</em></h2><div class="sh-sub">Save flows, expansion handoffs, and escalation paths. The repeatable plays that drive the 68% save rate.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Save play <span>— dflow</span></span><span class="bdg bdg-green">Active</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node no"><span class="df-tag n">1</span><strong>Trigger</strong> — Health <40 OR login decay >14d OR NPS ≤6</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">2</span><strong>Assess</strong> — CSM reviews account history within 4hrs. Assigns risk level (Critical/High/Medium)</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">3</span><strong>Outreach</strong> — Personalized email + call within 24hrs. Document objections and blockers</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">4</span><strong>Exec Escalation</strong> — If no response in 72hrs → VP-level exec sponsor call</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">5</span><strong>Success Plan</strong> — Custom 30-day recovery plan with weekly checkpoints</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node"><strong>IF</strong> health >60 in 30d → Saved <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> &nbsp; <strong>IF NOT</strong> → Final save offer (discount/upgrade)</div>
+      </div>
+      <div class="cl cl-green mt8"><strong>68% save rate</strong> when triggered ≤7 days. <strong>12% save rate</strong> after 14 days. The playbook works — execution speed is the variable.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Expansion play <span>— dflow</span></span><span class="bdg bdg-amber">Needs Review</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node yes"><span class="df-tag y">1</span><strong>Signal Detected</strong> — Seat usage >80% OR new dept users OR feature requests OR API spike</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">2</span><strong>Qualify</strong> — CSM confirms signal: is it real demand or noise? Budget available?</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">3</span><strong>Warm Handoff</strong> — CSM introduces AE within 48hrs. Shares context: usage data, pain points, expansion fit</div>
+        <div class="df-arrow">↓</div>
+        <div class="df-node"><strong>IF</strong> AE confirms opp → Pipeline created. <strong>IF NOT</strong> → CSM nurtures for next quarter</div>
+      </div>
+      <div class="cl cl-blue mt8">CS-sourced expansion closes at <strong>72%</strong> vs 28% cold outbound. The warm handoff model works — but only 58% of signals get qualified within 7 days. Faster qualification = more pipeline.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Escalation path</span><span class="bdg bdg-red">Active</span></div><div class="cd-b">
+    <div class="pbs">
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">L1 — CSM Self-Serve</div><div class="pb-meta"><span>Standard save playbook</span></div><div class="pb-desc">CSM follows standard play: assess, outreach, monitor. 68% of escalations resolve here.</div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">L2 — CS Manager Escalation</div><div class="pb-meta"><span>Triggers at day 7 without recovery</span></div><div class="pb-desc">CS Manager takes over. Custom success plan, exec sponsor engagement, potential service credits.</div></div></div>
+      <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">L3 — VP Customer Success</div><div class="pb-meta"><span class="camb">Triggers at day 14 — 4 accounts here now</span></div><div class="pb-desc">VP CS engages directly. Executive-to-executive call. Board-level retention package if needed. 24% of L2 escalations reach here.</div></div></div>
+      <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">L4 — CEO/Founder Call</div><div class="pb-meta"><span>Nuclear option — ARR >$100K only</span></div><div class="pb-desc">CEO calls directly. Reserved for strategic accounts or >$100K ARR. Used 3 times in last 12 months — saved 2 of 3.</div></div></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">CS Decision Intelligence</div>
+    <div class="rp-sub">Health · Churn · Retention</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-red">
+      <div class="rs-title">ARR at Risk</div>
+      <div class="rs-val red">$1.3M</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:58%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">At-risk accounts</span><span class="rv dn">38</span></div>
+      <div class="rs-row"><span class="rl">Critical</span><span class="rv dn">Kellerman · $84K</span></div>
+      <div class="rs-row"><span class="rl">Weekly bleed</span><span class="rv dn">~$42K</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Save Rate</div>
+      <div class="rs-val green">68% <span style="font-size:14px;font-weight:400;color:var(--ink4)">vs 12%</span></div>
+      <div class="rs-row"><span class="rl">≤7 day trigger</span><span class="rv up">68%</span></div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:68%;background:var(--green)"></div></div>
+      <div class="rs-row"><span class="rl">&gt;14 day trigger</span><span class="rv dn">12%</span></div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:12%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">NRR Trend</div>
+      <div class="rs-row"><span class="rl">Enterprise NRR</span><span class="rv up">112%</span></div>
+      <div class="rs-row"><span class="rl">SMB NRR</span><span class="rv dn">96%</span></div>
+      <div class="rs-row"><span class="rl">Churn rate</span><span class="rv">1.8%</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--green)">CRO</span><span class="ra-text">Kellerman on at-risk list</span><span class="ra-val">Joint save</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--amber)">CFO</span><span class="ra-text">SMB NRR 96%</span><span class="ra-val" style="color:var(--amber-text)">$164K/yr</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--purple)">CTO</span><span class="ra-text">Mobile offline cited</span><span class="ra-val">5 exits</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const h=document.getElementById('ch-health');if(h){if(h._chart)h._chart.destroy();h._chart=new Chart(h,{type:'bar',data:{labels:['Critical\n(<40)','At Risk\n(40-60)','Healthy\n(60-80)','Thriving\n(80+)'],datasets:[{label:'Accounts',data:[14,28,62,52],backgroundColor:['#dc2626','#d97706','#3b82f6','#16a34a'],borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const n=document.getElementById('ch-nps');if(n){if(n._chart)n._chart.destroy();n._chart=new Chart(n,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'NPS',data:[30,32,34,36,34,36,38,38,40,40,42,42],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#dc2626',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target (50)',data:[50,50,50,50,50,50,50,50,50,50,50,50],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:20,max:60,ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const t=document.getElementById('ch-ttv');if(t){if(t._chart)t._chart.destroy();t._chart=new Chart(t,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Median TTFV',data:[48,46,44,42,40,40,38,38,36,36,34,34],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#dc2626',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target (30d)',data:[30,30,30,30,30,30,30,30,30,30,30,30],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:20,max:55,ticks:{callback:v=>v+'d',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cs');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

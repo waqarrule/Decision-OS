@@ -1,0 +1,28 @@
+{
+  "accounts": [
+    {"id":"a001","name":"Meridian Health Systems","arr":420000,"health":92,"tier":"Enterprise","segment":"Healthcare","renewalDate":"2026-06-15","expansionSignals":3,"lastActivity":"2026-03-28","contacts":12,"features":24,"usage":94},
+    {"id":"a002","name":"Vanguard Logistics","arr":380000,"health":88,"tier":"Enterprise","segment":"Logistics","renewalDate":"2026-07-01","expansionSignals":2,"lastActivity":"2026-03-27","contacts":8,"features":18,"usage":87},
+    {"id":"a003","name":"Cascade Financial","arr":340000,"health":78,"tier":"Enterprise","segment":"Fintech","renewalDate":"2026-05-20","expansionSignals":1,"lastActivity":"2026-03-25","contacts":15,"features":22,"usage":81},
+    {"id":"a004","name":"Kellerman Group","arr":84000,"health":31,"tier":"Mid-Market","segment":"Consulting","renewalDate":"2026-04-30","expansionSignals":0,"lastActivity":"2026-03-11","contacts":3,"features":8,"usage":22},
+    {"id":"a005","name":"Pinnacle Retail","arr":280000,"health":85,"tier":"Enterprise","segment":"Retail","renewalDate":"2026-08-15","expansionSignals":2,"lastActivity":"2026-03-28","contacts":10,"features":20,"usage":91},
+    {"id":"a006","name":"Atlas Manufacturing","arr":195000,"health":72,"tier":"Mid-Market","segment":"Manufacturing","renewalDate":"2026-06-01","expansionSignals":1,"lastActivity":"2026-03-22","contacts":6,"features":14,"usage":68},
+    {"id":"a007","name":"Horizon Education","arr":120000,"health":65,"tier":"Mid-Market","segment":"Education","renewalDate":"2026-05-10","expansionSignals":0,"lastActivity":"2026-03-20","contacts":4,"features":10,"usage":55},
+    {"id":"a008","name":"Summit Healthcare Partners","arr":510000,"health":95,"tier":"Enterprise","segment":"Healthcare","renewalDate":"2026-09-01","expansionSignals":4,"lastActivity":"2026-03-29","contacts":18,"features":28,"usage":97},
+    {"id":"a009","name":"BlueWave Media","arr":165000,"health":82,"tier":"Mid-Market","segment":"Media","renewalDate":"2026-07-15","expansionSignals":2,"lastActivity":"2026-03-26","contacts":7,"features":16,"usage":79},
+    {"id":"a010","name":"Ironclad Security","arr":225000,"health":90,"tier":"Enterprise","segment":"Security","renewalDate":"2026-06-30","expansionSignals":3,"lastActivity":"2026-03-28","contacts":9,"features":21,"usage":93},
+    {"id":"a011","name":"NexGen Biotech","arr":175000,"health":76,"tier":"Mid-Market","segment":"Biotech","renewalDate":"2026-08-01","expansionSignals":1,"lastActivity":"2026-03-24","contacts":5,"features":15,"usage":72},
+    {"id":"a012","name":"Cornerstone Legal","arr":95000,"health":58,"tier":"Mid-Market","segment":"Legal","renewalDate":"2026-04-15","expansionSignals":0,"lastActivity":"2026-03-18","contacts":3,"features":9,"usage":45}
+  ],
+  "summary": {
+    "totalAccounts": 847,
+    "enterpriseAccounts": 42,
+    "midMarketAccounts": 187,
+    "smbAccounts": 618,
+    "atRiskAccounts": 38,
+    "atRiskARR": 2840000,
+    "atRiskARRFormatted": "$2.84M",
+    "expansionReady": 24,
+    "expansionARR": 1100000,
+    "expansionARRFormatted": "$1.1M"
+  }
+}

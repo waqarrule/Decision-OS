@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alert Routing Center — ArcusSoft Decision OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);
+}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:var(--red);color:#fff}
+a{color:inherit;text-decoration:none}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(248,247,244,.92);backdrop-filter:blur(20px) saturate(1.3);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 32px;gap:18px}
+.hdr .brand{font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase}
+.hdr .brand b{color:var(--ink);font-weight:700;font-size:11px}
+.hdr .sep{width:1px;height:22px;background:var(--border2)}
+.hdr .co{font-size:14px;font-weight:700;color:var(--ink)}.hdr .co span{color:var(--ink3);font-weight:400;font-size:11px;margin-left:8px}
+.hdr-r{margin-left:auto;display:flex;gap:4px}
+.hdr-r a{font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;color:var(--ink4);transition:all .15s}
+.hdr-r a:hover{color:var(--ink2);background:var(--bg2)}
+.hdr-r a.on{background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(220,38,38,.25)}
+.tabs{position:fixed;top:56px;left:0;right:0;z-index:199;height:46px;background:rgba(248,247,244,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;padding:0 32px;gap:2px;overflow-x:auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:0 18px;height:100%;font-size:12px;font-weight:500;color:var(--ink4);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;background:none;border:none;font-family:var(--sans);border-radius:6px 6px 0 0}
+.tab:hover{color:var(--ink2);background:var(--bg2)}.tab.on{color:var(--red);border-bottom-color:var(--red);background:var(--red-soft)}
+.main{margin-top:102px;padding:28px 32px;max-width:1100px;margin-left:auto;margin-right:auto}
+.sh{margin-bottom:24px}
+.sh-over{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sh h2{font-size:26px;font-weight:300;letter-spacing:-.03em}.sh h2 b{font-weight:700}
+.sh-sub{font-size:13px;color:var(--ink3);margin-top:6px}
+.cd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:14px;box-shadow:var(--shadow)}
+.cd-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.kc .kl{font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.kc .kv{font-size:24px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kc .ks{font-size:10px;color:var(--ink3);margin-top:4px}
+.kc.at-red{border-top:3px solid var(--red)}.kc.at-amber{border-top:3px solid var(--amber)}.kc.at-green{border-top:3px solid var(--green)}.kc.at-blue{border-top:3px solid var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 12px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);border-bottom:2px solid var(--border);background:var(--surface3);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--bg2);color:var(--ink2)}
+tbody tr{transition:background .15s}tbody tr:hover td{background:var(--surface3)}
+tr.crit td{background:var(--red-soft)!important}tr.warn td{background:var(--amber-soft)!important}
+.bdg{display:inline-flex;font-size:9px;font-weight:600;padding:3px 10px;border-radius:5px;font-family:var(--mono)}
+.bdg-red{background:var(--red-soft);color:var(--red-text)}.bdg-amber{background:var(--amber-soft);color:var(--amber-text)}.bdg-green{background:var(--green-soft);color:var(--green-text)}.bdg-blue{background:var(--blue-soft);color:var(--blue-text)}.bdg-purple{background:var(--purple-soft);color:var(--purple-text)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.alert-card{padding:16px 20px;border-radius:var(--radius);border:1px solid;margin-bottom:10px;transition:all .2s}
+.alert-card:hover{box-shadow:var(--shadow-hover)}
+.alert-card.crit{border-color:rgba(220,38,38,.15);background:var(--red-soft)}
+.alert-card.warn{border-color:rgba(217,119,6,.15);background:var(--amber-soft)}
+.alert-card.info{border-color:rgba(59,130,246,.15);background:var(--blue-soft)}
+.alert-card .a-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.alert-card .a-title{font-size:13px;font-weight:600}
+.alert-card .a-time{font-size:10px;color:var(--ink4);font-family:var(--mono)}
+.alert-card .a-body{font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:8px}
+.alert-card .a-meta{display:flex;gap:12px;font-size:10px;color:var(--ink4);flex-wrap:wrap}
+.alert-card .a-meta strong{color:var(--ink2)}
+.sev{font-family:var(--mono);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:4px;color:#fff}
+.sev-crit{background:var(--red)}.sev-warn{background:var(--amber)}.sev-info{background:var(--blue)}
+.prog{height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin:4px 0}
+.prog-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.22,1,.36,1)}
+.prog-green{background:linear-gradient(90deg,#86efac,#16a34a)}.prog-red{background:linear-gradient(90deg,#fca5a5,#dc2626)}.prog-amber{background:linear-gradient(90deg,#fcd34d,#d97706)}.prog-blue{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
+.cl{border-radius:var(--radius);padding:14px 18px;font-size:12px;line-height:1.7;border:1px solid;margin-bottom:12px}
+.cl-blue{background:var(--blue-soft);border-color:rgba(59,130,246,.15);color:var(--blue-text)}
+.cl strong{font-weight:600}
+.mono{font-family:var(--mono)}.fw6{font-weight:600}
+.cgrn{color:var(--green-text)}.cred{color:var(--red-text)}.camb{color:var(--amber-text)}.cgry{color:var(--ink3)}
+@media(max-width:768px){.krow,.g2{grid-template-columns:1fr}.main{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand"><b>ArcusSoft</b> · Decision OS</div><div class="sep"></div>
+  <div class="co">Alert Routing Center <span>Cross-portal notification management</span></div>
+  <div class="hdr-r"><a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html" class="on">Alerts</a><a href="learning.html">Learning</a></div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('active',this)">Active Alerts (8)</button>
+  <button class="tab" onclick="show('routing',this)">Routing Rules</button>
+  <button class="tab" onclick="show('sla',this)">SLA Tracking</button>
+  <button class="tab" onclick="show('history',this)">Alert History</button>
+</div>
+<div class="main">
+
+<!-- ACTIVE ALERTS -->
+<div id="s-active">
+  <div class="sh"><div class="sh-over">Alert Center · Active</div><h2>3 critical. <b>4 warning. 1 info.</b></h2><div class="sh-sub">Cross-portal alerts ranked by severity and SLA urgency.</div></div>
+  <div class="krow">
+    <div class="kc at-red"><div class="kl">Critical Alerts</div><div class="kv" style="color:var(--red-text)">3</div><div class="ks">Immediate response required</div></div>
+    <div class="kc at-amber"><div class="kl">Warning Alerts</div><div class="kv" style="color:var(--amber-text)">4</div><div class="ks">24-hour response window</div></div>
+    <div class="kc at-green"><div class="kl">Avg Response Time</div><div class="kv">2.4<span style="font-size:14px;color:var(--ink3)">hrs</span></div><div class="ks"><span class="cgrn">↓ from 4.1hrs</span></div></div>
+    <div class="kc at-blue"><div class="kl">SLA Compliance</div><div class="kv">94%</div><div class="ks">Target: >95%</div></div>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg> Critical Alerts</div>
+    <div class="alert-card crit"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-crit">CRITICAL</span><span class="a-title">SMB NRR below 96% — net contraction</span></div><span class="a-time">4 min ago</span></div>
+    <div class="a-body">38 SMB accounts contracting faster than they expand. NRR dropped to 96%. Annualized churn: $1.3M. If trend continues, SMB becomes net-negative by Q3.</div>
+    <div class="a-meta"><span>Source: <strong>CS Portal</strong></span><span>Routed: <strong>CS → CRO → CEO</strong></span><span>SLA: <strong class="cred">4 hours</strong></span><span>Status: <span class="bdg bdg-amber">Awaiting CRO</span></span></div></div>
+    <div class="alert-card crit"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-crit">CRITICAL</span><span class="a-title">Engineering utilization at 91% — velocity declining</span></div><span class="a-time">12 min ago</span></div>
+    <div class="a-body">5 consecutive weeks above 90%. Sprint velocity dropped 15%. Bug backlog growing 15% month-over-month. Change failure rate up from 5% to 8%.</div>
+    <div class="a-meta"><span>Source: <strong>CTO Portal</strong></span><span>Routed: <strong>CTO → COO → CEO</strong></span><span>SLA: <strong class="cred">1 hour</strong></span><span>Status: <span class="bdg bdg-green">CTO acknowledged</span></span></div></div>
+    <div class="alert-card crit"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-crit">CRITICAL</span><span class="a-title">Kellerman Group ($84K) — health score 31, 18 days no login</span></div><span class="a-time">1 hr ago</span></div>
+    <div class="a-body">Health score 31 (threshold: 40). No login 18 days. 7 open tickets. CSM has not initiated save playbook.</div>
+    <div class="a-meta"><span>Source: <strong>CS Portal</strong></span><span>Routed: <strong>CS → CRO → CEO</strong></span><span>SLA: <strong class="cred">4 hours</strong></span><span>Status: <span class="bdg bdg-amber">Save playbook triggered</span></span></div></div>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Warning Alerts</div>
+    <div class="alert-card warn"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-warn">WARNING</span><span class="a-title">AE hiring blocked — Bear scenario runway below 12mo</span></div><span class="a-time">2 hrs ago</span></div>
+    <div class="a-body">CFO hiring gate blocked AE request. Bear scenario: 11.8mo runway. Deferred 8 weeks — re-evaluate May 15.</div>
+    <div class="a-meta"><span>Source: <strong>CFO Portal</strong></span><span>Routed: <strong>CFO → CEO</strong></span><span>Status: <span class="bdg bdg-blue">Deferred</span></span></div></div>
+    <div class="alert-card warn"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-warn">WARNING</span><span class="a-title">Mobile offline blocking 3 enterprise deals ($480K)</span></div><span class="a-time">3 hrs ago</span></div>
+    <div class="a-body">3 enterprise deals ($480K) stalled. CTO estimates 4 sprints after scheduling refactor. Refactor 60% done.</div>
+    <div class="a-meta"><span>Source: <strong>CTO Portal</strong></span><span>Status: <span class="bdg bdg-amber">In Progress</span></span></div></div>
+    <div class="alert-card warn"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-warn">WARNING</span><span class="a-title">TTFV regressed from 8 to 11 days</span></div><span class="a-time">5 hrs ago</span></div>
+    <div class="a-body">37.5% regression. Each day delay = 2.3% increase in early churn risk. Onboarding wizard in development.</div>
+    <div class="a-meta"><span>Source: <strong>CS Portal</strong></span><span>Status: <span class="bdg bdg-amber">Wizard in dev</span></span></div></div>
+    <div class="alert-card warn"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-warn">WARNING</span><span class="a-title">Burn multiple 2.1× — needs below 2× for Series C</span></div><span class="a-time">8 hrs ago</span></div>
+    <div class="a-body">Current: 2.1×. Series C demands <1.5×. Break-even at $22.3M ARR in 11.4 months.</div>
+    <div class="a-meta"><span>Source: <strong>CFO Portal</strong></span><span>Status: <span class="bdg bdg-blue">Monitoring</span></span></div></div>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Info Alerts</div>
+    <div class="alert-card info"><div class="a-head"><div style="display:flex;align-items:center;gap:8px"><span class="sev sev-info">INFO</span><span class="a-title">Board meeting in 18 days — 3/5 fundraising metrics green</span></div><span class="a-time">1 day ago</span></div>
+    <div class="a-body">Runway and Burn Multiple failing. CEO needs to address in board narrative.</div>
+    <div class="a-meta"><span>Source: <strong>CEO Portal</strong></span><span>Status: <span class="bdg bdg-blue">FYI</span></span></div></div>
+  </div>
+</div>
+
+<!-- ROUTING RULES -->
+<div id="s-routing" style="display:none">
+  <div class="sh"><div class="sh-over">Alert Center · Routing Rules</div><h2>Who gets <b>alerted, when.</b></h2></div>
+  <div class="cd">
+    <div class="cd-title">Alert Routing Matrix</div>
+    <table><thead><tr><th>Alert Type</th><th>Severity</th><th>Condition</th><th>Route</th><th>SLA</th><th>Delivery</th></tr></thead>
+    <tbody>
+      <tr class="crit"><td class="fw6">Churn risk >$50K ARR</td><td><span class="bdg bdg-red">Critical</span></td><td>Health <40 AND ARR >$50K</td><td>CS → CRO → CEO</td><td class="mono fw6">4 hours</td><td>Push + Email + Slack</td></tr>
+      <tr class="crit"><td class="fw6">Uptime <99.5%</td><td><span class="bdg bdg-red">Critical</span></td><td>30-day rolling below threshold</td><td>CTO → COO → CEO</td><td class="mono fw6">1 hour</td><td>Push + PagerDuty</td></tr>
+      <tr class="crit"><td class="fw6">Security vulnerability</td><td><span class="bdg bdg-red">Critical</span></td><td>CVSS >8.0</td><td>CTO → CEO</td><td class="mono fw6">2 hours</td><td>Push + Email + Slack</td></tr>
+      <tr class="warn"><td class="fw6">Pipeline drops >15%</td><td><span class="bdg bdg-amber">Warning</span></td><td>Week-over-week decline</td><td>CRO → CEO</td><td class="mono fw6">24 hours</td><td>Push + Email</td></tr>
+      <tr class="warn"><td class="fw6">Runway <12 months</td><td><span class="bdg bdg-amber">Warning</span></td><td>Bear scenario below floor</td><td>CFO → CEO</td><td class="mono fw6">24 hours</td><td>Push + Email</td></tr>
+      <tr class="warn"><td class="fw6">Eng utilization >90%</td><td><span class="bdg bdg-amber">Warning</span></td><td>Sustained 2+ weeks</td><td>CTO → COO → CEO</td><td class="mono fw6">24 hours</td><td>Push + Email</td></tr>
+    </tbody></table>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-title">Escalation Protocol</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="padding:12px 16px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Level 1:</strong> Direct recipient handles within SLA.</div>
+        <div style="padding:12px 16px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Level 2:</strong> SLA breached 2× → auto-escalate.</div>
+        <div style="padding:12px 16px;border-left:3px solid var(--red);background:var(--red-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Level 3:</strong> SLA breached 4× → CEO notification.</div>
+      </div>
+    </div>
+    <div class="cd"><div class="cd-title">Delivery Channels</div>
+      <table><thead><tr><th>Channel</th><th>Used For</th><th>Latency</th></tr></thead>
+      <tbody><tr><td class="fw6">Push notification</td><td>All severities</td><td class="mono"><30 sec</td></tr>
+      <tr><td class="fw6">Email</td><td>Critical + Warning</td><td class="mono"><2 min</td></tr>
+      <tr><td class="fw6">Slack #alerts</td><td>Critical only</td><td class="mono"><30 sec</td></tr>
+      <tr><td class="fw6">PagerDuty</td><td>Uptime/Security</td><td class="mono"><15 sec</td></tr></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- SLA TRACKING -->
+<div id="s-sla" style="display:none">
+  <div class="sh"><div class="sh-over">Alert Center · SLA Tracking</div><h2>Response <b>compliance.</b></h2></div>
+  <div class="krow">
+    <div class="kc at-green"><div class="kl">SLA Compliance</div><div class="kv">94%</div><div class="ks">Target: >95%</div></div>
+    <div class="kc at-blue"><div class="kl">Avg Response</div><div class="kv">2.4<span style="font-size:14px;color:var(--ink3)">hrs</span></div><div class="ks"><span class="cgrn">↓ from 4.1hrs</span></div></div>
+    <div class="kc at-amber"><div class="kl">SLA Breaches (30d)</div><div class="kv">3</div><div class="ks">Down from 8 last month</div></div>
+    <div class="kc at-red"><div class="kl">Escalations to CEO</div><div class="kv">1</div><div class="ks">Kellerman Group</div></div>
+  </div>
+  <div class="cd"><div class="cd-title">Response Time by Executive</div>
+    <table><thead><tr><th>Executive</th><th>Portal</th><th>Alerts (30d)</th><th>Avg Response</th><th>SLA Compliance</th><th>Trend</th></tr></thead>
+    <tbody>
+      <tr><td class="fw6">Sarah Chen</td><td><span class="bdg bdg-blue">CEO</span></td><td class="mono">12</td><td class="mono cgrn fw6">1.8 hrs</td><td><div class="prog" style="width:100px"><div class="prog-fill prog-green" style="width:100%"></div></div> <span class="mono">100%</span></td><td class="cgrn">↑ improving</td></tr>
+      <tr><td class="fw6">Alex Rivera</td><td><span class="bdg bdg-green">CRO</span></td><td class="mono">18</td><td class="mono cgrn fw6">2.1 hrs</td><td><div class="prog" style="width:100px"><div class="prog-fill prog-green" style="width:94%"></div></div> <span class="mono">94%</span></td><td class="cgrn">↑ improving</td></tr>
+      <tr><td class="fw6">David Park</td><td><span class="bdg bdg-amber">CFO</span></td><td class="mono">8</td><td class="mono cgrn fw6">1.2 hrs</td><td><div class="prog" style="width:100px"><div class="prog-fill prog-green" style="width:100%"></div></div> <span class="mono">100%</span></td><td class="cgry">→ stable</td></tr>
+      <tr><td class="fw6">Priya Sharma</td><td><span class="bdg bdg-red">CS</span></td><td class="mono">22</td><td class="mono camb fw6">3.4 hrs</td><td><div class="prog" style="width:100px"><div class="prog-fill prog-amber" style="width:82%"></div></div> <span class="mono">82%</span></td><td class="cred">↓ declining</td></tr>
+      <tr><td class="fw6">James Wu</td><td><span class="bdg bdg-purple">CTO</span></td><td class="mono">10</td><td class="mono cgrn fw6">1.6 hrs</td><td><div class="prog" style="width:100px"><div class="prog-fill prog-green" style="width:100%"></div></div> <span class="mono">100%</span></td><td class="cgry">→ stable</td></tr>
+    </tbody></table>
+    <div class="cl cl-blue" style="margin-top:12px"><strong>Note:</strong> CS generates 22 alerts/month (most of any portal). Consider adding a second CS alert handler or batching non-critical alerts into daily digests.</div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="s-history" style="display:none">
+  <div class="sh"><div class="sh-over">Alert Center · History</div><h2>Past <b>alerts.</b></h2></div>
+  <div class="cd"><div class="cd-title">Resolved Alerts — Last 30 Days</div>
+    <table><thead><tr><th>Alert</th><th>Severity</th><th>Portal</th><th>Triggered</th><th>Response</th><th>Resolution</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="fw6">Apex Construction — health 32</td><td><span class="bdg bdg-red">Critical</span></td><td>CS</td><td>Mar 5</td><td class="mono">1.2 hrs</td><td class="mono">3 days</td><td class="cgrn fw6">Saved <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+      <tr><td class="fw6">DB connection pool exhaustion</td><td><span class="bdg bdg-red">Critical</span></td><td>CTO</td><td>Mar 18</td><td class="mono">0.3 hrs</td><td class="mono">47 min</td><td class="cgrn fw6">Resolved <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+      <tr><td class="fw6">Pipeline drop — 18% WoW</td><td><span class="bdg bdg-amber">Warning</span></td><td>CRO</td><td>Mar 12</td><td class="mono">2.4 hrs</td><td class="mono">1 day</td><td class="cgrn fw6">Recovered <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+      <tr><td class="fw6">SMB churn spike — 4 accounts</td><td><span class="bdg bdg-amber">Warning</span></td><td>CS</td><td>Mar 8</td><td class="mono">3.8 hrs</td><td class="mono">5 days</td><td class="camb fw6">2 saved, 2 lost</td></tr>
+      <tr><td class="fw6">Uptime <99.9% (15-min window)</td><td><span class="bdg bdg-red">Critical</span></td><td>CTO</td><td>Feb 22</td><td class="mono">0.2 hrs</td><td class="mono">23 min</td><td class="cgrn fw6">Resolved <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></td></tr>
+    </tbody></table>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-title">Alerts by Source Portal</div>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span class="fw6">CS</span><span class="cred fw6">38%</span></div><div class="prog" style="width:100%"><div class="prog-fill prog-red" style="width:38%"></div></div></div>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span class="fw6">CTO</span><span class="camb fw6">22%</span></div><div class="prog" style="width:100%"><div class="prog-fill prog-amber" style="width:22%"></div></div></div>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span class="fw6">CRO</span><span class="fw6">18%</span></div><div class="prog" style="width:100%"><div class="prog-fill prog-blue" style="width:18%"></div></div></div>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span class="fw6">CFO</span><span class="fw6">12%</span></div><div class="prog" style="width:100%"><div class="prog-fill prog-blue" style="width:12%"></div></div></div>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span class="fw6">CEO</span><span class="fw6">6%</span></div><div class="prog" style="width:100%"><div class="prog-fill prog-blue" style="width:6%"></div></div></div>
+    </div>
+    <div class="cd"><div class="cd-title">Alert Volume — 6 Months</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Oct</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:15%"></div><div class="prog-fill prog-amber" style="width:25%"></div></div><span class="mono" style="font-size:10px">24</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Nov</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:12%"></div><div class="prog-fill prog-amber" style="width:22%"></div></div><span class="mono" style="font-size:10px">21</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Dec</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:10%"></div><div class="prog-fill prog-amber" style="width:18%"></div></div><span class="mono" style="font-size:10px">18</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Jan</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:14%"></div><div class="prog-fill prog-amber" style="width:24%"></div></div><span class="mono" style="font-size:10px">26</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Feb</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:11%"></div><div class="prog-fill prog-amber" style="width:20%"></div></div><span class="mono" style="font-size:10px">20</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:40px;font-size:11px;font-weight:500">Mar</span><div class="prog" style="flex:1;height:14px"><div class="prog-fill prog-red" style="width:16%"></div><div class="prog-fill prog-amber" style="width:26%"></div></div><span class="mono" style="font-size:10px">28</span></div>
+      </div>
+      <p style="font-size:10px;color:var(--ink4);margin-top:8px">Red = Critical · Amber = Warning · March spike: SMB churn + engineering overload</p>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function show(id,el){
+  ['active','routing','sla','history'].forEach(s=>{document.getElementById('s-'+s).style.display=s===id?'block':'none'});
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(el)el.classList.add('on');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#0d9488;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --teal:#0d9488;--teal-soft:#f0fdfa;--teal-text:#0f766e;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--teal);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(13,148,136,.25)}
+.hdr-r .live {display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;color:var(--teal);margin-left:12px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
+.hdr-r .live i {width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s ease-in-out infinite}
+.tab.on {color:var(--teal);border-bottom-color:var(--teal);background:var(--teal-soft)}
+.sh h2 em {font-style:italic;color:var(--teal)}
+.kc .ks .up {color:var(--teal-text);font-weight:600}
+.kc.accent-teal {border-top:3px solid var(--teal)}
+.kc.accent-teal .kv {color:var(--teal-text)}
+tr.good td {background:var(--teal-soft)!important}
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+.btn-p {background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 2px 8px rgba(13,148,136,.25)}
+.story {background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(13,148,136,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--teal)}
+.story .s-body strong {color:var(--teal-text);font-weight:600}
+.cl-teal {background:var(--teal-soft);border-color:rgba(13,148,136,.15);color:var(--teal-text)}
+.df-node.yes {border-left:3px solid var(--teal);background:var(--teal-soft)}
+.df-tag.y {background:var(--teal);color:#fff}
+.prog-teal {background:linear-gradient(90deg,#99f6e4,#0d9488)}
+.ct {color:var(--teal-text)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CMO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html" class="on">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('demand',this)">Demand</button>
+  <button class="tab" onclick="show('attribution',this)">Attribution</button>
+  <button class="tab" onclick="show('content',this)">Content</button>
+  <button class="tab" onclick="show('brand',this)">Brand</button>
+  <button class="tab" onclick="show('campaigns',this)">Campaigns</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- DEMAND -->
+<div id="s-demand" class="scr on">  <div class="sh"><div class="sh-over">CMO · Marketing Layer · Demand</div><h2>Organic and referral <em>win the economics.</em></h2><div class="sh-sub">Channel performance, funnel metrics, and where your cheapest pipeline actually comes from.</div></div>
+  <div class="story"><div class="s-num">$82</div><div class="s-label">Channel Economics</div><div class="s-title">Organic and referral are 10× cheaper than paid.</div><div class="s-body">Your best channels are the ones you're spending the least on. <strong>Organic content drives $82 CAC</strong> vs <strong>$780 CAC for paid ads</strong> — a 9.5× difference. Referral converts at 2.4× the rate of outbound. Meanwhile, 34% of your demand budget goes to paid channels that produce 11% of pipeline. The economics scream: <strong>double down on organic, reinvest paid budget into content and community.</strong></div><button class="s-cta" onclick="show('attribution',document.querySelector('.tab:nth-child(2)'))">See attribution truth →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-teal"><div class="kl">Monthly MQLs</div><div class="kv">1,240</div><div class="ks"><span class="up">↑ 18%</span> vs last quarter</div></div>
+    <div class="kc accent-blue"><div class="kl">MQL → SQL</div><div class="kv">28%</div><div class="ks">Organic: <span class="up">38%</span> · Paid: <span class="dn">14%</span></div></div>
+    <div class="kc accent-amber"><div class="kl">Blended CAC</div><div class="kv">$214</div><div class="ks">Target: &lt;$200 · <span class="dn">7% over</span></div></div>
+    <div class="kc accent-purple"><div class="kl">Pipeline Generated</div><div class="kv">$4.2M</div><div class="ks"><span class="up">↑ $680K</span> vs Q3</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Channel performance <span>— demand economics</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Channel</th><th>MQLs</th><th>MQL→SQL</th><th>CAC</th><th>Pipeline $</th><th>% Budget</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Organic / SEO</td><td>420</td><td class="ct fw6">38%</td><td class="ct">$82</td><td>$1.4M</td><td>18%</td></tr>
+      <tr class="good"><td class="fw6">Referral / Community</td><td>180</td><td class="ct fw6">34%</td><td class="ct">$96</td><td>$820K</td><td>8%</td></tr>
+      <tr><td class="fw6">LinkedIn Organic</td><td>210</td><td>28%</td><td>$140</td><td>$680K</td><td>12%</td></tr>
+      <tr><td class="fw6">Events / Webinars</td><td>120</td><td>24%</td><td>$320</td><td>$560K</td><td>22%</td></tr>
+      <tr><td class="fw6">Email Nurture</td><td>95</td><td>22%</td><td>$180</td><td>$380K</td><td>6%</td></tr>
+      <tr class="alert"><td class="fw6">Paid Ads (Google/Meta)</td><td>215</td><td class="cred">14%</td><td class="cred fw6">$780</td><td>$360K</td><td class="cred fw6">34%</td></tr></tbody></table>
+      <div class="cl cl-teal mt8">Paid ads consume 34% of budget but produce only 11% of pipeline. Reallocate $45K/quarter from paid to content team and referral incentives.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Funnel conversion <span>— stage by stage</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-funnel"></canvas></div></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Pipeline source mix <span>— current quarter</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-pipeline"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Demand forecast <span>— next quarter</span></span></div><div class="cd-b">
+      <div style="padding:14px 18px;border-left:3px solid var(--teal);background:var(--teal-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>Base case: $4.6M</strong> — Organic grows 15% (SEO momentum), referral flat, paid contracts 20%.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>Bull case: $5.2M</strong> — Community launch adds 200 MQLs/mo at $60 CAC. Content team velocity +40%.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Bear case: $3.8M</strong> — Google algorithm shift reduces organic 30%. Paid budget stays flat. No community lift.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ATTRIBUTION -->
+<div id="s-attribution" class="scr">  <div class="sh"><div class="sh-over">CMO · Marketing Layer · Attribution</div><h2>The <em>tracking gap</em> is 32%.</h2><div class="sh-sub">Multi-touch vs first-touch vs last-touch. The models disagree — and 32% of revenue has no clean attribution.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-teal"><div class="kl">Attributed Pipeline</div><div class="kv">$2.9M</div><div class="ks">68% of total $4.2M</div></div>
+    <div class="kc accent-amber"><div class="kl">Tracking Gap</div><div class="kv">32%</div><div class="ks"><span class="dn">$1.3M unattributed</span></div></div>
+    <div class="kc accent-blue"><div class="kl">Best Model Fit</div><div class="kv">W-Shaped</div><div class="ks">R² = 0.74 vs first-touch 0.52</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Attribution model comparison <span>— channel allocation</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Channel</th><th>First-Touch</th><th>Last-Touch</th><th>Linear</th><th>W-Shaped</th><th>Delta (W vs FT)</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Organic / SEO</td><td>22%</td><td>18%</td><td>20%</td><td class="ct fw6">28%</td><td class="ct fw6">+6pp</td></tr>
+    <tr><td class="fw6">Referral</td><td>14%</td><td>10%</td><td>12%</td><td class="ct">16%</td><td class="ct">+2pp</td></tr>
+    <tr><td class="fw6">LinkedIn Organic</td><td>18%</td><td>22%</td><td>20%</td><td>15%</td><td class="camb">−3pp</td></tr>
+    <tr><td class="fw6">Events</td><td>26%</td><td>12%</td><td>18%</td><td>14%</td><td class="cred fw6">−12pp</td></tr>
+    <tr><td class="fw6">Email</td><td>8%</td><td>20%</td><td>14%</td><td>12%</td><td>+4pp</td></tr>
+    <tr><td class="fw6">Paid Ads</td><td>12%</td><td>18%</td><td>16%</td><td>15%</td><td>+3pp</td></tr></tbody></table>
+    <div class="cl cl-amber mt8">Events get 26% first-touch credit but only 14% in W-shaped. They're good at awareness but rarely the converting touchpoint. Rebalance event spend expectations.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Channel mix evolution <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-mix"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Tracking gap analysis</span></div><div class="cd-b">
+      <div style="text-align:center;padding:24px;margin-bottom:12px">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Unattributed Revenue</div>
+        <div style="font-size:48px;font-weight:800;color:var(--amber-text);letter-spacing:-.04em">32%</div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:4px">$1.3M of $4.2M total pipeline</div>
+      </div>
+      <div class="cl cl-amber" style="margin-bottom:12px"><strong>Dark social:</strong> ~40% of gap. Slack shares, DMs, word-of-mouth. No UTM, no cookie, no attribution.</div>
+      <div class="cl cl-amber" style="margin-bottom:12px"><strong>Multi-device:</strong> ~35% of gap. Users research on mobile, convert on desktop. Cross-device tracking broken.</div>
+      <div class="cl cl-amber"><strong>Direct traffic:</strong> ~25% of gap. Returning visitors who type URL directly. Likely brand-aware but uncredited.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div id="s-content" class="scr">  <div class="sh"><div class="sh-over">CMO · Marketing Layer · Content</div><h2>What content <em>actually drives pipeline.</em></h2><div class="sh-sub">Pipeline attribution by content piece, ROI ranking, and SEO position tracking.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top content by pipeline attribution <span>— last 90 days</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Content</th><th>Type</th><th>Pipeline $</th><th>Leads</th><th>CAC</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">"Construction ERP Buyer's Guide"</td><td>eBook</td><td class="ct fw6">$480K</td><td>340</td><td class="ct">$48</td></tr>
+      <tr class="good"><td class="fw6">ROI Calculator (Interactive)</td><td>Tool</td><td class="ct fw6">$320K</td><td>210</td><td class="ct">$32</td></tr>
+      <tr><td class="fw6">"Why We Switched" Case Study</td><td>Case Study</td><td>$240K</td><td>85</td><td>$64</td></tr>
+      <tr><td class="fw6">Weekly Industry Newsletter</td><td>Email</td><td>$180K</td><td>420</td><td>$28</td></tr>
+      <tr><td class="fw6">"ERP vs Spreadsheets" Blog Series</td><td>Blog</td><td>$160K</td><td>580</td><td>$22</td></tr>
+      <tr><td class="fw6">Product Demo Videos</td><td>Video</td><td>$140K</td><td>160</td><td>$72</td></tr>
+      <tr><td class="fw6">Annual Industry Report</td><td>Report</td><td>$120K</td><td>340</td><td>$56</td></tr>
+      <tr class="alert"><td class="fw6">Social Media Posts (organic)</td><td>Social</td><td>$40K</td><td>1200</td><td class="cred">$96</td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Content ROI <span>— by pipeline per dollar</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-content"></canvas></div></div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">SEO position tracking <span>— target keywords</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Keyword</th><th>Volume</th><th>Position</th><th>Δ 30d</th><th>Traffic</th><th>Status</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">construction erp software</td><td>4,800</td><td class="ct fw6">#3</td><td class="ct">↑ 2</td><td>680</td><td><span class="bdg bdg-teal">Rising</span></td></tr>
+    <tr class="good"><td class="fw6">best project management construction</td><td>3,200</td><td class="ct fw6">#5</td><td class="ct">↑ 3</td><td>420</td><td><span class="bdg bdg-teal">Rising</span></td></tr>
+    <tr><td class="fw6">contractor accounting software</td><td>2,100</td><td>#8</td><td class="camb">↓ 1</td><td>180</td><td><span class="bdg bdg-amber">Stable</span></td></tr>
+    <tr><td class="fw6">construction scheduling tools</td><td>2,800</td><td>#12</td><td>—</td><td>95</td><td><span class="bdg bdg-amber">Stable</span></td></tr>
+    <tr class="alert"><td class="fw6">general contractor software</td><td>5,400</td><td class="cred fw6">#24</td><td class="cred">↓ 4</td><td>28</td><td><span class="bdg bdg-red">Dropping</span></td></tr>
+    <tr class="alert"><td class="fw6">home builder crm</td><td>3,600</td><td class="cred fw6">#18</td><td class="cred">↓ 2</td><td>52</td><td><span class="bdg bdg-red">Dropping</span></td></tr></tbody></table>
+    <div class="cl cl-teal mt8">"Construction ERP Software" broke into #3 — highest volume keyword. "General contractor software" at #24 is a gap: Buildertrend owns positions 1–5 for this term.</div>
+  </div></div>
+</div>
+
+<!-- BRAND -->
+<div id="s-brand" class="scr">  <div class="sh"><div class="sh-over">CMO · Marketing Layer · Brand</div><h2>Brand is <em>compounding.</em></h2><div class="sh-sub">Share of voice, brand search trends, aided awareness, and what the market actually says about you.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-teal"><div class="kl">Share of Voice</div><div class="kv">18%</div><div class="ks"><span class="up">↑ from 12%</span> 6 months ago</div></div>
+    <div class="kc accent-blue"><div class="kl">Brand Search Growth</div><div class="kv">+42%</div><div class="ks">YoY branded query volume</div></div>
+    <div class="kc accent-purple"><div class="kl">Aided Awareness</div><div class="kv">34%</div><div class="ks">Target: 40% by EOY · <span class="up">↑ from 22%</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Share of Voice <span>— competitive landscape</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-sov"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Brand search volume <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-brand"></canvas></div></div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Review sentiment <span>— what the market says</span></span></div><div class="cd-b">
+    <div class="g3">
+      <div style="padding:18px;background:var(--teal-soft);border-radius:var(--radius);border:1px solid rgba(13,148,136,.15)">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">G2 Review 5/5</div>
+        <div style="font-size:12px;line-height:1.7;color:var(--ink2);font-style:italic">"Finally a construction ERP that doesn't look like it was built in 2005. The project dashboards are genuinely beautiful — our PMs actually use them."</div>
+        <div style="font-size:10px;color:var(--ink4);margin-top:8px">— VP Operations, Pinnacle Builders</div>
+      </div>
+      <div style="padding:18px;background:var(--teal-soft);border-radius:var(--radius);border:1px solid rgba(13,148,136,.15)">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">G2 Review 5/5</div>
+        <div style="font-size:12px;line-height:1.7;color:var(--ink2);font-style:italic">"Switched from Procore 6 months ago. ROI was immediate. The financial reporting alone saved us 20 hours/week. Wish we'd done it sooner."</div>
+        <div style="font-size:10px;color:var(--ink4);margin-top:8px">— CFO, Meridian Holdings</div>
+      </div>
+      <div style="padding:18px;background:var(--amber-soft);border-radius:var(--radius);border:1px solid rgba(217,119,6,.15)">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">G2 Review 4/5</div>
+        <div style="font-size:12px;line-height:1.7;color:var(--ink2);font-style:italic">"Great product, but mobile experience needs work. Field crews want offline access — that's the only thing keeping us from 5 stars."</div>
+        <div style="font-size:10px;color:var(--ink4);margin-top:8px">— Project Director, Summit Partners</div>
+      </div>
+    </div>
+    <div class="cl cl-teal mt8">NPS across review platforms: 62. Positive sentiment up 14pp YoY. "Offline/mobile" is the #1 negative theme — correlates with CRO's #1 loss reason.</div>
+  </div></div>
+</div>
+
+<!-- CAMPAIGNS -->
+<div id="s-campaigns" class="scr">
+  <div class="sh"><div class="sh-over">CMO · Marketing Layer · Campaigns</div><h2>Active campaigns, <em>real results.</em></h2><div class="sh-sub">Campaign performance, budget reallocation scenarios, and ROI ranking across all active initiatives.</div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Active campaign performance <span>— current quarter</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Campaign</th><th>Budget</th><th>Spent</th><th>MQLs</th><th>Pipeline $</th><th>ROI</th><th>Status</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Q1 Content Engine</td><td>$48K</td><td>$36K</td><td class="ct fw6">520</td><td class="ct fw6">$680K</td><td class="ct fw6">14.8×</td><td><span class="bdg bdg-teal">On Track</span></td></tr>
+    <tr class="good"><td class="fw6">Referral Program v2</td><td>$12K</td><td>$9K</td><td class="ct">180</td><td class="ct">$320K</td><td class="ct fw6">26.7×</td><td><span class="bdg bdg-teal">Exceeding</span></td></tr>
+    <tr><td class="fw6">LinkedIn Thought Leadership</td><td>$18K</td><td>$15K</td><td>210</td><td>$280K</td><td class="ct">15.6×</td><td><span class="bdg bdg-teal">On Track</span></td></tr>
+    <tr><td class="fw6">Webinar Series (Monthly)</td><td>$24K</td><td>$18K</td><td>120</td><td>$240K</td><td>10.0×</td><td><span class="bdg bdg-amber">Needs Review</span></td></tr>
+    <tr><td class="fw6">Email Nurture Sequences</td><td>$8K</td><td>$6K</td><td>95</td><td>$180K</td><td>22.5×</td><td><span class="bdg bdg-teal">On Track</span></td></tr>
+    <tr class="alert"><td class="fw6">Google Ads (Brand)</td><td>$36K</td><td class="cred fw6">$32K</td><td>85</td><td class="cred">$120K</td><td class="cred fw6">3.8×</td><td><span class="bdg bdg-red">Underperforming</span></td></tr>
+    <tr class="alert"><td class="fw6">Google Ads (Non-Brand)</td><td>$42K</td><td class="cred fw6">$38K</td><td>130</td><td class="cred">$240K</td><td class="cred fw6">5.7×</td><td><span class="bdg bdg-red">Underperforming</span></td></tr></tbody></table>
+    <div class="cl cl-teal mt8">Referral Program v2 at 26.7× ROI is the best-performing campaign. Google Ads (both) are below 6× — the minimum threshold for viable spend. Reallocate $30K from paid to content and referral.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Budget reallocation scenario <span>— Q2 planning</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Channel</th><th>Current</th><th>Proposed</th><th>Δ</th><th>Expected Impact</th></tr></thead>
+      <tbody><tr><td class="fw6">Content / SEO</td><td>$48K</td><td class="ct fw6">$72K</td><td class="ct fw6">+$24K</td><td class="ct">+280 MQLs/qtr</td></tr>
+      <tr><td class="fw6">Referral / Community</td><td>$12K</td><td class="ct fw6">$24K</td><td class="ct fw6">+$12K</td><td class="ct">+120 MQLs/qtr</td></tr>
+      <tr><td class="fw6">LinkedIn Organic</td><td>$18K</td><td>$18K</td><td>—</td><td>Stable</td></tr>
+      <tr><td class="fw6">Events / Webinars</td><td>$24K</td><td>$24K</td><td>—</td><td>Stable</td></tr>
+      <tr><td class="fw6">Email Nurture</td><td>$8K</td><td>$10K</td><td class="ct">+$2K</td><td>+40 MQLs/qtr</td></tr>
+      <tr class="alert"><td class="fw6">Paid Ads (Google/Meta)</td><td class="cred">$78K</td><td class="cred fw6">$40K</td><td class="cred fw6">−$38K</td><td class="cred">−95 MQLs (low quality)</td></tr></tbody></table>
+      <div class="cl cl-teal mt8">Net effect: +345 high-quality MQLs at better CAC. Blended CAC drops from $214 to $168. Pipeline impact: +$620K/quarter.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Campaign ROI ranking <span>— all active</span></span></div><div class="cd-b">
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Referral Program v2</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="ct">26.7×</span></div><div class="prog"><div class="prog-fill prog-teal" style="width:89%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Email Nurture Sequences</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="ct">22.5×</span></div><div class="prog"><div class="prog-fill prog-teal" style="width:75%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">LinkedIn Thought Leadership</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="ct">15.6×</span></div><div class="prog"><div class="prog-fill prog-teal" style="width:52%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Q1 Content Engine</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="ct">14.8×</span></div><div class="prog"><div class="prog-fill prog-teal" style="width:49%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Webinar Series</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="camb">10.0×</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:33%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Google Ads (Non-Brand)</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="cred">5.7×</span></div><div class="prog"><div class="prog-fill prog-red" style="width:19%"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:11px;font-weight:600">Google Ads (Brand)</span><span style="font-family:var(--mono);font-size:11px;font-weight:600" class="cred">3.8×</span></div><div class="prog"><div class="prog-fill prog-red" style="width:13%"></div></div></div>
+    </div></div>
+  </div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Marketing Intelligence</div>
+    <div class="rp-sub">Channels · CAC · Attribution</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-teal">
+      <div class="rs-title">Channel Efficiency</div>
+      <div class="rs-val green">5.9×</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:59%;background:var(--teal)"></div></div>
+      <div class="rs-row"><span class="rl">Organic ROI</span><span class="rv up">14–27×</span></div>
+      <div class="rs-row"><span class="rl">Paid ROI</span><span class="rv dn">2.1×</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">CAC Breakdown</div>
+      <div class="rs-row"><span class="rl">Best (organic)</span><span class="rv up">$82</span></div>
+      <div class="rs-row"><span class="rl">Worst (paid)</span><span class="rv dn">$780</span></div>
+      <div class="rs-row"><span class="rl">Blended</span><span class="rv">$340</span></div>
+      <div class="rs-row"><span class="rl">LTV/CAC</span><span class="rv up">4.2×</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Pipeline Generated</div>
+      <div class="rs-val green">$8.4M</div>
+      <div class="rs-row"><span class="rl">Total deals</span><span class="rv">47</span></div>
+      <div class="rs-row"><span class="rl">Avg deal size</span><span class="rv">$178.7K</span></div>
+      <div class="rs-row"><span class="rl">Win rate</span><span class="rv">34%</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--green)">CRO</span><span class="ra-text">8 stale deals</span><span class="ra-val" style="color:var(--amber-text)">$1.2M</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">30% SMB detractors</span><span class="ra-val">WoM risk</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--blue)">CEO</span><span class="ra-text">Series C target</span><span class="ra-val">$120M</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+const TC=['#0d9488','#14b8a6','#2dd4bf','#5eead4','#99f6e4'];
+function initCharts(){
+  const f=document.getElementById('ch-funnel');if(f){if(f._chart)f._chart.destroy();f._chart=new Chart(f,{type:'bar',data:{labels:['Visitors','MQLs','SQLs','Opportunities','Closed Won'],datasets:[{label:'Volume',data:[42000,1240,347,148,82],backgroundColor:[TC[4],TC[3],TC[2],TC[1],TC[0]],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false},ticks:{font:{family:'Inter',size:11},color:'#7a7770'}}}}})}
+  const p=document.getElementById('ch-pipeline');if(p){if(p._chart)p._chart.destroy();p._chart=new Chart(p,{type:'doughnut',data:{labels:['Organic/SEO','Referral','LinkedIn','Events','Email','Paid Ads'],datasets:[{data:[1400,820,680,560,380,360],backgroundColor:TC.concat(['#99f6e4']),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:12,color:'#7a7770'}}}}})}
+  const m=document.getElementById('ch-mix');if(m){if(m._chart)m._chart.destroy();m._chart=new Chart(m,{type:'bar',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Organic',data:[28,30,30,32,32,34,34,36,36,38,38,40],backgroundColor:TC[0],borderRadius:2},{label:'Referral',data:[10,10,11,11,12,12,13,13,14,14,15,15],backgroundColor:TC[1],borderRadius:2},{label:'LinkedIn',data:[16,16,16,17,17,17,18,18,18,18,18,18],backgroundColor:TC[2],borderRadius:2},{label:'Events',data:[18,18,17,17,16,16,15,15,14,14,13,12],backgroundColor:TC[3],borderRadius:2},{label:'Paid',data:[22,22,20,20,18,18,16,16,14,14,12,10],backgroundColor:TC[4],borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{stacked:true,beginAtZero:true,max:100,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{stacked:true,grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const ct=document.getElementById('ch-content');if(ct){if(ct._chart)ct._chart.destroy();ct._chart=new Chart(ct,{type:'bar',data:{labels:['Newsletter','Blog Series','eBook Guide','ROI Calculator','Case Study','Demo Videos','Industry Report','Social Posts'],datasets:[{label:'Pipeline $ per $1 spent',data:[22.5,18.2,14.8,12.4,10.8,8.2,6.4,1.8],backgroundColor:function(ctx){return ctx.dataIndex===7?'#fca5a5':TC[0]},borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>'$'+v,font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},y:{grid:{display:false},ticks:{font:{family:'Inter',size:11},color:'#7a7770'}}}}})}
+  const sov=document.getElementById('ch-sov');if(sov){if(sov._chart)sov._chart.destroy();sov._chart=new Chart(sov,{type:'doughnut',data:{labels:['Procore','PlanGrid','Buildertrend','ArcusSoft','CoConstruct','Others'],datasets:[{data:[28,16,14,18,8,16],backgroundColor:[TC[0],TC[1],TC[2],TC[3],TC[4],'#e8e6e1'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:12,color:'#7a7770'}}}}})}
+  const br=document.getElementById('ch-brand');if(br){if(br._chart)br._chart.destroy();br._chart=new Chart(br,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Branded Searches',data:[2800,2900,3000,3100,3200,3400,3500,3600,3700,3800,3900,4200],borderColor:TC[0],backgroundColor:'rgba(13,148,136,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:TC[0],pointBorderColor:'#fff',pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:2000,ticks:{callback:v=>v.toLocaleString(),font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cmo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

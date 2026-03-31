@@ -1,0 +1,51 @@
+#!/bin/bash
+urls=(
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/admin-025fa5da2c339e91bf4464be92338630.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475280&Signature=yS8ms8hxHjJw4VF6nNxoP+20QPQ="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/alerts-dea314175f81e4138b587689649ecd32.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475285&Signature=ctO0J87WFQY3iqmQF1ZzcaoUIcY="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/auth-8b58c8de669ac6ee39cac8237dfc8321.js?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475289&Signature=L5q2GLvYpZbmItAo/DKGtmunpPk="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/calculators-22c49288bbf2dd1e66d236344657c5dc.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475292&Signature=zELXZH01USbnsksqtvT5dYP4oNU="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-ceo-b9c575014c95ae120ec933570b1a17e7.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475303&Signature=B+4BjjaHO21MLtF7TN7bM3NPEkU="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cfo-a472ac0fcf3b72a9c5d2c2a34b50cfa5.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475320&Signature=ScZVjs6Qg9X/19M6NV+TLYLO8Tk="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cmo-4d1cdd8efeab793a01e3a49ed47ce48b.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475325&Signature=4P3lTnoxyL5zsOuHuPrLr56IwWE="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-coo-a10fd0c349d26b2588e103fd1d36ee25.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475342&Signature=dse/Ba+RrimB7x10rM208iaAMDo="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cpo-f02b36feac76f429a6f2dfea11b79680.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475349&Signature=+uDA/Fn/9U1q7KEInum94Jy45u4="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cro-ddf13049211e90071644b6097dc51618.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475361&Signature=y6vMCSMglNiQKrYEhfHE5/Ucb4c="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cs-949cdbb9d685e7a3300df346f0a76a07.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475375&Signature=yY1/hMLWZhzrXYjEh+PSFbEKcmA="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-cto-b1510eede2201ff9334e411b82cd8d8b.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475391&Signature=WPJA0tfQ+Afx81iyeCr/OJQxPWA="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/dsl-ceo.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475390&Signature=5LDAV+tnC4LxzG4x073GTPpwp+M="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/index-a64a90e1ebac6ee3c220ca568e4b7e7d.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475398&Signature=TKCkiGKn0WQQRWgGyHnlT9kCP/Q="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/b9fb3008-d4e7-4ff5-b135-a760907749a7.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475421&Signature=2LYbZkSJ4VDlttUinQ2FqJlQosY="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/08d980f0-b308-48b9-b2f7-9508c14595e3.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475432&Signature=BN0cSBfStNkIy2nD0qiM49r7Tfw="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/learning-7cba1d2b532006ac2858c177e8b6fc92.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475437&Signature=SkTETdJSXyYfDYhUTWfuWeKQ7AY="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/login-4fcf7cc0618d6f03237e2bf368022284.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475440&Signature=jDBAWb9NuZQtu5QsgswB03MO/Pg="
+"https://alsgp0.fds.api.xiaomi.com/chatbot-prod/multimedia/6705156125/outcomes-5da2f7e595aa722afc37af58fe9cad2c.html?GalaxyAccessKeyId=AKDFVGPIRVU2J5L22P&Expires=1806277475444&Signature=xzvwE7z7x1XvErqI0W94yy2MIC0="
+)
+
+names=(
+"admin.html"
+"alerts.html"
+"auth.js"
+"calculators.html"
+"dsl-ceo.html"
+"dsl-cfo.html"
+"dsl-cmo.html"
+"dsl-coo.html"
+"dsl-cpo.html"
+"dsl-cro.html"
+"dsl-cs.html"
+"dsl-cto.html"
+"dsl-ceo.html"
+"index.html"
+"information-pack.html"
+"layouts-wireframes.html"
+"learning.html"
+"login.html"
+"outcomes.html"
+)
+
+for i in "${!urls[@]}"; do
+  echo "Downloading ${names[$i]}..."
+  curl -sL -o "${names[$i]}" "${urls[$i]}"
+  echo "  -> $(wc -c < "${names[$i]}") bytes"
+done
+echo "Done!"

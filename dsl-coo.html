@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#ea580c;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --orange:#ea580c;--orange-soft:#fff7ed;--orange-text:#c2410c;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--orange);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--orange);color:#fff;box-shadow:0 2px 8px rgba(234,88,12,.25)}
+.tab.on {color:var(--orange);border-bottom-color:var(--orange);background:var(--orange-soft)}
+.sh h2 em {font-style:italic;color:var(--orange)}
+.kc.accent-orange {border-top:3px solid var(--orange)}
+.kc.accent-orange .kv {color:var(--orange-text)}
+.bdg-orange {background:var(--orange-soft);color:var(--orange-text)}
+.story {background:linear-gradient(135deg,#fff7ed,#fed7aa);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(234,88,12,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--orange)}
+.story .s-body strong {color:var(--orange-text);font-weight:600}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.prog-orange {background:linear-gradient(90deg,#fdba74,#ea580c)}
+.cor {color:var(--orange-text)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">COO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html" class="on">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('ops',this)">Operations</button>
+  <button class="tab" onclick="show('okr',this)">OKR Command</button>
+  <button class="tab" onclick="show('capacity',this)">Capacity</button>
+  <button class="tab" onclick="show('process',this)">Process</button>
+  <button class="tab" onclick="show('leverage',this)">Leverage</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- OPERATIONS -->
+<div id="s-ops" class="scr on">
+  <div class="sh"><div class="sh-over">COO · Operations Layer · Command</div><h2>The machine, <em>in real time.</em></h2><div class="sh-sub">Revenue per FTE, team utilization, and the operational bottlenecks slowing you down.</div></div>
+  <div class="story"><div class="s-num">127%</div><div class="s-label">Utilization Spread</div><div class="s-title">Your best AE is at 127%. Your worst is at 64%.</div><div class="s-body">Team utilization averages <strong>82%</strong> — that's healthy. But the spread tells a different story. Your top AE (Martinez) is crushing it at <strong>127% of quota</strong>, while your lowest performer (Chen) is at <strong>64%</strong>. That's a 2× gap. Engineering is at <strong>91% utilization</strong> — they're maxed and starting to slip on quality. Meanwhile, G&A is at <strong>68%</strong>. The question isn't whether you have capacity — it's whether it's in the right places.</div><button class="s-cta" onclick="show('capacity',document.querySelector('.tab:nth-child(3)'))">See capacity details →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-orange"><div class="kl">Revenue per FTE</div><div class="kv">$105K</div><div class="ks"><span class="up">↑ 12%</span> YoY</div></div>
+    <div class="kc accent-blue"><div class="kl">Team Utilization</div><div class="kv">82%</div><div class="ks">Target: >80% <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+    <div class="kc accent-green"><div class="kl">Operational Efficiency</div><div class="kv">74%</div><div class="ks">Revenue output / total capacity</div></div>
+    <div class="kc accent-red"><div class="kl">Process Bottlenecks</div><div class="kv">3</div><div class="ks">Blocking cross-functional flow</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Revenue per FTE trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-rpfte"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Utilization by department</span></div><div class="cd-b">
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500">Engineering <span style="color:var(--ink4);font-size:11px">(48 people)</span></span><span class="fw6 cred">91%</span></div><div class="prog"><div class="prog-fill prog-red" style="width:91%"></div></div><div style="font-size:10px;color:var(--red-text);margin-top:2px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Over capacity — quality slipping</div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500">Sales <span style="color:var(--ink4);font-size:11px">(32 people)</span></span><span class="fw6 cgrn">86%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:86%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500">Customer Success <span style="color:var(--ink4);font-size:11px">(28 people)</span></span><span class="fw6 cgrn">84%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:84%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500">Marketing <span style="color:var(--ink4);font-size:11px">(18 people)</span></span><span class="fw6 cgrn">79%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:79%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:500">G&A <span style="color:var(--ink4);font-size:11px">(30 people)</span></span><span class="fw6 camb">68%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:68%"></div></div><div style="font-size:10px;color:var(--amber-text);margin-top:2px">Below target — consider reallocation</div></div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Active operational alerts</span></div><div class="cd-b">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(220,38,38,.15);border-radius:var(--radius);background:var(--red-soft)"><span class="bdg bdg-red" style="font-size:8px">CRITICAL</span><span style="font-size:12px"><strong>Engineering at 91% utilization</strong> — Sprint velocity dropped 12%. Bug backlog growing. Need 2 engineers or scope reduction.</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(217,119,6,.15);border-radius:var(--radius);background:var(--amber-soft)"><span class="bdg bdg-amber" style="font-size:8px">WARNING</span><span style="font-size:12px"><strong>Sales onboarding queue</strong> — 6 new customers in implementation backlog. Avg wait: 12 days (target: 5).</span></div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(234,88,12,.15);border-radius:var(--radius);background:var(--orange-soft)"><span class="bdg bdg-orange" style="font-size:8px">WATCH</span><span style="font-size:12px"><strong>G&A at 68% utilization</strong> — Finance and HR have spare capacity. Consider cross-training for ops support.</span></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- OKR COMMAND -->
+<div id="s-okr" class="scr">  <div class="sh"><div class="sh-over">COO · Operations Layer · OKR Command</div><h2>Objectives. <b>Reality check.</b></h2><div class="sh-sub">Quarterly OKR tracker with confidence scores.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">On Track</div><div class="kv">5<span style="font-size:16px;color:var(--ink4)">/9</span></div><div class="ks">Objectives progressing as planned</div></div>
+    <div class="kc accent-amber"><div class="kl">At Risk</div><div class="kv">3<span style="font-size:16px;color:var(--ink4)">/9</span></div><div class="ks">Behind pace, needs intervention</div></div>
+    <div class="kc accent-red"><div class="kl">Off Track</div><div class="kv">1<span style="font-size:16px;color:var(--ink4)">/9</span></div><div class="ks">Critical — executive review needed</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Q1 2026 OKR Tracker</span></div><div class="cd-b">
+    <table><thead><tr><th>Objective</th><th>Key Result</th><th>Target</th><th>Current</th><th>Progress</th><th>Confidence</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3" class="fw6" style="vertical-align:top;border-right:1px solid var(--border)">Accelerate Revenue</td><td>Grow ARR to $17M</td><td>$17M</td><td>$16.4M</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-green" style="width:96%"></div></div></td><td><span class="bdg bdg-green">85%</span></td></tr>
+      <tr><td>Achieve 105% NRR</td><td>105%</td><td>103%</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-amber" style="width:98%"></div></div></td><td><span class="bdg bdg-amber">60%</span></td></tr>
+      <tr class="alert"><td>Close 3 enterprise deals</td><td>3</td><td>1</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-red" style="width:33%"></div></div></td><td><span class="bdg bdg-red">25%</span></td></tr>
+      <tr><td rowspan="3" class="fw6" style="vertical-align:top;border-right:1px solid var(--border)">Scale Operations</td><td>Hire 8 people (net)</td><td>8</td><td>5</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-amber" style="width:63%"></div></div></td><td><span class="bdg bdg-amber">55%</span></td></tr>
+      <tr class="good"><td>Reduce onboarding to 5 days</td><td>5 days</td><td>6 days</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-green" style="width:83%"></div></div></td><td><span class="bdg bdg-green">80%</span></td></tr>
+      <tr><td>Automate 3 workflows</td><td>3</td><td>2</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-green" style="width:67%"></div></div></td><td><span class="bdg bdg-green">75%</span></td></tr>
+      <tr><td rowspan="3" class="fw6" style="vertical-align:top;border-right:1px solid var(--border)">Improve Efficiency</td><td>Team utilization >80%</td><td>80%</td><td>82%</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-green" style="width:100%"></div></div></td><td><span class="bdg bdg-green">95%</span></td></tr>
+      <tr class="alert"><td>Fix 3 bottlenecks</td><td>3</td><td>1</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-red" style="width:33%"></div></div></td><td><span class="bdg bdg-amber">40%</span></td></tr>
+      <tr><td>Revenue per FTE >$100K</td><td>$100K</td><td>$105K</td><td><div class="prog" style="width:80px"><div class="prog-fill prog-green" style="width:100%"></div></div></td><td><span class="bdg bdg-green">100%</span></td></tr>
+    </tbody></table>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">OKR completion trend <span>— 4 quarters</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-okr"></canvas></div></div></div>
+</div>
+
+<!-- CAPACITY -->
+<div id="s-capacity" class="scr">  <div class="sh"><div class="sh-over">COO · Operations Layer · Capacity</div><h2>Who's <b>maxed. Who's not.</b></h2><div class="sh-sub">Team utilization heatmap, hiring projections, and bottleneck detection.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-orange"><div class="kl">Total Headcount</div><div class="kv">156</div><div class="ks">Eng 48 · Sales 32 · CS 28 · Mkt 18 · G&A 30</div></div>
+    <div class="kc accent-red"><div class="kl">Maxed Teams</div><div class="kv">2</div><div class="ks">Engineering (91%), Sales (86%)</div></div>
+    <div class="kc accent-green"><div class="kl">Capacity Buffer</div><div class="kv">18%</div><div class="ks">Available headroom before hiring</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Utilization heatmap <span>— by team, by week</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Team</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>Avg</th></tr></thead>
+    <tbody>
+      <tr><td class="fw6">Engineering</td><td style="background:#fee2e2">92%</td><td style="background:#fee2e2">90%</td><td style="background:#fee2e2">93%</td><td style="background:#fee2e2">91%</td><td style="background:#fee2e2">89%</td><td style="background:#fee2e2">91%</td><td style="background:#fee2e2">94%</td><td style="background:#fef2f2">88%</td><td class="cred fw6">91%</td></tr>
+      <tr><td class="fw6">Sales</td><td style="background:#dcfce7">84%</td><td style="background:#dcfce7">86%</td><td style="background:#dcfce7">88%</td><td style="background:#dcfce7">85%</td><td style="background:#dcfce7">87%</td><td style="background:#dcfce7">84%</td><td style="background:#dcfce7">86%</td><td style="background:#dcfce7">88%</td><td class="cgrn fw6">86%</td></tr>
+      <tr><td class="fw6">CS</td><td style="background:#dcfce7">82%</td><td style="background:#dcfce7">85%</td><td style="background:#dcfce7">83%</td><td style="background:#dcfce7">86%</td><td style="background:#dcfce7">84%</td><td style="background:#dcfce7">82%</td><td style="background:#dcfce7">85%</td><td style="background:#dcfce7">84%</td><td class="cgrn fw6">84%</td></tr>
+      <tr><td class="fw6">Marketing</td><td style="background:#dcfce7">78%</td><td style="background:#dcfce7">80%</td><td style="background:#dcfce7">76%</td><td style="background:#dcfce7">82%</td><td style="background:#dcfce7">79%</td><td style="background:#dcfce7">81%</td><td style="background:#dcfce7">77%</td><td style="background:#dcfce7">79%</td><td class="cgrn fw6">79%</td></tr>
+      <tr><td class="fw6">G&A</td><td style="background:#fef3c7">66%</td><td style="background:#fef3c7">70%</td><td style="background:#fef3c7">68%</td><td style="background:#fef3c7">64%</td><td style="background:#fef3c7">72%</td><td style="background:#fef3c7">68%</td><td style="background:#fef3c7">70%</td><td style="background:#fef3c7">68%</td><td class="camb fw6">68%</td></tr>
+    </tbody></table>
+    <div style="display:flex;gap:8px;margin-top:8px;font-size:10px;color:var(--ink4)">
+      <span style="padding:2px 8px;background:var(--red-soft);border-radius:3px">>90% Critical</span>
+      <span style="padding:2px 8px;background:var(--green-soft);border-radius:3px">75-90% Healthy</span>
+      <span style="padding:2px 8px;background:var(--amber-soft);border-radius:3px"><75% Under</span>
+    </div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Hiring needs projection</span></div><div class="cd-b">
+      <table><thead><tr><th>Role</th><th>Current</th><th>Needed by Q3</th><th>Trigger</th><th>Status</th></tr></thead>
+      <tbody><tr class="alert"><td class="fw6">Engineers</td><td>48</td><td class="fw6">51 (+3)</td><td>Sprint velocity −12%</td><td><span class="bdg bdg-red">Urgent</span></td></tr>
+      <tr><td class="fw6">AEs</td><td>12</td><td class="fw6">14 (+2)</td><td>Pipeline coverage >3×</td><td><span class="bdg bdg-amber">Blocked (CFO)</span></td></tr>
+      <tr><td class="fw6">CSMs</td><td>8</td><td class="fw6">9 (+1)</td><td>Account ratio >40:1</td><td><span class="bdg bdg-amber">Blocked (CFO)</span></td></tr>
+      <tr class="good"><td class="fw6">Marketing</td><td>18</td><td>18 (0)</td><td>—</td><td><span class="bdg bdg-green">Staffed</span></td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Bottleneck detection</span></div><div class="cd-b">
+      <div style="padding:14px 18px;border-left:3px solid var(--red);background:var(--red-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>#1: Engineering</strong> — 91% utilization. Sprint velocity dropped 12%. Bug backlog growing 15% month-over-month. 2 engineers needed immediately.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>#2: Implementation</strong> — 12-day onboarding wait (target: 5 days). 6 customers in queue. CS absorbing overflow.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--orange);background:var(--orange-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>#3: Sales Enablement</strong> — New AE ramp time 90 days (target: 60). No formal onboarding program.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Capacity vs demand <span>— 6 month projection</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-capacity"></canvas></div></div></div>
+</div>
+
+<!-- PROCESS -->
+<div id="s-process" class="scr">
+  <div class="sh"><div class="sh-over">COO · Operations Layer · Process</div><h2>Where work <b>gets stuck.</b></h2><div class="sh-sub">Workflow efficiency, automation opportunities, and cross-functional friction.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-orange"><div class="kl">Workflow Efficiency</div><div class="kv">74%</div><div class="ks">Output / theoretical max</div></div>
+    <div class="kc accent-green"><div class="kl">Automated Workflows</div><div class="kv">12</div><div class="ks">Saving 140 hrs/month total</div></div>
+    <div class="kc accent-red"><div class="kl">Manual Bottlenecks</div><div class="kv">8</div><div class="ks">Costing ~200 hrs/month</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Workflow efficiency scores</span></div><div class="cd-b">
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Lead → Opportunity</span><span class="cgrn fw6">82%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:82%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Opportunity → Closed Won</span><span class="camb fw6">68%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:68%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Onboard → Go Live</span><span class="cred fw6">54%</span></div><div class="prog"><div class="prog-fill prog-red" style="width:54%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Support Ticket → Resolution</span><span class="cgrn fw6">78%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:78%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Bug Report → Deploy Fix</span><span class="camb fw6">71%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:71%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Hire Request → Offer Accepted</span><span class="cgrn fw6">76%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:76%"></div></div></div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Automation opportunities</span></div><div class="cd-b">
+      <table><thead><tr><th>Process</th><th>Current</th><th>Automated</th><th>Hours Saved/mo</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Invoice generation</td><td>Manual (8 hrs)</td><td>Auto-trigger</td><td class="cgrn fw6">32 hrs</td></tr>
+      <tr><td class="fw6">Onboarding checklist</td><td>Manual (6 hrs/acct)</td><td>Template + assign</td><td class="cgrn fw6">28 hrs</td></tr>
+      <tr><td class="fw6">Report compilation</td><td>Manual (4 hrs/wk)</td><td>Dashboard auto-gen</td><td class="cgrn">16 hrs</td></tr>
+      <tr><td class="fw6">Contract routing</td><td>Email chain</td><td>Auto-assign + track</td><td class="cgrn">12 hrs</td></tr>
+      <tr><td class="fw6">QBR prep</td><td>Manual (3 hrs/acct)</td><td>Data pull + template</td><td class="cgrn">10 hrs</td></tr></tbody></table>
+      <div class="cl cl-green mt8">Total opportunity: <strong>98 hours/month</strong> recoverable with 5 automations. ROI: $18K/month in freed capacity.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Cross-functional dependency map</span></div><div class="cd-b"><div class="g3">
+    <div style="padding:16px;border:1px solid var(--border);border-radius:var(--radius);text-align:center"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Sales → CS</div><div style="font-size:12px;color:var(--ink3)">Handoff quality: <strong class="cgrn">88%</strong></div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Avg: 2 days</div></div>
+    <div style="padding:16px;border:1px solid rgba(220,38,38,.15);border-radius:var(--radius);text-align:center;background:var(--red-soft)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Sales → Eng</div><div style="font-size:12px;color:var(--ink3)">Handoff quality: <strong class="cred">62%</strong></div><div style="font-size:11px;color:var(--ink3);margin-top:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Feature requests dropped</div></div>
+    <div style="padding:16px;border:1px solid rgba(217,119,6,.15);border-radius:var(--radius);text-align:center;background:var(--amber-soft)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">CS → Eng</div><div style="font-size:12px;color:var(--ink3)">Handoff quality: <strong class="camb">71%</strong></div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Bugs need more context</div></div>
+  </div></div></div>
+</div>
+
+<!-- LEVERAGE -->
+<div id="s-leverage" class="scr">  <div class="sh"><div class="sh-over">COO · Operations Layer · Leverage</div><h2>Scale, <em>not just grow.</em></h2><div class="sh-sub">Operational leverage ratio. Revenue per department. Whether growth is compounding or linear.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Op Leverage Ratio</div><div class="kv">1.38×</div><div class="ks">Revenue growth (38%) / HC growth (28%)</div></div>
+    <div class="kc accent-orange"><div class="kl">Revenue per FTE</div><div class="kv">$105K</div><div class="ks"><span class="up">↑ 12%</span> YoY</div></div>
+    <div class="kc accent-blue"><div class="kl">Scale Score</div><div class="kv">7.4<span style="font-size:16px;color:var(--ink4)">/10</span></div><div class="ks">Composite efficiency metric</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Operational leverage ratio <span>— 4 quarters</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Quarter</th><th>Revenue Growth</th><th>HC Growth</th><th>Leverage Ratio</th><th>Status</th></tr></thead>
+    <tbody><tr><td class="fw6">Q2 '25</td><td>32%</td><td>28%</td><td>1.14×</td><td><span class="bdg bdg-amber">Low</span></td></tr>
+    <tr><td class="fw6">Q3 '25</td><td>34%</td><td>25%</td><td>1.36×</td><td><span class="bdg bdg-green">Healthy</span></td></tr>
+    <tr class="good"><td class="fw6">Q4 '25</td><td>36%</td><td>22%</td><td class="cgrn fw6">1.64×</td><td><span class="bdg bdg-green">Strong</span></td></tr>
+    <tr><td class="fw6">Q1 '26</td><td>38%</td><td>28%</td><td class="cgrn fw6">1.36×</td><td><span class="bdg bdg-green">Healthy</span></td></tr></tbody></table>
+    <div class="cl cl-blue mt8">Leverage ratio above 1× means revenue grows faster than headcount. Q4 was exceptional (1.64×). Q1 dipped because of 5 new hires. Target: maintain >1.3× through 2026.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Revenue per department</span></div><div class="cd-b">
+      <table><thead><tr><th>Department</th><th>Headcount</th><th>Cost</th><th>Revenue</th><th>ROI</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Sales</td><td>32</td><td>$3.8M</td><td class="cgrn fw6">$12.2M</td><td class="cgrn fw6">3.2×</td></tr>
+      <tr><td class="fw6">CS</td><td>28</td><td>$2.4M</td><td class="fw6">$4.2M</td><td class="fw6">1.8×</td></tr>
+      <tr><td class="fw6">Engineering</td><td>48</td><td>$5.8M</td><td>—</td><td class="cgry">Enabling</td></tr>
+      <tr><td class="fw6">Marketing</td><td>18</td><td>$1.6M</td><td class="fw6">$2.8M</td><td class="fw6">1.8×</td></tr>
+      <tr class="alert"><td class="fw6">G&A</td><td>30</td><td>$2.2M</td><td>—</td><td class="cgry">Support</td></tr></tbody></table>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Efficiency trends <span>— 6 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-efficiency"></canvas></div></div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Scale indicators</span></div><div class="cd-b"><div class="g3">
+    <div style="padding:20px;background:var(--green-soft);border-radius:var(--radius);text-align:center;border:1px solid rgba(22,163,74,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Revenue / HC growth</div><div style="font-size:28px;font-weight:800;margin:8px 0" class="cgrn">1.38×</div><div style="font-size:11px;color:var(--ink3)">Above 1× = scaling</div></div>
+    <div style="padding:20px;background:var(--green-soft);border-radius:var(--radius);text-align:center;border:1px solid rgba(22,163,74,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Revenue / $ OpEx</div><div style="font-size:28px;font-weight:800;margin:8px 0" class="cgrn">$1.40</div><div style="font-size:11px;color:var(--ink3)">Target: >$1.30</div></div>
+    <div style="padding:20px;background:var(--amber-soft);border-radius:var(--radius);text-align:center;border:1px solid rgba(217,119,6,.15)"><div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em">Automation Coverage</div><div style="font-size:28px;font-weight:800;margin:8px 0" class="camb">60%</div><div style="font-size:11px;color:var(--ink3)">Target: >75%</div></div>
+  </div></div></div>
+</div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">
+  <div class="sh"><div class="sh-over">COO · Operations Layer · Playbooks</div><h2>Operational <em>decision flows.</em></h2><div class="sh-sub">Team restructuring, process changes, and vendor evaluation frameworks.</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Team restructuring trigger</span><span class="bdg bdg-orange">Evaluate</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node"><strong>IF</strong> any team utilization >90% for 4+ weeks</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Assess</span> Temporary (project spike) or structural (understaffed)?</div><div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">Temporary</span> Reallocate from underutilized teams (G&A at 68%)</div>
+        <div class="df-node no"><span class="df-tag n">Structural</span> Trigger hiring request → CFO scenario check</div><div class="df-arrow">↓</div>
+        <div class="df-node"><strong>IF</strong> 2+ teams simultaneously >90% → executive restructuring review</div>
+      </div>
+      <div class="cl cl-amber mt8">Engineering has been >90% for 5 weeks. This is structural. Hiring request for 2 engineers is the right call — but CFO scenario gate applies.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Process change decision flow</span></div><div class="cd-b">
+      <div class="dflow">
+        <div class="df-node"><strong>IF</strong> workflow efficiency &lt; 70% AND manual hours >40/week</div><div class="df-arrow">↓</div>
+        <div class="df-node warn"><span class="df-tag m">Evaluate</span> Build automation ROI case</div><div class="df-arrow">↓</div>
+        <div class="df-node yes"><span class="df-tag y">ROI >3×</span> Queue for engineering sprint</div>
+        <div class="df-node warn"><span class="df-tag m">ROI 1-3×</span> Add to backlog, review monthly</div>
+        <div class="df-node no"><span class="df-tag n">ROI &lt;1×</span> Keep manual, revisit next quarter</div>
+      </div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Vendor evaluation framework</span></div><div class="cd-b">
+    <table><thead><tr><th>Criterion</th><th>Weight</th><th>Scoring</th></tr></thead>
+    <tbody><tr><td class="fw6">Integration complexity</td><td>25%</td><td>1 = months, 3 = weeks, 5 = days</td></tr>
+    <tr><td class="fw6">Total cost of ownership (3yr)</td><td>25%</td><td>1 = >$500K, 3 = $100-500K, 5 = <$100K</td></tr>
+    <tr><td class="fw6">Security & compliance</td><td>20%</td><td>1 = no SOC2, 3 = SOC2, 5 = SOC2 + HIPAA</td></tr>
+    <tr><td class="fw6">Scalability</td><td>15%</td><td>1 = manual, 3 = auto with limits, 5 = fully elastic</td></tr>
+    <tr><td class="fw6">Support quality</td><td>15%</td><td>1 = email only, 3 = chat, 5 = dedicated CSM</td></tr></tbody></table>
+    <div class="cl cl-blue mt8">Minimum score: <strong>3.5/5.0 weighted average</strong>. Any criterion scoring 1 is an automatic disqualifier.</div>
+  </div></div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Operational Intelligence</div>
+    <div class="rp-sub">Capacity · Quality · Efficiency</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-orange">
+      <div class="rs-title">Operational Health</div>
+      <div class="rs-val orange">7.4 / 10</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:74%;background:var(--orange)"></div></div>
+      <div class="rs-row"><span class="rl">Previous quarter</span><span class="rv dn">7.8 → 7.4</span></div>
+      <div class="rs-row"><span class="rl">Root cause</span><span class="rv">Eng overload</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Capacity</div>
+      <div class="rs-row"><span class="rl">Engineering util</span><span class="rv dn">91%</span></div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:91%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">Velocity trend</span><span class="rv dn">↓ 15% MoM</span></div>
+      <div class="rs-row"><span class="rl">SLA compliance</span><span class="rv">87%</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Quality</div>
+      <div class="rs-val green">94%</div>
+      <div class="rs-row"><span class="rl">Model accuracy</span><span class="rv up">94%</span></div>
+      <div class="rs-row"><span class="rl">Uptime</span><span class="rv up">99.9%</span></div>
+      <div class="rs-row"><span class="rl">NPS</span><span class="rv">42</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--purple)">CTO</span><span class="ra-text">91% utilization</span><span class="ra-val" style="color:var(--red-text)">Critical</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">TTFV regressed</span><span class="ra-val" style="color:var(--amber-text)">8→11d</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--amber)">CFO</span><span class="ra-text">AE hiring blocked</span><span class="ra-val">Bear</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const r=document.getElementById('ch-rpfte');if(r){if(r._chart)r._chart.destroy();r._chart=new Chart(r,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Revenue/FTE ($K)',data:[88,90,92,93,95,96,98,99,100,102,104,105],borderColor:'#ea580c',backgroundColor:'rgba(234,88,12,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#ea580c',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target',data:[88,90,92,94,96,98,100,102,104,106,108,110],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:80,ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const o=document.getElementById('ch-okr');if(o){if(o._chart)o._chart.destroy();o._chart=new Chart(o,{type:'bar',data:{labels:['Q2 25','Q3 25','Q4 25','Q1 26'],datasets:[{label:'On Track',data:[5,6,7,5],backgroundColor:'rgba(22,163,74,.7)',borderRadius:3},{label:'At Risk',data:[3,2,1,3],backgroundColor:'rgba(217,119,6,.7)',borderRadius:3},{label:'Off Track',data:[1,1,1,1],backgroundColor:'rgba(220,38,38,.7)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:true,max:10,ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const cp=document.getElementById('ch-capacity');if(cp){if(cp._chart)cp._chart.destroy();cp._chart=new Chart(cp,{type:'line',data:{labels:['Mar','Apr','May','Jun','Jul','Aug'],datasets:[{label:'Engineering',data:[91,93,95,97,98,99],borderColor:'#dc2626',tension:.35,borderWidth:2,pointRadius:3,pointBackgroundColor:'#dc2626'},{label:'Sales',data:[86,88,89,90,91,92],borderColor:'#ea580c',tension:.35,borderWidth:2,pointRadius:3,pointBackgroundColor:'#ea580c'},{label:'Threshold',data:Array(6).fill(90),borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:80,max:105,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const ef=document.getElementById('ch-efficiency');if(ef){if(ef._chart)ef._chart.destroy();ef._chart=new Chart(ef,{type:'line',data:{labels:['Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Utilization',data:[80,81,82,81,82,82],borderColor:'#ea580c',tension:.35,borderWidth:2,pointRadius:3,pointBackgroundColor:'#ea580c'},{label:'Efficiency',data:[72,73,75,74,73,74],borderColor:'#3b82f6',tension:.35,borderWidth:2,pointRadius:3,pointBackgroundColor:'#3b82f6'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:60,max:90,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('coo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

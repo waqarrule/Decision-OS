@@ -1,0 +1,60 @@
+{
+  "financials": {
+    "arr": 16400000,
+    "mrr": 1367000,
+    "grossMargin": 78,
+    "grossMarginFormatted": "78%",
+    "operatingExpenses": 1580000,
+    "opexFormatted": "$1.58M/mo",
+    "cashOnHand": 9200000,
+    "cashOnHandFormatted": "$9.2M",
+    "monthlyBurn": 529000,
+    "monthlyBurnFormatted": "$529K",
+    "runwayMonths": 17.4,
+    "burnMultiple": 2.1,
+    "revenuePerEmployee": 105128,
+    "revenuePerEmployeeFormatted": "$105.1K",
+    "ltv": 14280,
+    "cac": 340,
+    "ltvCacRatio": 4.2,
+    "paybackMonths": 14,
+    "magicNumber": 0.9,
+    "ruleOf40": 42
+  },
+  "revenueBreakdown": {
+    "newBusiness": 420000,
+    "expansion": 380000,
+    "renewal": 890000,
+    "churned": -240000,
+    "netNew": 1450000
+  },
+  "expenseBreakdown": [
+    {"category":"Engineering","amount":580000,"amountFormatted":"$580K","pct":36.7,"headcount":62},
+    {"category":"Sales & Marketing","amount":420000,"amountFormatted":"$420K","pct":26.6,"headcount":38},
+    {"category":"Customer Success","amount":240000,"amountFormatted":"$240K","pct":15.2,"headcount":28},
+    {"category":"G&A","amount":190000,"amountFormatted":"$190K","pct":12.0,"headcount":18},
+    {"category":"Product","amount":150000,"amountFormatted":"$150K","pct":9.5,"headcount":10}
+  ],
+  "hiring": {
+    "openRoles": 12,
+    "pipeline": 34,
+    "offersExtended": 3,
+    "accepted": 2,
+    "costPerHire": 18500,
+    "avgTimeToHire": 32,
+    "departments": [
+      {"dept":"Engineering","open":5,"pipeline":14,"priority":"high"},
+      {"dept":"Sales","open":3,"pipeline":10,"priority":"high"},
+      {"dept":"CS","open":2,"pipeline":6,"priority":"medium"},
+      {"dept":"Product","open":2,"pipeline":4,"priority":"medium"}
+    ]
+  },
+  "cashFlow": [
+    {"month":"Oct 2025","inflow":1280000,"outflow":1420000,"net":-140000},
+    {"month":"Nov 2025","inflow":1310000,"outflow":1450000,"net":-140000},
+    {"month":"Dec 2025","inflow":1350000,"outflow":1480000,"net":-130000},
+    {"month":"Jan 2026","inflow":1340000,"outflow":1520000,"net":-180000},
+    {"month":"Feb 2026","inflow":1360000,"outflow":1550000,"net":-190000},
+    {"month":"Mar 2026","inflow":1367000,"outflow":1580000,"net":-213000}
+  ]
+}

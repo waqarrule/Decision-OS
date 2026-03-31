@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#3b82f6;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-glow:rgba(59,130,246,.08);--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-glow:rgba(22,163,74,.08);--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-glow:rgba(220,38,38,.06);--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-glow:rgba(217,119,6,.08);--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-glow:rgba(124,58,237,.08);--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;--shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a {color:inherit}
+/* HEADER */
+.hdr {position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);box-shadow:0 1px 0 var(--accent);display:flex;align-items:center;padding:0 32px;gap:18px}
+/* TABS */
+.tabs {position:fixed;top:56px;left:0;right:0;z-index:199;height:46px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);display:flex;padding:0 32px;gap:2px;overflow-x:auto}
+/* LAYOUT */
+.layout {display:flex;height:calc(100vh - 102px);margin-top:102px}
+/* SCREENS */
+.scr {display:none}
+/* SCREEN HEADER */
+.sh {margin-bottom:24px}
+/* KPI CARDS */
+.krow {display:grid;gap:12px;margin-bottom:22px}
+/* CARDS */
+.cd {background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:14px;transition:all .25s;box-shadow:var(--shadow)}
+/* TABLES */
+table {width:100%;border-collapse:collapse;font-size:12px}
+/* BADGES */
+.bdg {display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:4px 11px;border-radius:6px}
+/* BUTTONS */
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+/* SCENARIO ENGINE */
+.scen-bar {display:inline-flex;background:var(--bg2);border-radius:8px;padding:3px;gap:2px;border:1px solid var(--border)}
+.scen-btn {padding:7px 22px;border-radius:6px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--ink3);transition:all .15s}
+.scen-btn.s-bear {background:var(--red);color:#fff;box-shadow:0 2px 8px rgba(220,38,38,.2)}
+.scen-btn.s-base {background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.2)}
+.scen-btn.s-bull {background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.2)}
+.sg {display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.sg-cell {padding:20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);text-align:center;transition:all .3s;cursor:pointer;box-shadow:var(--shadow)}
+.sg-cell.sel {box-shadow:var(--shadow-hover)}
+.sg-cell .sg-l {font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink4);margin-bottom:6px}
+.sg-cell .sg-v {font-size:22px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:6px;transition:all .4s}
+.sg-cell .sg-s {font-size:10px;color:var(--ink3)}
+/* STORYTELLING */
+.story {background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.08),transparent 70%)}
+.story::after {content:'';position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.06),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--blue)}
+.story .s-body strong {color:var(--amber-text);font-weight:600}
+/* CALLOUT */
+.cl {border-radius:var(--radius);padding:14px 18px;font-size:12px;line-height:1.7;border:1px solid;margin-bottom:12px}
+/* DECISION FLOW */
+.dflow {display:flex;flex-direction:column;gap:6px}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+/* RIGHT PANEL */
+/* rp-header h4 styled via dss-shared.css */
+/* PLAYBOOK STEPS */
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:var(--blue-soft);border-color:rgba(59,130,246,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(59,130,246,.25)}
+.pb-step.done .pb-num {background:var(--green);box-shadow:0 2px 6px rgba(22,163,74,.25);color:#fff}
+/* CD HEADER with filters */
+.cd-h {display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:18px 20px 0}
+/* CHART */
+.chart-wrap {position:relative;height:200px;margin:8px 0}
+.chart-wrap.tall {height:240px}
+/* PROGRESS */
+.prog {height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin:6px 0}
+/* MISC */
+.mono {font-family:var(--mono)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}
+  .krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div>
+  <div class="sep"></div>
+  <div class="co">CEO Portal</div>
+  <div class="hdr-r">
+    <div class="live"><i></i>Live</div>
+    <div class="sep"></div>
+    
+    <a href="dsl-ceo.html" class="on">CEO</a>
+    <a href="dsl-cro.html">CRO</a>
+    <a href="dsl-cfo.html">CFO</a>
+    <a href="dsl-coo.html">COO</a>
+    <a href="dsl-cs.html">CS</a>
+    <a href="dsl-cto.html">CTO</a>
+    <a href="dsl-cmo.html">CMO</a>
+    <a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab on" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('board',this)">Board Ready</button>
+  <button class="tab" onclick="show('forecast',this)">Strategic Forecast</button>
+  <button class="tab" onclick="show('market',this)">Market Position</button>
+  <button class="tab" onclick="show('ma',this)">M&A Readiness</button>
+  <button class="tab" onclick="show('playbooks',this)">Decision Playbooks</button>
+</div>
+
+<div class="layout">
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- OVERVIEW -->
+<div id="s-overview" class="scr on">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · Overview</div>
+    <h2>The company, <b>right now.</b></h2>
+    <div class="sh-sub">Everything you need before the next board meeting, investor call, or strategic decision.</div>
+  </div>
+
+  <div class="story">
+    <div class="s-num">01</div>
+    <div class="s-label">Narrative</div>
+    <div class="s-title">You're 0.6 months behind your own runway target.</div>
+    <div class="s-body">ARR is growing at <strong>38% YoY</strong> — that's strong for construction SaaS. But burn is <strong>$486K/mo</strong> and you have <strong>17.4 months</strong> of runway. Your target was 18 months. The gap isn't fatal, but it means the Q2 hiring plan needs the CFO's scenario grid before it gets approved. Meanwhile, <strong>16 enterprise accounts</strong> are carrying $1.3M in at-risk ARR. The CRO's save playbook is live — check the cross-portal intelligence below.</div>
+    <button class="s-cta" onclick="show('forecast',document.querySelector('.tab:nth-child(3)'))">See the scenario grid →</button>
+  </div>
+
+  <div class="krow kr4">
+    <div class="kc accent-blue">
+      <div class="kl">Annual Recurring Revenue</div>
+      <div class="kv">$16.4M</div>
+      <div class="ks"><span class="up">↑ 38%</span> YoY · $1.37M MRR</div>
+    </div>
+    <div class="kc accent-amber">
+      <div class="kl">Runway</div>
+      <div class="kv">17.4<span style="font-size:16px;color:var(--ink4)"> mo</span></div>
+      <div class="ks"><span class="dn">↓ 0.6</span> vs 18mo target</div>
+    </div>
+    <div class="kc accent-green">
+      <div class="kl">Net Revenue Retention</div>
+      <div class="kv">103%</div>
+      <div class="ks">Enterprise: 112% · SMB: <span class="dn">96%</span></div>
+    </div>
+    <div class="kc accent-red">
+      <div class="kl">At-Risk ARR</div>
+      <div class="kv">$1.3M</div>
+      <div class="ks">16 accounts · 90-day window</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Revenue trend <span>— by segment</span></span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+          <select id="rev-range" onchange="loadRevenueTrend()" style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:10px;background:var(--surface);color:var(--ink2);cursor:pointer">
+            <option value="12" selected>12 months</option>
+            <option value="6">6 months</option>
+            <option value="3">3 months</option>
+          </select>
+          <div id="rev-seg-filters" style="display:flex;gap:6px">
+            <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--ink3);cursor:pointer"><input type="checkbox" class="rev-seg-cb" value="enterprise" checked onchange="loadRevenueTrend()" style="accent-color:#3b82f6"> <span style="width:8px;height:8px;border-radius:2px;background:#3b82f6;display:inline-block"></span> Enterprise</label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--ink3);cursor:pointer"><input type="checkbox" class="rev-seg-cb" value="midmarket" checked onchange="loadRevenueTrend()" style="accent-color:#7c3aed"> <span style="width:8px;height:8px;border-radius:2px;background:#7c3aed;display:inline-block"></span> Mid-Market</label>
+            <label style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--ink3);cursor:pointer"><input type="checkbox" class="rev-seg-cb" value="smb" checked onchange="loadRevenueTrend()" style="accent-color:#d97706"> <span style="width:8px;height:8px;border-radius:2px;background:#d97706;display:inline-block"></span> SMB</label>
+          </div>
+        </div>
+      </div>
+      <div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-rev"></canvas></div></div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Revenue mix <span>— by segment</span></span>
+        <div style="margin-left:auto;display:flex;gap:6px">
+          <button class="mix-seg-btn on" onclick="filterMix('all',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--blue);color:#fff">All</button>
+          <button class="mix-seg-btn" onclick="filterMix('enterprise',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">Enterprise</button>
+          <button class="mix-seg-btn" onclick="filterMix('midmarket',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">Mid-Market</button>
+          <button class="mix-seg-btn" onclick="filterMix('smb',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">SMB</button>
+        </div>
+      </div>
+      <div class="cd-b">
+        <div id="mix-table-wrap">
+        <table>
+          <thead><tr><th>Segment</th><th>Customers</th><th>ARR</th><th>% of Rev</th><th>NRR</th><th>Trend</th></tr></thead>
+          <tbody id="mix-tbody"></tbody>
+          <tfoot id="mix-tfoot"></tfoot>
+        </table>
+        </div>
+        <div id="mix-callout"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Cross-Portal Intelligence</span></div>
+      <div class="cd-b">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(22,163,74,.3)';this.style.boxShadow='0 4px 16px rgba(22,163,74,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+          <span class="bdg bdg-green" style="font-size:8px">CRO</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>$1.6M hope gap</strong> — pipeline quality-adjusted from $4.8M to $3.2M</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(217,119,6,.3)';this.style.boxShadow='0 4px 16px rgba(217,119,6,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+          <span class="bdg bdg-amber" style="font-size:8px">CFO</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Hiring trigger blocked</strong> — Bear scenario shows 11.8mo runway if plan hires go through</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(220,38,38,.3)';this.style.boxShadow='0 4px 16px rgba(220,38,38,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+          <span class="bdg bdg-red" style="font-size:8px">CS</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Save playbook active</strong> — Kellerman Group ($84K) health score dropped to 31</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(124,58,237,.3)';this.style.boxShadow='0 4px 16px rgba(124,58,237,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+          <span class="bdg bdg-purple" style="font-size:8px">CTO</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Mobile offline</strong> — blocking 3 enterprise deals, $480K in pipeline</span>
+        </div>
+      </div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Decision velocity</span></div>
+      <div class="cd-b">
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:var(--ink3)">Decisions lacking data</span><span class="fw6" style="font-size:12px;color:var(--amber-text)">34%</span></div>
+          <div class="prog"><div class="prog-fill prog-amber" style="width:34%"></div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:var(--ink3)">Decisions on gut feel</span><span class="fw6" style="font-size:12px;color:var(--red-text)">22%</span></div>
+          <div class="prog"><div class="prog-fill prog-red" style="width:22%"></div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;color:var(--ink3)">Data-backed decisions</span><span class="fw6" style="font-size:12px;color:var(--blue-text)">44%</span></div>
+          <div class="prog"><div class="prog-fill prog-blue" style="width:44%"></div></div>
+        </div>
+        <div class="cl cl-blue">This system exists to flip those numbers. Target: 80%+ data-backed decisions by Q4.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOARD READY -->
+<div id="s-board" class="scr">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · Board Ready</div>
+    <h2>What the <em>board wants to see.</em></h2>
+    <div class="sh-sub">Investor-grade metrics. Cohort analysis. Fundraising readiness score. Updated for next board meeting.</div>
+  </div>
+
+  <div class="krow kr4">
+    <div class="kc accent-blue"><div class="kl">ARR</div><div class="kv">$16.4M</div><div class="ks"><span class="up">↑ 38% YoY</span></div></div>
+    <div class="kc accent-green"><div class="kl">Gross Margin</div><div class="kv">78%</div><div class="ks">Target: >75% <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+    <div class="kc accent-amber"><div class="kl">Burn Multiple</div><div class="kv">2.1×</div><div class="ks">Net burn / net new ARR</div></div>
+    <div class="kc accent-purple"><div class="kl">LTV:CAC</div><div class="kv">4.8×</div><div class="ks"><span class="up">↑ from 4.2×</span></div></div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Cohort retention <span>— revenue by signup quarter</span></span></div>
+      <div class="cd-b">
+        <table>
+          <thead><tr><th>Cohort</th><th>Q0</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th></tr></thead>
+          <tbody>
+            <tr><td class="fw6">Q3 '24</td><td>100%</td><td>98%</td><td>104%</td><td class="cgrn fw6">109%</td><td class="cgrn fw6">112%</td><td class="cgrn fw6">116%</td><td class="cgrn fw6">118%</td></tr>
+            <tr><td class="fw6">Q4 '24</td><td>100%</td><td>96%</td><td>101%</td><td class="cgrn">105%</td><td class="cgrn">108%</td><td class="cgrn">110%</td><td></td></tr>
+            <tr><td class="fw6">Q1 '25</td><td>100%</td><td>94%</td><td>99%</td><td class="cgrn">103%</td><td></td><td></td><td></td></tr>
+            <tr><td class="fw6">Q2 '25</td><td>100%</td><td>92%</td><td>97%</td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+        <div class="cl cl-green mt8">Net dollar retention improves over time — cohorts expand after Q2. Strong PMF in enterprise. Q3 '24 cohort now at 118%.</div>
+      </div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Fundraising readiness</span></div>
+      <div class="cd-b">
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:500">ARR growth (>30%)</span><span class="cgrn fw6"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 38%</span></div>
+          <div class="prog"><div class="prog-fill prog-green" style="width:100%"></div></div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:500">Gross margin (>75%)</span><span class="cgrn fw6"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 78%</span></div>
+          <div class="prog"><div class="prog-fill prog-green" style="width:100%"></div></div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:500">NRR (>100%)</span><span class="cgrn fw6"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 103%</span></div>
+          <div class="prog"><div class="prog-fill prog-green" style="width:100%"></div></div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:500">Runway (>18mo)</span><span class="camb fw6"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> 17.4mo</span></div>
+          <div class="prog"><div class="prog-fill prog-amber" style="width:85%"></div></div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:500">Burn multiple (<2×)</span><span class="cred fw6"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> 2.1x</span></div>
+          <div class="prog"><div class="prog-fill prog-red" style="width:65%"></div></div>
+        </div>
+        <div class="cl cl-amber">Fundraising score: <strong>3 of 5 metrics green</strong>. Fix runway (defer hiring) and burn multiple (reduce SMB acquisition cost) before approaching Series C.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STRATEGIC FORECAST -->
+<div id="s-forecast" class="scr">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · Forecast</div>
+    <h2>Three futures. <em>Pick one.</em></h2>
+    <div class="sh-sub">Bear / Base / Bull scenarios. Every number updates when you toggle. Click a scenario to see its full cascade.</div>
+  </div>
+
+  <div class="story">
+    <div class="s-num">02</div>
+    <div class="s-label">The hiring dilemma</div>
+    <div class="s-title">The CRO wants 3 AEs. The CFO says no.</div>
+    <div class="s-body">In the <strong>Base scenario</strong>, adding 1 AE + 1 CSM drops runway from 17.4 to <strong>16.8 months</strong> — manageable. But in the <strong>Bear scenario</strong> (Q2 churn spike + delayed enterprise deals), the same hires push runway to <strong>11.8 months</strong> — below the 12-month survivability floor. The Aggressive plan (3 hires) is off the table in Bear: <strong>8.9 months</strong>. Not survivable.</div>
+    <button class="s-cta" onclick="document.getElementById('bear-btn').click()">Try Bear scenario →</button>
+  </div>
+
+  <div class="sh-actions">
+    <div class="scen-bar">
+      <button class="scen-btn" id="bear-btn" onclick="setScenario('bear',this)">Bear</button>
+      <button class="scen-btn s-base" onclick="setScenario('base',this)">Base</button>
+      <button class="scen-btn" onclick="setScenario('bull',this)">Bull</button>
+    </div>
+    <span style="font-size:11px;color:var(--ink4)">Click a scenario — everything updates</span>
+  </div>
+
+  <div class="sg">
+    <div class="sg-cell" id="sg-bear" onclick="setScenario('bear',document.getElementById('bear-btn'))">
+      <div class="sg-l">Bear Case</div>
+      <div class="sg-v" style="color:var(--red-text)" id="sv-bear">$14.8M</div>
+      <div class="sg-s">Q2 churn spike + delayed deals</div>
+    </div>
+    <div class="sg-cell sel sel-base" id="sg-base">
+      <div class="sg-l">Base Case</div>
+      <div class="sg-v" style="color:var(--blue-text)" id="sv-base">$17.2M</div>
+      <div class="sg-s">Current trajectory continues</div>
+    </div>
+    <div class="sg-cell" id="sg-bull" onclick="setScenario('bull',document.querySelector('.scen-btn:last-child'))">
+      <div class="sg-l">Bull Case</div>
+      <div class="sg-v" style="color:var(--green-text)" id="sv-bull">$18.1M</div>
+      <div class="sg-s">2 enterprise deals close in Q2</div>
+    </div>
+  </div>
+
+  <div class="cd">
+    <div class="cd-h"><span class="cd-t">Scenario matrix <span>— runway by revenue × hiring plan</span></span></div>
+    <div class="cd-b">
+      <table>
+        <thead><tr><th></th><th style="color:var(--red-text)">Bear · $14.8M</th><th style="color:var(--blue-text)">Base · $17.2M</th><th style="color:var(--green-text)">Bull · $18.1M</th></tr></thead>
+        <tbody>
+          <tr><td class="fw6">Conservative<br><span style="font-size:10px;color:var(--ink4)">No new hires</span></td>
+            <td class="camb">14.2 mo</td>
+            <td class="cgrn fw6">18.8 mo</td>
+            <td class="cgrn fw6">21.1 mo</td></tr>
+          <tr id="row-plan"><td class="fw6">Plan<br><span style="font-size:10px;color:var(--ink4)">1 AE + 1 CSM</span></td>
+            <td class="cred fw6">11.8 mo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></td>
+            <td class="camb fw6">17.4 mo ◄</td>
+            <td class="cgrn">19.6 mo</td></tr>
+          <tr class="alert"><td class="fw6">Aggressive<br><span style="font-size:10px;color:var(--ink4)">+3 hires</span></td>
+            <td class="cred fw6" style="font-size:16px">8.9 mo <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg></td>
+            <td class="camb">13.2 mo</td>
+            <td class="cgrn">15.4 mo</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:var(--ink4);margin-top:8px">◄ = current state · <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> = below 12mo minimum · <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg> = not survivable</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Cost of error <span>— mis-timing this hire</span></span></div>
+      <div class="cd-b">
+        <table>
+          <thead><tr><th>Mistiming</th><th>Cost</th></tr></thead>
+          <tbody>
+            <tr><td>Hire too early (before ARR justifies)</td><td class="fw6 cred">$63K–$243K</td></tr>
+            <tr><td>Hire too late (wait until $18M)</td><td class="fw6 cred">$180K–$400K</td></tr>
+            <tr><td>Use wrong ARR data (Salesforce vs billing)</td><td class="fw6 cred">$28K + runway risk</td></tr>
+          </tbody>
+        </table>
+        <div class="cl cl-red mt8">Annual exposure: <strong>$540K–$1.6M</strong> from 3–4 mis-timed hiring decisions. This system eliminates that.</div>
+      </div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Decision rule</span></div>
+      <div class="cd-b">
+        <div class="dflow">
+          <div class="df-node"><strong>IF</strong> Plan + Bear runway &lt; 12 months</div>
+          <div class="df-arrow">↓</div>
+          <div class="df-node no"><span class="df-tag n">Block</span> Block hiring approval</div>
+          <div class="df-arrow">↓</div>
+          <div class="df-node warn"><span class="df-tag m">Defer</span> Defer 8 weeks, re-evaluate at Q2 mid-point</div>
+          <div class="df-arrow">↓</div>
+          <div class="df-node yes"><span class="df-tag y">If green</span> Bear runway ≥ 12mo → proceed to CEO approval</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKET POSITION -->
+<div id="s-market" class="scr">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · Market</div>
+    <h2>Where you <b>sit.</b></h2>
+    <div class="sh-sub">Competitive landscape. Market share. Position movement. What the other players are doing.</div>
+  </div>
+
+  <div class="krow kr3">
+    <div class="kc accent-blue"><div class="kl">Market Share (SAM)</div><div class="kv">4.2%</div><div class="ks">Construction PM software · $390M SAM</div></div>
+    <div class="kc accent-green"><div class="kl">Win Rate vs Procore</div><div class="kv">64%</div><div class="ks"><span class="up">↑ from 58%</span> last quarter</div></div>
+    <div class="kc accent-amber"><div class="kl">Deals Lost to "Do Nothing"</div><div class="kv">28%</div><div class="ks">Biggest competitor is spreadsheets</div></div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Competitive positioning</span></div>
+      <div class="cd-b">
+        <table>
+          <thead><tr><th>Company</th><th>ARR Est.</th><th>Growth</th><th>Focus</th><th>Threat</th></tr></thead>
+          <tbody>
+            <tr><td class="fw6">Procore</td><td>$750M+</td><td>18%</td><td>Enterprise full-suite</td><td><span class="bdg bdg-red">High</span></td></tr>
+            <tr><td class="fw6">PlanGrid (Autodesk)</td><td>$120M</td><td class="cred">Flat</td><td>Field collaboration</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
+            <tr><td class="fw6">Buildertrend</td><td>$80M</td><td>22%</td><td>Residential</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
+            <tr><td class="fw6">BuildOS</td><td>$4M</td><td class="cgrn fw6">180%</td><td>SMB PLG</td><td><span class="bdg bdg-amber">Watch</span></td></tr>
+            <tr><td class="fw6" style="color:var(--blue-text)">ArcusSoft</td><td class="fw6">$16.4M</td><td class="cgrn fw6">38%</td><td>Mid-market + enterprise</td><td><span class="bdg bdg-blue">Us</span></td></tr>
+          </tbody>
+        </table>
+        <div class="cl cl-blue mt8">Procore is 45× our size but we win 64% of head-to-head deals. Our advantage: <strong>4× faster implementation</strong>, <strong>4× lower price</strong>, and better scheduling AI.</div>
+      </div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Market dynamics to watch</span></div>
+      <div class="cd-b">
+        <div style="padding:14px 18px;background:var(--red-soft);border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
+          <strong>Procore acquired Esticom</strong> — building a full suite. Our scheduling AI advantage narrows if they invest in ML.
+        </div>
+        <div style="padding:14px 18px;background:var(--green-soft);border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
+          <strong>Autodesk spun off PlanGrid</strong> — team is smaller. We're winning more head-to-head. Window: 6–12 months.
+        </div>
+        <div style="padding:14px 18px;background:var(--amber-soft);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;font-size:12px">
+          <strong>BuildOS raised $25M Series A</strong> — PLG play for SMB. They might eat the SMB market before we fix our PMF there.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M&A READINESS -->
+<div id="s-ma" class="scr">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · M&A</div>
+    <h2>Acquisition <b>scorecard.</b></h2>
+    <div class="sh-sub">How attractive are you to acquirers? What would integration look like? What's your walk-away number?</div>
+  </div>
+
+  <div class="krow kr3">
+    <div class="kc accent-blue"><div class="kl">Acquisition Score</div><div class="kv">7.2<span style="font-size:16px;color:var(--ink4)">/10</span></div><div class="ks">Based on 12 M&A readiness factors</div></div>
+    <div class="kc accent-green"><div class="kl">Implied Valuation</div><div class="kv">$82M</div><div class="ks">5× ARR multiple (construction SaaS median)</div></div>
+    <div class="kc accent-amber"><div class="kl">Walk-Away Price</div><div class="kv">$120M</div><div class="ks">7.3× ARR · accounts for growth premium</div></div>
+  </div>
+
+  <div class="cd">
+    <div class="cd-h"><span class="cd-t">M&A readiness factors</span></div>
+    <div class="cd-b">
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Revenue quality (recurring %)</span><span class="cgrn fw6">9/10</span></div><div class="prog"><div class="prog-fill prog-green" style="width:90%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Customer concentration risk</span><span class="camb fw6">6/10</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:60%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Technology stack cleanliness</span><span class="camb fw6">5/10</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:50%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Team retention risk</span><span class="cred fw6">4/10</span></div><div class="prog"><div class="prog-fill prog-red" style="width:40%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Growth trajectory</span><span class="cgrn fw6">8/10</span></div><div class="prog"><div class="prog-fill prog-green" style="width:80%"></div></div></div>
+      <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>IP / moat defensibility</span><span class="cgrn fw6">7/10</span></div><div class="prog"><div class="prog-fill prog-green" style="width:70%"></div></div></div>
+    </div>
+  </div>
+
+  <div class="cl cl-amber">Biggest risk: <strong>team retention (4/10)</strong>. Acquirers worry about key-person dependency. If you're thinking about M&A in the next 18 months, invest in documentation and bench strength first.</div>
+</div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">  <div class="sh">
+    <div class="sh-over">CEO · Strategy Layer · Playbooks</div>
+    <h2>Pre-built <em>decision flows.</em></h2>
+    <div class="sh-sub">When to hire, when to fundraise, when to pivot. Every trigger has a threshold and a playbook.</div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Fundraising trigger</span><span class="bdg bdg-amber">Active — Monitor</span></div>
+      <div class="cd-b">
+        <div class="pbs">
+          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">ARR hits $15M</div><div class="pb-meta"><span>Triggered 3 months ago</span></div></div></div>
+          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Board approves Series C prep</div><div class="pb-meta"><span>Approved Feb 2026</span></div></div></div>
+          <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">Fix burn multiple below 2×</div><div class="pb-meta"><span class="cred">Current: 2.1×</span><span>Target: <1.8×</span></div><div class="pb-desc">Reduce SMB acquisition spend. Focus on enterprise where LTV:CAC is 6.2× vs SMB's 2.8×</div></div></div>
+          <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">Build investor deck</div><div class="pb-meta"><span>Not started</span></div></div></div>
+          <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Begin conversations</div><div class="pb-meta"><span>Target: Q3 2026</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Hiring trigger</span><span class="bdg bdg-red">Blocked</span></div>
+      <div class="cd-b">
+        <div class="pbs">
+          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Pipeline coverage > 3×</div><div class="pb-meta"><span>Hit 3.2× last month</span></div></div></div>
+          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Rep productivity > 85% quota</div><div class="pb-meta"><span>Current: 91%</span></div></div></div>
+          <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">CFO scenario check</div><div class="pb-meta"><span class="cred">BLOCKED</span></div><div class="pb-desc">Bear scenario shows 11.8mo runway with Plan hiring. Below 12mo minimum. Deferred 8 weeks.</div></div></div>
+          <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">CEO approval</div><div class="pb-meta"><span>Waiting on Step 3</span></div></div></div>
+          <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Post roles + hire</div><div class="pb-meta"><span>30-day search target</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Decision Intelligence</div>
+    <div class="rp-sub">64 systems · 9 data sources</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-red">
+      <div class="rs-title">Cost of Inaction</div>
+      <div class="rs-val red">$540K–$1.6M</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:72%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">Per hire mistake</span><span class="rv dn">$180K–$400K</span></div>
+      <div class="rs-row"><span class="rl">Avg decision time</span><span class="rv">30 min</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">System Value</div>
+      <div class="rs-val green">$4.2M</div>
+      <div class="rs-row"><span class="rl">ROI</span><span class="rv up">24×</span></div>
+      <div class="rs-row"><span class="rl">Decision systems</span><span class="rv">64</span></div>
+      <div class="rs-row"><span class="rl">Data sources</span><span class="rv">9</span></div>
+    </div>
+
+    <div class="rp-section accent-blue">
+      <div class="rs-title">Board Readiness</div>
+      <div class="rs-val blue">18 days</div>
+      <div class="rs-dots">
+        <div class="rs-dot on-green"></div>
+        <div class="rs-dot on-green"></div>
+        <div class="rs-dot on-green"></div>
+        <div class="rs-dot on-amber"></div>
+        <div class="rs-dot on-red"></div>
+      </div>
+      <div class="rs-row"><span class="rl">Metrics green</span><span class="rv">3 / 5</span></div>
+      <div class="rs-row"><span class="rl">Target valuation</span><span class="rv">$120M</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">Kellerman health 31</span><span class="ra-val" style="color:var(--red-text)">$84K</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--amber)">CFO</span><span class="ra-text">Hiring blocked</span><span class="ra-val" style="color:var(--amber-text)">Bear</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--purple)">CTO</span><span class="ra-text">Mobile offline</span><span class="ra-val" style="color:var(--purple-text)">$480K</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /rp -->
+</div><!-- /layout -->
+
+<script>
+function show(id,el){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('s-'+id).classList.add('on');
+  if(el)el.classList.add('on');
+  loadRevenueTrend();
+}
+
+function setScenario(type,btn){
+  document.querySelectorAll('.scen-btn').forEach(b=>{b.className='scen-btn'});
+  document.querySelectorAll('.sg-cell').forEach(c=>{c.className='sg-cell'});
+  if(type==='bear'){btn.classList.add('s-bear');document.getElementById('sg-bear').classList.add('sel','sel-bear')}
+  else if(type==='base'){btn.classList.add('s-base');document.getElementById('sg-base').classList.add('sel','sel-base')}
+  else{btn.classList.add('s-bull');document.getElementById('sg-bull').classList.add('sel','sel-bull')}
+}
+
+/* ═══ Embedded fallback data (works without server) ═══ */
+const REV_TREND_FALLBACK = {
+  months:["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar"],
+  segments:{
+    enterprise:{label:"Enterprise",color:"#3b82f6",data:[580,610,630,660,680,700,720,750,770,790,810,830]},
+    midmarket:{label:"Mid-Market",color:"#7c3aed",data:[280,295,310,320,330,340,350,360,370,380,390,400]},
+    smb:{label:"SMB",color:"#d97706",data:[130,135,140,140,140,150,150,150,150,150,150,140]}
+  },
+  target:[990,1020,1050,1080,1110,1140,1170,1200,1230,1260,1290,1320],
+  total:[990,1040,1080,1120,1150,1190,1220,1260,1290,1320,1350,1370]
+};
+const REV_MIX_FALLBACK = {
+  segments:[
+    {id:"enterprise",name:"Enterprise (>$100K)",customers:18,arr:7200000,arrFormatted:"$7.2M",pct:44,nrr:112,nrrClass:"cgrn",trend:"up",trendPct:8},
+    {id:"midmarket",name:"Mid-Market ($25–100K)",customers:89,arr:5800000,arrFormatted:"$5.8M",pct:35,nrr:106,nrrClass:"cgrn",trend:"up",trendPct:4},
+    {id:"smb",name:"SMB (<$25K)",customers:205,arr:3400000,arrFormatted:"$3.4M",pct:21,nrr:96,nrrClass:"cred",trend:"down",trendPct:-2}
+  ],
+  totals:{customers:312,arr:16400000,arrFormatted:"$16.4M",nrr:103}
+};
+
+/* ═══ Revenue Trend — API-driven with fallback ═══ */
+async function loadRevenueTrend(){
+  const range = document.getElementById('rev-range')?.value || 12;
+  const cbs = document.querySelectorAll('.rev-seg-cb:checked');
+  const segs = Array.from(cbs).map(c=>c.value).join(',');
+  let data = null;
+  try{
+    const res = await fetch('/api/revenue-trend?range='+range+(segs?'&segments='+segs:''));
+    if(res.ok) data = await res.json();
+  }catch(e){}
+  // Fallback: apply filters to embedded data
+  if(!data){
+    data = JSON.parse(JSON.stringify(REV_TREND_FALLBACK));
+    // Apply range filter
+    const n = parseInt(range);
+    if(n > 0 && n < data.months.length){
+      const start = data.months.length - n;
+      data.months = data.months.slice(start);
+      data.total = data.total.slice(start);
+      data.target = data.target.slice(start);
+      const filtered = {};
+      for(const [k,v] of Object.entries(data.segments)){filtered[k]={...v,data:v.data.slice(start)}}
+      data.segments = filtered;
+    }
+    // Apply segment filter
+    if(segs){
+      const segList = segs.split(',').map(s=>s.trim().toLowerCase());
+      const filtered = {};
+      for(const k of segList){if(data.segments[k]) filtered[k]=data.segments[k]}
+      data.segments = filtered;
+    }
+  }
+  renderRevenueChart(data);
+}
+
+function renderRevenueChart(data){
+  const r = document.getElementById('ch-rev');
+  if(!r) return;
+  if(r._chart) r._chart.destroy();
+
+  const datasets = [];
+  // Add segment lines
+  for(const [key, seg] of Object.entries(data.segments)){
+    datasets.push({
+      label: seg.label,
+      data: seg.data,
+      borderColor: seg.color,
+      backgroundColor: seg.color + '10',
+      fill: false,
+      tension: .35,
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: seg.color,
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2
+    });
+  }
+  // Add total line
+  datasets.push({
+    label: 'Total MRR',
+    data: data.total,
+    borderColor: '#1a1916',
+    backgroundColor: 'rgba(26,25,22,.03)',
+    fill: true,
+    tension: .35,
+    borderWidth: 2.5,
+    pointRadius: 0,
+    borderDash: []
+  });
+  // Add target line
+  datasets.push({
+    label: 'Target',
+    data: data.target,
+    borderColor: '#ccc9c2',
+    borderDash: [6,4],
+    borderWidth: 1.5,
+    pointRadius: 0,
+    fill: false
+  });
+
+  r._chart = new Chart(r, {
+    type:'line',
+    data:{labels: data.months, datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
+      scales:{
+        y:{beginAtZero:false, ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},
+        x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}
+      }
+    }
+  });
+}
+
+/* ═══ Revenue Mix — API-driven with fallback ═══ */
+let _mixData = null;
+async function loadRevenueMix(segment){
+  let data = null;
+  try{
+    const url = '/api/revenue-mix'+(segment&&segment!=='all'?'?segment='+segment:'');
+    const res = await fetch(url);
+    if(res.ok) data = await res.json();
+  }catch(e){}
+  // Fallback: filter embedded data
+  if(!data){
+    data = JSON.parse(JSON.stringify(REV_MIX_FALLBACK));
+    if(segment && segment!=='all'){
+      data.segments = data.segments.filter(s=>s.id===segment);
+    }
+  }
+  _mixData = data;
+  renderMixTable(data);
+}
+
+function renderMixTable(data){
+  const tbody = document.getElementById('mix-tbody');
+  const tfoot = document.getElementById('mix-tfoot');
+  const callout = document.getElementById('mix-callout');
+  if(!tbody) return;
+
+  let html = '';
+  for(const seg of data.segments){
+    const alertCls = seg.nrr < 100 ? ' class="alert"' : '';
+    html += '<tr'+alertCls+'>'
+      +'<td class="fw6">'+seg.name+'</td>'
+      +'<td>'+seg.customers+'</td>'
+      +'<td>'+seg.arrFormatted+'</td>'
+      +'<td class="fw6">'+seg.pct+'%</td>'
+      +'<td class="'+seg.nrrClass+' fw6">'+seg.nrr+'%</td>'
+      +'<td>'+(seg.trend==='up'?'<span class="cgrn">↑ '+seg.trendPct+'%</span>':'<span class="cred">↓ '+Math.abs(seg.trendPct)+'%</span>')+'</td>'
+      +'</tr>';
+  }
+  tbody.innerHTML = html;
+
+  const t = data.totals;
+  tfoot.innerHTML = '<tr><td class="fw6">Total</td><td class="fw6">'+t.customers+'</td><td class="fw6">'+t.arrFormatted+'</td><td></td><td class="fw6">'+t.nrr+'%</td><td></td></tr>';
+
+  // Callout
+  const hasSmb = data.segments.some(s=>s.id==='smb');
+  if(hasSmb){
+    callout.innerHTML = '<div class="cl cl-amber mt8">SMB NRR at 96% is below breakeven. Each SMB dollar is slowly leaking. See CS Portal → At-Risk for the 38 accounts driving this.</div>';
+  } else {
+    callout.innerHTML = '';
+  }
+}
+
+function filterMix(seg, btn){
+  document.querySelectorAll('.mix-seg-btn').forEach(b=>{
+    b.style.background='var(--surface)'; b.style.color='var(--ink3)'; b.classList.remove('on');
+  });
+  btn.style.background='var(--blue)'; btn.style.color='#fff'; btn.classList.add('on');
+  loadRevenueMix(seg);
+}
+
+// Initial loads
+loadRevenueTrend();
+loadRevenueMix();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('ceo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+
+// ── Load data from JSON ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (!company) return;
+  const c = company.company;
+  const s = company.scenarios;
+
+  // Update scenario button data attributes for dynamic switching
+  document.querySelectorAll('.scen-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const type = this.textContent.trim().toLowerCase();
+      setScenario(type, this);
+    });
+  });
+
+  // Listen for scenario changes and update KPIs
+  document.addEventListener('scenarioChange', function(e) {
+    const scenario = s[e.detail.scenario];
+    if (!scenario) return;
+    // Update scenario-specific values on the page
+    const kvElements = document.querySelectorAll('.kc .kv');
+    // The first KPI card is typically ARR
+    if (kvElements[0]) kvElements[0].textContent = scenario.arrFormatted;
+  });
+
+  // Footer + status bar
+  const footer = document.querySelector('.footer span');
+  if (footer) footer.textContent = `Built by Decision System Lab · decisionsystemlab.com · Confidential · v${c.version}`;
+})();
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

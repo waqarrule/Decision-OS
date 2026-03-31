@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CTO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#7c3aed;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--purple);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--purple);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.25)}
+.hdr-r .live {display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;color:var(--purple);margin-left:12px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
+.hdr-r .live i {width:7px;height:7px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:pulse 2s ease-in-out infinite}
+.tab.on {color:var(--purple);border-bottom-color:var(--purple);background:#f5f3ff}
+.sh h2 em {font-style:italic;color:var(--purple)}
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+.btn-p {background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 2px 8px rgba(124,58,237,.25)}
+.story {background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--purple)}
+.story .s-body strong {color:var(--purple-text);font-weight:600}
+.cl-purple {background:var(--purple-soft);border-color:rgba(124,58,237,.15);color:#5b21b6}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:#f5f3ff;border-color:rgba(124,58,237,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(124,58,237,.25)}
+.pb-step.done .pb-num {background:var(--purple)}
+.prog-purple {background:linear-gradient(90deg,#c4b5fd,#7c3aed)}
+.cpur {color:var(--purple-text)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CTO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html" class="on">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('engineering',this)">Engineering</button>
+  <button class="tab" onclick="show('reliability',this)">Reliability</button>
+  <button class="tab" onclick="show('techdebt',this)">Tech Debt</button>
+  <button class="tab" onclick="show('security',this)">Security</button>
+  <button class="tab" onclick="show('scale',this)">Scale</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- ENGINEERING -->
+<div id="s-engineering" class="scr on">
+  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Velocity</div><h2>Ship speed is <em>the strategy.</em></h2><div class="sh-sub">Sprint velocity, deploy frequency, and the engineering metrics that predict whether you'll hit product-market timeline or lose to faster competitors.</div></div>
+  <div class="story"><div class="s-num">−23%</div><div class="s-label">The Velocity Problem</div><div class="s-title">Sprint velocity dropped 23% in 8 weeks.</div><div class="s-body">Engineering velocity has declined from <strong>142 story points/sprint</strong> to <strong>109 points/sprint</strong> over the last 8 weeks. The cause isn't headcount — it's context switching. Teams are splitting time between <strong>3.2 active projects</strong> on average, up from 1.8 last quarter. Every context switch costs ~20 minutes of recovery. With 47 engineers averaging 4 switches/day, that's <strong>63 lost engineering hours per week</strong>. This screen shows what's happening and what to do about it.</div><button class="s-cta" onclick="show('techdebt',document.querySelector('.tab:nth-child(3)'))">See tech debt impact →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-purple"><div class="kl">Sprint Velocity</div><div class="kv">109<span style="font-size:16px;color:var(--ink4)"> pts</span></div><div class="ks"><span class="dn">↓ 23%</span> from 142 pts/sprint</div></div>
+    <div class="kc accent-green"><div class="kl">Deploy Frequency</div><div class="kv">4.2<span style="font-size:16px;color:var(--ink4)">/day</span></div><div class="ks"><span class="up">↑ from 3.1</span> last quarter</div></div>
+    <div class="kc accent-amber"><div class="kl">Lead Time</div><div class="kv">3.8<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks">Target: &lt;2 days · <span class="dn">↑ from 2.9</span></div></div>
+    <div class="kc accent-red"><div class="kl">Change Failure Rate</div><div class="kv">12.4%</div><div class="ks">Target: &lt;5% · <span class="dn">↑ from 8.1%</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Velocity trend <span>— 12 months, story points/sprint</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-vel"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Team utilization <span>— by squad</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Squad</th><th>Engineers</th><th>Active Projects</th><th>Utilization</th><th>Status</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Platform Core</td><td>12</td><td>2</td><td class="cgrn fw6">94%</td><td><span class="bdg bdg-green">Focused</span></td></tr>
+      <tr><td class="fw6">Payments</td><td>8</td><td>2</td><td class="fw6">88%</td><td><span class="bdg bdg-green">Healthy</span></td></tr>
+      <tr class="alert"><td class="fw6">Growth</td><td>10</td><td>5</td><td class="cred fw6">61%</td><td><span class="bdg bdg-red">Overloaded</span></td></tr>
+      <tr class="alert"><td class="fw6">Integrations</td><td>7</td><td>4</td><td class="cred fw6">58%</td><td><span class="bdg bdg-red">Overloaded</span></td></tr>
+      <tr><td class="fw6">Data/ML</td><td>6</td><td>3</td><td class="camb fw6">72%</td><td><span class="bdg bdg-amber">Stretched</span></td></tr>
+      <tr><td class="fw6">Mobile</td><td>4</td><td>3</td><td class="camb fw6">68%</td><td><span class="bdg bdg-amber">Stretched</span></td></tr></tbody></table>
+      <div class="cl cl-purple mt8">Growth and Integrations squads are <strong>5-4× overcommitted</strong>. Each additional project beyond 2 reduces velocity by ~15%. Consolidate or pause lower-priority work.</div>
+    </div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">DORA metrics <span>— quarter over quarter</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Metric</th><th>Q3 2025</th><th>Q4 2025</th><th>Q1 2026</th><th>Target</th><th>Trend</th></tr></thead>
+      <tbody><tr><td class="fw6">Deploy Frequency</td><td>2.4/day</td><td>3.1/day</td><td class="cgrn fw6">4.2/day</td><td>&gt;1/day</td><td><span class="up">↑ Improving</span></td></tr>
+      <tr><td class="fw6">Lead Time</td><td>2.1 days</td><td>2.9 days</td><td class="camb fw6">3.8 days</td><td>&lt;2 days</td><td><span class="dn">↓ Degrading</span></td></tr>
+      <tr class="alert"><td class="fw6">Change Failure Rate</td><td>6.2%</td><td>8.1%</td><td class="cred fw6">12.4%</td><td>&lt;5%</td><td><span class="dn">↓ Critical</span></td></tr>
+      <tr><td class="fw6">MTTR</td><td>48 min</td><td>62 min</td><td class="camb fw6">74 min</td><td>&lt;30 min</td><td><span class="dn">↓ Degrading</span></td></tr></tbody></table>
+      <div class="cl cl-red mt8">Deploy frequency is up (good) but lead time and failure rate are worsening. We're shipping faster but with <strong>lower quality</strong>. The 12.4% CFR means 1 in 8 deploys causes an incident.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Context switching cost</span></div><div class="cd-b">
+      <div style="padding:18px;background:var(--purple-soft);border-radius:8px;margin-bottom:12px">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Weekly impact</div>
+        <div style="font-size:28px;font-weight:800;color:var(--purple-text);letter-spacing:-.03em">63 hours lost</div>
+        <div style="font-size:11px;color:var(--ink3);margin-top:4px">47 engineers × 4 switches/day × 20min recovery</div>
+      </div>
+      <div class="g2" style="gap:8px">
+        <div style="padding:14px;background:var(--surface3);border-radius:8px;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--ink)">3.2</div><div style="font-size:10px;color:var(--ink4)">Avg projects/eng</div><div style="font-size:11px;color:var(--red-text);font-weight:600">Target: &lt;2</div></div>
+        <div style="padding:14px;background:var(--surface3);border-radius:8px;text-align:center"><div style="font-size:20px;font-weight:800;color:var(--ink)">1.6 FTE</div><div style="font-size:10px;color:var(--ink4)">Equivalent lost</div><div style="font-size:11px;color:var(--red-text);font-weight:600">$280K/yr waste</div></div>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<!-- RELIABILITY -->
+<div id="s-reliability" class="scr">
+  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Reliability</div><h2>Uptime is <b>the product.</b></h2><div class="sh-sub">Availability, incident response, and the operational metrics customers feel but never see on a status page.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-green"><div class="kl">Uptime (30d)</div><div class="kv">99.91%</div><div class="ks">SLA: 99.95% · <span class="dn">4 breaches</span> this month</div></div>
+    <div class="kc accent-amber"><div class="kl">Mean Time to Recovery</div><div class="kv">74<span style="font-size:16px;color:var(--ink4)"> min</span></div><div class="ks">Target: &lt;30 min · <span class="dn">↑ from 48 min</span></div></div>
+    <div class="kc accent-red"><div class="kl">Incidents (30d)</div><div class="kv">14</div><div class="ks">3 P1 · 5 P2 · 6 P3 · <span class="dn">↑ from 9</span></div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">MTTR trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-mttr"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">SLA compliance <span>— by service</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Service</th><th>SLA</th><th>Actual</th><th>Breaches</th><th>Status</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">API Gateway</td><td>99.99%</td><td class="cgrn fw6">99.98%</td><td>0</td><td><span class="bdg bdg-green">Compliant</span></td></tr>
+      <tr><td class="fw6">Auth Service</td><td>99.95%</td><td class="fw6">99.94%</td><td>1</td><td><span class="bdg bdg-amber">At Risk</span></td></tr>
+      <tr class="alert"><td class="fw6">Payments</td><td>99.99%</td><td class="cred fw6">99.87%</td><td>3</td><td><span class="bdg bdg-red">Breached</span></td></tr>
+      <tr><td class="fw6">Web App</td><td>99.95%</td><td class="fw6">99.93%</td><td>1</td><td><span class="bdg bdg-amber">At Risk</span></td></tr>
+      <tr class="good"><td class="fw6">CDN / Static</td><td>99.9%</td><td class="cgrn fw6">99.99%</td><td>0</td><td><span class="bdg bdg-green">Compliant</span></td></tr>
+      <tr class="alert"><td class="fw6">Background Jobs</td><td>99.9%</td><td class="cred fw6">99.72%</td><td>2</td><td><span class="bdg bdg-red">Breached</span></td></tr></tbody></table>
+      <div class="cl cl-red mt8">Payments service breached SLA 3 times this month. Root cause: race condition in idempotency key handling under high concurrency. Fix is in review — ETA 3 days.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Incident log <span>— last 30 days</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Date</th><th>Severity</th><th>Service</th><th>Duration</th><th>Root Cause</th><th>Status</th></tr></thead>
+    <tbody><tr class="alert"><td class="fw6">Mar 24</td><td><span class="bdg bdg-red">P1</span></td><td>Payments</td><td class="cred fw6">2h 14m</td><td>Idempotency race condition</td><td><span class="bdg bdg-amber">Fix in review</span></td></tr>
+    <tr class="alert"><td class="fw6">Mar 21</td><td><span class="bdg bdg-red">P1</span></td><td>Auth Service</td><td class="cred fw6">1h 42m</td><td>Redis cluster failover delay</td><td><span class="bdg bdg-green">Resolved</span></td></tr>
+    <tr><td class="fw6">Mar 18</td><td><span class="bdg bdg-amber">P2</span></td><td>Background Jobs</td><td class="camb fw6">3h 08m</td><td>Queue consumer OOM</td><td><span class="bdg bdg-green">Resolved</span></td></tr>
+    <tr><td class="fw6">Mar 15</td><td><span class="bdg bdg-amber">P2</span></td><td>Web App</td><td class="camb fw6">48m</td><td>CDN cache invalidation loop</td><td><span class="bdg bdg-green">Resolved</span></td></tr>
+    <tr class="alert"><td class="fw6">Mar 12</td><td><span class="bdg bdg-red">P1</span></td><td>Payments</td><td class="cred fw6">58m</td><td>Stripe webhook timeout</td><td><span class="bdg bdg-green">Resolved</span></td></tr>
+    <tr><td class="fw6">Mar 09</td><td><span class="bdg bdg-amber">P2</span></td><td>Background Jobs</td><td class="camb fw6">2h 20m</td><td>Deadlock in batch processor</td><td><span class="bdg bdg-amber">Monitoring</span></td></tr>
+    <tr><td class="fw6">Mar 05</td><td><span class="bdg bdg-blue">P3</span></td><td>API Gateway</td><td>22m</td><td>Rate limiter misconfiguration</td><td><span class="bdg bdg-green">Resolved</span></td></tr></tbody></table>
+  </div></div>
+</div>
+
+<!-- TECH DEBT -->
+<div id="s-techdebt" class="scr">  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Tech Debt</div><h2>The tax on <em>every feature.</em></h2><div class="sh-sub">Technical debt quantified: velocity impact, refactoring ROI, and the backlog that's eating your engineering capacity.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-red"><div class="kl">Tech Debt Ratio</div><div class="kv">31%</div><div class="ks">Of sprint capacity consumed by debt</div></div>
+    <div class="kc accent-amber"><div class="kl">Refactor Cost</div><div class="kv">$1.2M</div><div class="ks">Estimated to clear critical debt</div></div>
+    <div class="kc accent-purple"><div class="kl">Velocity Impact</div><div class="kv">−23%</div><div class="ks">Sprint velocity reduction from debt</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Debt by category <span>— distribution</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-debt"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Refactoring ROI <span>— by category</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Category</th><th>Effort</th><th>Velocity Gain</th><th>ROI</th><th>Priority</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Database query optimization</td><td>3 sprints</td><td class="cgrn fw6">+8%</td><td class="cgrn fw6">4.2×</td><td><span class="bdg bdg-green">P0</span></td></tr>
+      <tr class="good"><td class="fw6">Auth service refactor</td><td>2 sprints</td><td class="cgrn fw6">+5%</td><td class="cgrn fw6">3.8×</td><td><span class="bdg bdg-green">P0</span></td></tr>
+      <tr><td class="fw6">Frontend build system</td><td>2 sprints</td><td class="fw6">+4%</td><td class="fw6">3.1×</td><td><span class="bdg bdg-blue">P1</span></td></tr>
+      <tr><td class="fw6">API versioning cleanup</td><td>4 sprints</td><td>+3%</td><td class="fw6">1.6×</td><td><span class="bdg bdg-amber">P2</span></td></tr>
+      <tr><td class="fw6">Legacy monolith extraction</td><td>8 sprints</td><td>+6%</td><td class="camb fw6">1.2×</td><td><span class="bdg bdg-amber">P2</span></td></tr></tbody></table>
+      <div class="cl cl-green mt8">Database optimization and auth refactor have <strong>ROI above 3.5×</strong> — they should be prioritized immediately. Combined, they'd recover ~13% velocity in 5 sprints.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Impact scoring <span>— debt items ranked by blast radius</span></span></div><div class="cd-b">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">N+1 query problem in billing service</span><span class="cpur fw6" style="font-size:11px">9.2/10</span></div><div class="prog"><div class="prog-fill prog-purple" style="width:92%"></div></div><div style="font-size:10px;color:var(--ink4)">Affects: Payments, Invoices, Reports · Blocks 3 features</div></div>
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Monolithic auth — no horizontal scaling</span><span class="cpur fw6" style="font-size:11px">8.7/10</span></div><div class="prog"><div class="prog-fill prog-purple" style="width:87%"></div></div><div style="font-size:10px;color:var(--ink4)">Affects: Login, SSO, API keys · Limits throughput at 2K RPS</div></div>
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Frontend: no component library, 4 design systems</span><span class="cpur fw6" style="font-size:11px">7.4/10</span></div><div class="prog"><div class="prog-fill prog-purple" style="width:74%"></div></div><div style="font-size:10px;color:var(--ink4)">Affects: Every UI feature · 2× CSS bundle, inconsistent UX</div></div>
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">No API versioning — breaking changes ship undetected</span><span class="cpur fw6" style="font-size:11px">6.8/10</span></div><div class="prog"><div class="prog-fill prog-purple" style="width:68%"></div></div><div style="font-size:10px;color:var(--ink4)">Affects: Integrations, Partners · 12 partner API breaks this quarter</div></div>
+      <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Test coverage at 34% — no integration tests</span><span class="camb fw6" style="font-size:11px">6.1/10</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:61%"></div></div><div style="font-size:10px;color:var(--ink4)">Affects: Change Failure Rate · Direct cause of 12.4% CFR</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- SECURITY -->
+<div id="s-security" class="scr">  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Security</div><h2>Vulnerabilities <b>don't wait.</b></h2><div class="sh-sub">Security posture, vulnerability tracking, compliance status, and the open items that keep your CISO up at night.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-amber"><div class="kl">Security Posture</div><div class="kv">72<span style="font-size:16px;color:var(--ink4)">/100</span></div><div class="ks">Target: &gt;85 · <span class="up">↑ from 68</span></div></div>
+    <div class="kc accent-red"><div class="kl">Open Vulnerabilities</div><div class="kv">47</div><div class="ks">6 Critical · 14 High · 27 Med/Low</div></div>
+    <div class="kc accent-green"><div class="kl">Compliance Score</div><div class="kv">88%</div><div class="ks">SOC 2 Type II audit: Jun 2026</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Vulnerability tracking <span>— 6 month trend</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Month</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Total Open</th><th>Resolved</th></tr></thead>
+      <tbody><tr><td class="fw6">Oct 2025</td><td class="cred">3</td><td>11</td><td>22</td><td>18</td><td class="fw6">54</td><td>12</td></tr>
+      <tr><td class="fw6">Nov 2025</td><td class="cred">5</td><td>13</td><td>20</td><td>16</td><td class="fw6">54</td><td>14</td></tr>
+      <tr><td class="fw6">Dec 2025</td><td>2</td><td>10</td><td>19</td><td>15</td><td class="fw6">46</td><td>18</td></tr>
+      <tr><td class="fw6">Jan 2026</td><td class="cred">4</td><td>12</td><td>21</td><td>14</td><td class="fw6">51</td><td>16</td></tr>
+      <tr><td class="fw6">Feb 2026</td><td>3</td><td>11</td><td>18</td><td>13</td><td class="fw6">45</td><td>20</td></tr>
+      <tr class="alert"><td class="fw6">Mar 2026</td><td class="cred fw6">6</td><td class="camb">14</td><td>16</td><td>11</td><td class="cred fw6">47</td><td>10</td></tr></tbody></table>
+      <div class="cl cl-red mt8">Critical vulns spiked to <strong>6 this month</strong> — 3 are from a newly disclosed CVE in our auth dependency. Patch is available but requires auth service downtime window.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Compliance status <span>— SOC 2 Type II prep</span></span></div><div class="cd-b">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Access Control</span><span class="cgrn fw6" style="font-size:11px">94%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:94%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Data Encryption</span><span class="cgrn fw6" style="font-size:11px">91%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:91%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Incident Response</span><span class="camb fw6" style="font-size:11px">86%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:86%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Vulnerability Management</span><span class="camb fw6" style="font-size:11px">78%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:78%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Change Management</span><span class="camb fw6" style="font-size:11px">82%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:82%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Logging & Monitoring</span><span class="cgrn fw6" style="font-size:11px">89%</span></div><div class="prog"><div class="prog-fill prog-green" style="width:89%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">Vendor Risk Management</span><span class="cred fw6" style="font-size:11px">64%</span></div><div class="prog"><div class="prog-fill prog-red" style="width:64%"></div></div></div>
+      </div>
+      <div class="cl cl-amber mt8">Vendor risk management is the weakest area at <strong>64%</strong>. 3 critical vendors lack current SOC 2 reports. SOC 2 audit in June — need vendor questionnaires completed by May 1.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Open security items <span>— action required</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Item</th><th>Severity</th><th>Age</th><th>Owner</th><th>ETA</th></tr></thead>
+    <tbody><tr class="alert"><td class="fw6">Auth dependency CVE (critical)</td><td><span class="bdg bdg-red">Critical</span></td><td class="cred fw6">6 days</td><td>Platform Core</td><td>Mar 30</td></tr>
+    <tr class="alert"><td class="fw6">SQL injection in legacy report builder</td><td><span class="bdg bdg-red">Critical</span></td><td class="cred fw6">12 days</td><td>Integrations</td><td>Apr 2</td></tr>
+    <tr><td class="fw6">API key rotation not enforced</td><td><span class="bdg bdg-amber">High</span></td><td class="camb">22 days</td><td>Platform Core</td><td>Apr 5</td></tr>
+    <tr><td class="fw6">CORS misconfiguration on staging</td><td><span class="bdg bdg-amber">High</span></td><td class="camb">8 days</td><td>Growth</td><td>Mar 29</td></tr>
+    <tr><td class="fw6">Missing rate limit on /api/v2/export</td><td><span class="bdg bdg-amber">High</span></td><td class="camb">15 days</td><td>Data/ML</td><td>Apr 8</td></tr>
+    <tr><td class="fw6">Vendor SOC 2 reports expired (3 vendors)</td><td><span class="bdg bdg-amber">High</span></td><td class="camb">30 days</td><td>Security</td><td>May 1</td></tr></tbody></table>
+  </div></div>
+</div>
+
+<!-- SCALE -->
+<div id="s-scale" class="scr">
+  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Scale</div><h2>Before it <em>breaks.</em></h2><div class="sh-sub">Cost per transaction, capacity utilization, architecture risks, and the scaling bottlenecks that'll hit before Series C.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-purple"><div class="kl">Cost / Transaction</div><div class="kv">$0.0034</div><div class="ks"><span class="dn">↑ 18%</span> from $0.0029 · target &lt;$0.003</div></div>
+    <div class="kc accent-amber"><div class="kl">Capacity Used</div><div class="kv">73%</div><div class="ks">Projected 95% at 2× current load</div></div>
+    <div class="kc accent-red"><div class="kl">Bottlenecks</div><div class="kv">4</div><div class="ks">2 will block growth at 5K DAU</div></div>
+  </div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Cost per transaction <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-cost"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Architecture risks <span>— ranked by severity</span></span></div><div class="cd-b">
+      <table><thead><tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Score</th></tr></thead>
+      <tbody><tr class="alert"><td class="fw6">Single-region database</td><td><span class="bdg bdg-red">Critical</span></td><td><span class="bdg bdg-amber">Medium</span></td><td class="cred fw6">8.5</td></tr>
+      <tr class="alert"><td class="fw6">Monolithic auth (no scaling)</td><td><span class="bdg bdg-red">Critical</span></td><td><span class="bdg bdg-amber">Medium</span></td><td class="cred fw6">8.2</td></tr>
+      <tr><td class="fw6">No connection pooling on read replicas</td><td><span class="bdg bdg-amber">High</span></td><td><span class="bdg bdg-red">High</span></td><td class="camb fw6">7.8</td></tr>
+      <tr><td class="fw6">Background job queue single point of failure</td><td><span class="bdg bdg-amber">High</span></td><td><span class="bdg bdg-amber">Medium</span></td><td class="camb fw6">6.5</td></tr>
+      <tr><td class="fw6">No CDN for API responses</td><td><span class="bdg bdg-blue">Medium</span></td><td><span class="bdg bdg-amber">Medium</span></td><td class="fw6">5.2</td></tr></tbody></table>
+      <div class="cl cl-red mt8">Single-region DB is the <strong>#1 scaling risk</strong>. At 2× load, we'll saturate the primary. Read replicas help but lack connection pooling — adding it is a 1-sprint fix that buys 6 months.</div>
+    </div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Scaling bottlenecks <span>— capacity flow</span></span></div><div class="cd-b">
+    <div class="dflow">
+      <div class="df-node warn"><span class="df-tag m">73%</span><strong>Database Primary</strong> — 73% CPU utilization at current load. Read replicas at 45%. Write path will saturate at ~1.8×.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node no"><span class="df-tag n">BLOCK</span><strong>Auth Service</strong> — Monolithic, maxes at 2K RPS. Current peak: 1.6K RPS. No horizontal scaling path without refactor.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node warn"><span class="df-tag m">68%</span><strong>Background Jobs</strong> — Queue depth growing 12% month-over-month. Consumer OOM incidents increasing. Needs sharding.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node yes"><span class="df-tag y">OK</span><strong>CDN / Static Assets</strong> — Well-optimized. CloudFront handles 50× current load with no changes needed.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node warn"><span class="df-tag m">78%</span><strong>API Gateway</strong> — Rate limiting working but no response caching. Adding Redis cache layer would reduce backend load by 40%.</div>
+    </div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Infrastructure cost breakdown</span></div><div class="cd-b">
+      <table><thead><tr><th>Component</th><th>Monthly Cost</th><th>% of Total</th><th>Trend</th></tr></thead>
+      <tbody><tr><td class="fw6">Compute (ECS/EKS)</td><td class="fw6">$42K</td><td>38%</td><td><span class="dn">↑ 8%</span></td></tr>
+      <tr><td class="fw6">Database (RDS)</td><td class="fw6">$28K</td><td>25%</td><td><span class="dn">↑ 14%</span></td></tr>
+      <tr><td class="fw6">Storage (S3)</td><td class="fw6">$12K</td><td>11%</td><td><span class="up">↑ 2%</span></td></tr>
+      <tr><td class="fw6">CDN / Networking</td><td class="fw6">$8K</td><td>7%</td><td>Stable</td></tr>
+      <tr><td class="fw6">Monitoring / Logging</td><td class="fw6">$6K</td><td>5%</td><td><span class="dn">↑ 6%</span></td></tr>
+      <tr><td class="fw6">Other (Redis, MQ, etc.)</td><td class="fw6">$15K</td><td>14%</td><td><span class="dn">↑ 5%</span></td></tr>
+      <tr style="border-top:2px solid var(--border)"><td class="fw6">Total</td><td class="fw6">$111K/mo</td><td class="fw6">100%</td><td><span class="dn">↑ 8% QoQ</span></td></tr></tbody></table>
+      <div class="cl cl-amber mt8">Database costs growing <strong>14% QoQ</strong> — outpacing revenue growth. Connection pooling and query optimization could cut this by $6-8K/month.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Scaling readiness</span></div><div class="cd-b">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">2× current load</span><span class="camb fw6" style="font-size:11px">68%</span></div><div class="prog"><div class="prog-fill prog-amber" style="width:68%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">5× current load</span><span class="cred fw6" style="font-size:11px">31%</span></div><div class="prog"><div class="prog-fill prog-red" style="width:31%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="fw6" style="font-size:12px">10× current load</span><span class="cred fw6" style="font-size:11px">12%</span></div><div class="prog"><div class="prog-fill prog-red" style="width:12%"></div></div></div>
+      </div>
+      <div class="cl cl-purple mt8">We can handle <strong>2× with hardening</strong> (connection pooling, auth refactor). Beyond that, we need database sharding and service decomposition. Plan for 10× before Series C fundraise.</div>
+    </div></div>
+  </div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Engineering Intelligence</div>
+    <div class="rp-sub">Velocity · Reliability · Debt</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-purple">
+      <div class="rs-title">Engineering Health</div>
+      <div class="rs-val purple">6.8 / 10</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:68%;background:var(--purple)"></div></div>
+      <div class="rs-row"><span class="rl">Tech debt load</span><span class="rv dn">31%</span></div>
+      <div class="rs-row"><span class="rl">Ship speed risk</span><span class="rv dn">↓ 15% by Q3</span></div>
+    </div>
+
+    <div class="rp-section accent-red">
+      <div class="rs-title">Utilization</div>
+      <div class="rs-val red">91%</div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:91%;background:var(--red)"></div></div>
+      <div class="rs-row"><span class="rl">Threshold</span><span class="rv">85%</span></div>
+      <div class="rs-row"><span class="rl">Velocity trend</span><span class="rv dn">↓ 15% MoM</span></div>
+      <div class="rs-row"><span class="rl">Headcount</span><span class="rv">62</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Reliability</div>
+      <div class="rs-val green">99.9%</div>
+      <div class="rs-row"><span class="rl">Uptime</span><span class="rv up">99.9%</span></div>
+      <div class="rs-row"><span class="rl">Model accuracy</span><span class="rv up">94%</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">Mobile offline → 5 exits</span><span class="ra-val" style="color:var(--red-text)">$480K</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--amber)">CFO</span><span class="ra-text">Eng costs $580K/mo</span><span class="ra-val">36.7%</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--rose)">CPO</span><span class="ra-text">3 AI features killed</span><span class="ra-val">Realloc</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const v=document.getElementById('ch-vel');if(v){if(v._chart)v._chart.destroy();v._chart=new Chart(v,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Sprint Velocity',data:[148,152,145,140,142,138,135,130,125,118,114,109],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target',data:[140,140,140,140,140,140,140,140,140,140,140,140],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:80,ticks:{callback:v=>v+' pts',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const m=document.getElementById('ch-mttr');if(m){if(m._chart)m._chart.destroy();m._chart=new Chart(m,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'MTTR (minutes)',data:[42,38,44,46,48,52,48,62,58,66,70,74],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target',data:[30,30,30,30,30,30,30,30,30,30,30,30],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:20,ticks:{callback:v=>v+' min',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const d=document.getElementById('ch-debt');if(d){if(d._chart)d._chart.destroy();d._chart=new Chart(d,{type:'doughnut',data:{labels:['Database / Queries','Auth & Security','Frontend / UI','API / Integrations','Testing Infra','Legacy Code'],datasets:[{data:[28,22,18,14,10,8],backgroundColor:['#7c3aed','#a78bfa','#c4b5fd','#ede9fe','#ddd6fe','#8b5cf6'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:12,color:'#7a7770'}}}}})}
+  const c=document.getElementById('ch-cost');if(c){if(c._chart)c._chart.destroy();c._chart=new Chart(c,{type:'line',data:{labels:['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],datasets:[{label:'Cost/Transaction',data:[0.0024,0.0025,0.0026,0.0027,0.0027,0.0028,0.0029,0.0030,0.0031,0.0032,0.0033,0.0034],borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Target',data:[0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003,0.003],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:0.002,ticks:{callback:v=>'$'+v.toFixed(4),font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cto');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

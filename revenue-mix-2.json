@@ -1,0 +1,9 @@
+{
+  "segments": [
+    {"id":"enterprise","name":"Enterprise (>$100K)","customers":18,"arr":7200000,"arrFormatted":"$7.2M","pct":44,"nrr":112,"nrrClass":"cgrn","trend":"up","trendPct":8},
+    {"id":"midmarket","name":"Mid-Market ($25–100K)","customers":89,"arr":5800000,"arrFormatted":"$5.8M","pct":35,"nrr":106,"nrrClass":"cgrn","trend":"up","trendPct":4},
+    {"id":"smb","name":"SMB (<$25K)","customers":205,"arr":3400000,"arrFormatted":"$3.4M","pct":21,"nrr":96,"nrrClass":"cred","trend":"down","trendPct":-2}
+  ],
+  "totals": {"customers":312,"arr":16400000,"arrFormatted":"$16.4M","nrr":103},
+  "updated": "2026-03-29T07:30:00+08:00"
+}

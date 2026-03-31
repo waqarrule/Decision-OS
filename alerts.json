@@ -1,0 +1,22 @@
+{
+  "alerts": [
+    {"id":"al001","severity":"critical","portal":"cs","title":"SMB NRR below 96%","description":"38 accounts contracting in SMB segment","metric":"NRR","value":95.2,"threshold":96,"dollarImpact":840000,"dollarImpactFormatted":"$840K","createdAt":"2026-03-29T06:00:00+08:00","status":"active"},
+    {"id":"al002","severity":"critical","portal":"cto","title":"Engineering at 91% utilization","description":"Velocity declining 15% month-over-month","metric":"Utilization","value":91,"threshold":85,"dollarImpact":0,"createdAt":"2026-03-29T05:30:00+08:00","status":"active"},
+    {"id":"al003","severity":"critical","portal":"cs","title":"Kellerman Group health score 31","description":"$84K ARR — 18 days since last login","metric":"Health Score","value":31,"threshold":60,"dollarImpact":84000,"dollarImpactFormatted":"$84K","createdAt":"2026-03-28T22:00:00+08:00","status":"active"},
+    {"id":"al004","severity":"warning","portal":"cfo","title":"AE hiring blocked","description":"Bear scenario runway 11.8 months — hiring freeze risk","metric":"Runway","value":11.8,"threshold":12,"dollarImpact":0,"createdAt":"2026-03-28T18:00:00+08:00","status":"active"},
+    {"id":"al005","severity":"warning","portal":"cto","title":"Mobile offline blocking 3 deals","description":"$480K in pipeline at risk due to missing feature","metric":"Feature Gap","value":0,"threshold":1,"dollarImpact":480000,"dollarImpactFormatted":"$480K","createdAt":"2026-03-28T14:00:00+08:00","status":"active"},
+    {"id":"al006","severity":"warning","portal":"cs","title":"TTFV regressed from 8 to 11 days","description":"Time-to-first-value increased 37.5%","metric":"TTFV","value":11,"threshold":8,"dollarImpact":0,"createdAt":"2026-03-27T10:00:00+08:00","status":"active"},
+    {"id":"al007","severity":"warning","portal":"cfo","title":"Burn multiple 2.1×","description":"Needs <2× for Series C positioning","metric":"Burn Multiple","value":2.1,"threshold":2.0,"dollarImpact":0,"createdAt":"2026-03-27T08:00:00+08:00","status":"active"},
+    {"id":"al008","severity":"info","portal":"ceo","title":"Board meeting in 18 days","description":"3/5 fundraising metrics green — 2 need attention","metric":"Board Readiness","value":60,"threshold":80,"dollarImpact":0,"createdAt":"2026-03-26T09:00:00+08:00","status":"active"}
+  ],
+  "summary": {
+    "critical": 3,
+    "warning": 5,
+    "info": 1,
+    "total": 9,
+    "totalDollarImpact": 1404000,
+    "totalDollarImpactFormatted": "$1.4M",
+    "avgResponseTimeMinutes": 42,
+    "slaCompliance": 87
+  }
+}

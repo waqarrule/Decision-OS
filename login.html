@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — ArcusSoft Decision OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f7f4;--bg2:#f0eeea;--surface:#ffffff;
+  --border:#e4e2dc;--border2:#d6d4ce;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-deep:#1d4ed8;--blue-soft:#dbeafe;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;
+  --purple:#7c3aed;--purple-soft:#ede9fe;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);
+}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.login-page{display:flex;min-height:100vh}
+
+/* ── LEFT PANEL ── */
+.login-left{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px;background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 50%,#f0fdf4 100%);position:relative;overflow:hidden}
+.login-left::before{content:'';position:absolute;top:-160px;right:-160px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.06),transparent 70%)}
+.login-left::after{content:'';position:absolute;bottom:-120px;left:-120px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.05),transparent 70%)}
+.login-brand{position:relative;text-align:center;max-width:480px}
+.login-brand-icon{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#3b82f6,#7c3aed);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 4px 16px rgba(59,130,246,.2)}
+.login-brand-icon svg{width:28px;height:28px;fill:white}
+.login-brand h1{font-size:32px;font-weight:300;letter-spacing:-0.04em;margin-bottom:8px;line-height:1.15}
+.login-brand h1 b{font-weight:800;background:linear-gradient(135deg,#3b82f6,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.login-brand p{font-size:14px;color:var(--ink3);line-height:1.7;max-width:380px;margin:0 auto 32px}
+.login-features{display:flex;flex-direction:column;gap:12px;width:100%;max-width:380px;position:relative}
+.login-feature{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:var(--radius);transition:all .2s}
+.login-feature:hover{background:white;box-shadow:var(--shadow)}
+.login-feat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.login-feat-text .ft{font-size:12px;font-weight:600;margin-bottom:2px}
+.login-feat-text .fd{font-size:10px;color:var(--ink3);line-height:1.5}
+.login-brand-footer{margin-top:40px;font-size:9px;color:var(--ink4);letter-spacing:0.06em;text-transform:uppercase;position:relative}
+
+/* ── RIGHT PANEL ── */
+.login-right{width:460px;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;background:var(--surface);border-left:1px solid var(--border)}
+.login-form-header{margin-bottom:32px}
+.login-form-header h2{font-size:24px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px}
+.login-form-header p{font-size:13px;color:var(--ink3)}
+
+/* ── FORM ── */
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+.form-input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--bg);transition:all .15s;outline:none}
+.form-input:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.form-input::placeholder{color:var(--ink4)}
+.form-input.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(220,38,38,.06)}
+.form-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.form-check{display:flex;align-items:center;gap:8px;cursor:pointer}
+.form-check input[type=checkbox]{width:16px;height:16px;accent-color:var(--blue);cursor:pointer}
+.form-check label{font-size:12px;color:var(--ink3);cursor:pointer}
+.form-link{font-size:12px;color:var(--blue);text-decoration:none;font-weight:500}
+.form-link:hover{text-decoration:underline}
+
+.btn-login{width:100%;padding:12px;border:none;border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:600;color:white;background:linear-gradient(135deg,#3b82f6,#2563eb);cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(59,130,246,.25);position:relative;overflow:hidden}
+.btn-login:hover{box-shadow:0 4px 16px rgba(59,130,246,.35);transform:translateY(-1px)}
+.btn-login:active{transform:none}
+.btn-login.loading{pointer-events:none;opacity:.8}
+
+.form-error{display:none;padding:10px 14px;background:var(--red-soft);border:1px solid rgba(220,38,38,.15);border-radius:8px;font-size:12px;color:var(--red-text);margin-bottom:16px;align-items:center;gap:8px}
+.form-error.show{display:flex}
+.form-error .err-icon{font-size:14px}
+
+.form-divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--ink4);font-size:11px}
+.form-divider::before,.form-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── DEMO ACCOUNTS ── */
+.demo-accounts{margin-top:24px}
+.demo-accounts-title{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.demo-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--bg)}
+.demo-card:hover{border-color:var(--blue);background:var(--blue-soft);box-shadow:var(--shadow)}
+.demo-card .da{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0}
+.demo-card .di{flex:1;min-width:0}
+.demo-card .dn{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.demo-card .dr{font-size:9px;color:var(--ink3);font-family:var(--mono)}
+.demo-card-close{margin-left:auto;opacity:0;transition:opacity .15s;padding:4px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--ink4)}
+.demo-card:hover .demo-card-close{opacity:1}
+.demo-card-close:hover{color:var(--red);background:var(--red-soft)}
+
+/* ── FORGOT / RESET MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,25,22,.4);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:white;border:1px solid var(--border);border-radius:var(--radius-lg);max-width:420px;width:90%;padding:32px;animation:modalIn .35s cubic-bezier(.22,1,.36,1);box-shadow:0 24px 80px rgba(0,0,0,.12)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(12px)}to{opacity:1;transform:none}}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.modal p{font-size:13px;color:var(--ink3);margin-bottom:20px;line-height:1.7}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+.modal-btn{padding:9px 20px;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:white;color:var(--ink2);transition:all .15s}
+.modal-btn.primary{background:var(--blue);color:white;border-color:var(--blue)}
+.modal-btn:hover{box-shadow:var(--shadow)}
+
+/* ── SUCCESS TOAST ── */
+.toast{position:fixed;top:24px;right:24px;z-index:600;padding:14px 20px;border-radius:10px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:10px;animation:toastIn .4s cubic-bezier(.22,1,.36,1);box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.toast.success{background:var(--green-soft);border:1px solid rgba(22,163,74,.2);color:var(--green-text)}
+.toast.error{background:var(--red-soft);border:1px solid rgba(220,38,38,.15);color:var(--red-text)}
+@keyframes toastIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+/* ── SESSION BANNER ── */
+.session-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:400;padding:10px 20px;background:var(--amber-soft);border-bottom:1px solid rgba(217,119,6,.15);font-size:11px;color:var(--amber-text);text-align:center;align-items:center;justify-content:center;gap:8px}
+.session-banner.show{display:flex}
+.session-banner a{color:var(--amber-text);font-weight:600;text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .login-left{display:none}
+  .login-right{width:100%;border:none}
+  .login-page{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- SESSION BANNER (shown if already logged in) -->
+<div class="session-banner" id="session-banner">
+  You're already signed in as <strong id="session-user"></strong>. <a href="login.html">Sign in again</a> or <a href="#" onclick="DSLAuth.logout();location.reload();return false">sign out</a>.
+</div>
+
+<div class="login-page">
+
+  <!-- LEFT: Branding -->
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="login-brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <h1>ArcusSoft<br><b>Decision OS</b></h1>
+      <p>Every executive decision, backed by data. 8 portals. 64 decision systems. One source of truth.</p>
+
+      <div class="login-features">
+        <div class="login-feature">
+          <div class="login-feat-icon" style="background:var(--blue-soft);color:var(--blue-deep)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="login-feat-text">
+            <div class="ft">SOC 2 Type II Certified</div>
+            <div class="fd">End-to-end encryption · Role-based access · Full audit trail</div>
+          </div>
+        </div>
+        <div class="login-feature">
+          <div class="login-feat-icon" style="background:var(--green-soft);color:var(--green-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="login-feat-text">
+            <div class="ft">Investor-Grade Analytics</div>
+            <div class="fd">Board-ready reports · Real-time KPIs · Multi-entity rollups</div>
+          </div>
+        </div>
+        <div class="login-feature">
+          <div class="login-feat-icon" style="background:var(--purple-soft);color:var(--purple)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="login-feat-text">
+            <div class="ft">847 Companies Trust Us</div>
+            <div class="fd">$16.4M ARR · 112% NRR · Construction SaaS leader</div>
+          </div>
+        </div>
+        <div class="login-feature">
+          <div class="login-feat-icon" style="background:var(--amber-soft);color:var(--amber-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="login-feat-text">
+            <div class="ft">24× ROI in Year One</div>
+            <div class="fd">$4.2M avg. annual value · 30 min decision turnaround</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-brand-footer">Decision System Lab · v5.0 · Confidential</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Login Form -->
+  <div class="login-right">
+    <div class="login-form-header">
+      <h2>Sign in</h2>
+      <p>Enter your credentials to access the Decision OS.</p>
+    </div>
+
+    <!-- Error Message -->
+    <div class="form-error" id="form-error">
+      <span class="err-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+      <span id="error-text"></span>
+    </div>
+
+    <!-- Login Form -->
+    <form id="login-form" onsubmit="return handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input type="email" class="form-input" id="login-email" placeholder="you@arcussoft.com" autocomplete="email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="login-password" placeholder="Enter your password" autocomplete="current-password" required>
+      </div>
+      <div class="form-row">
+        <div class="form-check">
+          <input type="checkbox" id="remember-me">
+          <label for="remember-me">Remember me for 30 days</label>
+        </div>
+        <a href="#" class="form-link" onclick="showForgotModal();return false">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-login" id="btn-login">Sign in to Decision OS</button>
+    </form>
+
+    <div class="form-divider">or use a demo account</div>
+
+    <!-- Quick-Login Demo Accounts -->
+    <div class="demo-accounts" id="demo-accounts-section">
+      <div class="demo-accounts-title">Quick Access — Demo Accounts</div>
+      <div class="demo-grid" id="demo-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal-overlay" id="forgot-modal">
+  <div class="modal">
+    <h3>Reset your password</h3>
+    <p>Enter your email address and we'll send you a reset link. (In this demo, the reset is simulated.)</p>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-input" id="reset-email" placeholder="you@arcussoft.com">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeForgotModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="handleReset()">Send Reset Link</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="change-pwd-modal">
+  <div class="modal">
+    <h3>Change your password</h3>
+    <p>Your password was reset to a temporary value. Please set a new password.</p>
+    <div class="form-group">
+      <label class="form-label">Current password</label>
+      <input type="password" class="form-input" id="old-pwd" placeholder="Enter current password">
+    </div>
+    <div class="form-group">
+      <label class="form-label">New password</label>
+      <input type="password" class="form-input" id="new-pwd" placeholder="Min 6 characters">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Confirm new password</label>
+      <input type="password" class="form-input" id="confirm-pwd" placeholder="Re-enter new password">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" onclick="closeChangePwdModal()">Cancel</button>
+      <button class="modal-btn primary" onclick="handleChangePwd()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+// ── Check if already logged in ──
+const existingSession = DSLAuth.getSession();
+if (existingSession) {
+  document.getElementById('session-banner').classList.add('show');
+  document.getElementById('session-user').textContent = existingSession.name + ' (' + existingSession.email + ')';
+}
+
+// ── Login Handler ──
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const remember = document.getElementById('remember-me').checked;
+
+  hideError();
+  const btn = document.getElementById('btn-login');
+  btn.classList.add('loading');
+  btn.textContent = 'Signing in...';
+
+  // Simulate network delay
+  setTimeout(() => {
+    const result = DSLAuth.login(email, password, remember);
+    btn.classList.remove('loading');
+    btn.textContent = 'Sign in to Decision OS';
+
+    if (result.success) {
+      trackDailyLogin();
+      showToast('success', `Welcome back, ${result.user.name}. Redirecting...`);
+      setTimeout(() => {
+        var p = result.user.role.toLowerCase();
+        window.location.href = p === 'admin' ? 'admin.html' : 'dsl-' + p + '.html';
+      }, 800);
+    } else {
+      showError(result.error);
+      document.getElementById('login-password').classList.add('error');
+    }
+  }, 600);
+
+  return false;
+}
+
+// ── Quick Login ──
+function quickLogin(email) {
+  const users = DSLAuth.getUsers();
+  const user = users.find(u => u.email === email);
+  if (!user) { showError('Account not found.'); return; }
+  document.getElementById('login-email').value = email;
+  document.getElementById('login-password').value = user.password;
+  document.getElementById('login-form').dispatchEvent(new Event('submit'));
+}
+
+function dismissQuickCard(email, el) {
+  event.stopPropagation();
+  let hidden = JSON.parse(localStorage.getItem('dsl_hidden_quick') || '[]');
+  if (!hidden.includes(email)) hidden.push(email);
+  localStorage.setItem('dsl_hidden_quick', JSON.stringify(hidden));
+  el.closest('.demo-card').remove();
+  const grid = document.getElementById('demo-grid');
+  if (!grid.querySelector('.demo-card')) {
+    document.getElementById('demo-accounts-section').style.display = 'none';
+  }
+}
+
+function trackDailyLogin() {
+  const today = new Date().toISOString().slice(0, 10);
+  const data = JSON.parse(localStorage.getItem('dsl_daily_logins') || '{"date":"","count":0}');
+  if (data.date !== today) {
+    data.date = today;
+    data.count = 0;
+  }
+  data.count++;
+  localStorage.setItem('dsl_daily_logins', JSON.stringify(data));
+  if (data.count >= 3) {
+    localStorage.removeItem('dsl_hidden_quick');
+  }
+}
+
+function renderQuickAccess() {
+  const hidden = JSON.parse(localStorage.getItem('dsl_hidden_quick') || '[]');
+  const users = DSLAuth.getUsers();
+  const quickUsers = [
+    'sarah@arcussoft.com', 'alex@arcussoft.com', 'david@arcussoft.com',
+    'priya@arcussoft.com', 'james@arcussoft.com', 'admin@arcussoft.com'
+  ];
+  const grid = document.getElementById('demo-grid');
+  let html = '';
+  quickUsers.forEach(email => {
+    if (hidden.includes(email)) return;
+    const u = users.find(u => u.email === email);
+    if (!u) return;
+    html += `<div class="demo-card" onclick="quickLogin('${u.email}')">
+      <div class="da" style="background:${u.color}">${u.avatar}</div>
+      <div class="di"><div class="dn">${u.name}</div><div class="dr">${u.role} · ${u.title}</div></div>
+      <div class="demo-card-close" onclick="dismissQuickCard('${u.email}', this)" title="Remove">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+    </div>`;
+  });
+  grid.innerHTML = html;
+  if (!html) document.getElementById('demo-accounts-section').style.display = 'none';
+}
+
+renderQuickAccess();
+
+// ── Error Display ──
+function showError(msg) {
+  const el = document.getElementById('form-error');
+  document.getElementById('error-text').textContent = msg;
+  el.classList.add('show');
+}
+function hideError() {
+  document.getElementById('form-error').classList.remove('show');
+  document.getElementById('login-password').classList.remove('error');
+}
+
+// ── Forgot Password ──
+function showForgotModal() {
+  document.getElementById('forgot-modal').classList.add('show');
+}
+function closeForgotModal() {
+  document.getElementById('forgot-modal').classList.remove('show');
+}
+function handleReset() {
+  const email = document.getElementById('reset-email').value.trim();
+  if (!email) return;
+  const result = DSLAuth.resetPassword(email);
+  closeForgotModal();
+  if (result.success) {
+    showToast('success', result.message);
+  } else {
+    showToast('error', result.error);
+  }
+}
+
+// ── Change Password ──
+function showChangePwdModal() {
+  document.getElementById('change-pwd-modal').classList.add('show');
+}
+function closeChangePwdModal() {
+  document.getElementById('change-pwd-modal').classList.remove('show');
+}
+function handleChangePwd() {
+  const session = DSLAuth.getSession();
+  if (!session) return;
+  const oldPwd = document.getElementById('old-pwd').value;
+  const newPwd = document.getElementById('new-pwd').value;
+  const confirmPwd = document.getElementById('confirm-pwd').value;
+  if (newPwd !== confirmPwd) { showToast('error', 'Passwords do not match.'); return; }
+  const result = DSLAuth.changePassword(session.userId, oldPwd, newPwd);
+  closeChangePwdModal();
+  showToast(result.success ? 'success' : 'error', result.success ? 'Password updated.' : result.error);
+}
+
+// ── Toast ──
+function showToast(type, msg) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${type === 'success' ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'}</span> ${msg}`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// ── Focus email on load ──
+document.getElementById('login-email').focus();
+</script>
+<script src="dark-mode.js"></script>
+</body>
+</html>

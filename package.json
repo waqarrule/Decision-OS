@@ -1,0 +1,16 @@
+{
+  "name": "dss-decision-os",
+  "version": "5.0.0",
+  "description": "ArcusSoft Decision OS — Executive Decision Support System",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npx live-server . --port=3000 --no-browser"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4",
+    "chokidar": "^3.6.0",
+    "node-cache": "^5.1.2"
+  },
+  "private": true
+}

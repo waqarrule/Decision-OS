@@ -1,0 +1,42 @@
+{
+  "pipeline": {
+    "totalValue": 8400000,
+    "totalValueFormatted": "$8.4M",
+    "weightedValue": 3200000,
+    "weightedValueFormatted": "$3.2M",
+    "totalDeals": 47,
+    "avgDealSize": 178723,
+    "avgDealSizeFormatted": "$178.7K",
+    "winRate": 34,
+    "avgCycleDays": 62,
+    "staleDeals": 8,
+    "staleValue": 1200000,
+    "staleValueFormatted": "$1.2M"
+  },
+  "stages": [
+    {"name":"Discovery","deals":18,"value":2800000,"valueFormatted":"$2.8M","weight":15},
+    {"name":"Qualification","deals":12,"value":2100000,"valueFormatted":"$2.1M","weight":30},
+    {"name":"Proposal","deals":9,"value":1900000,"valueFormatted":"$1.9M","weight":55},
+    {"name":"Negotiation","deals":5,"value":1100000,"valueFormatted":"$1.1M","weight":80},
+    {"name":"Closed Won","deals":3,"value":500000,"valueFormatted":"$500K","weight":100}
+  ],
+  "deals": [
+    {"id":"d001","name":"Rivana Corp — Enterprise","value":420000,"stage":"Negotiation","probability":80,"owner":"Alex Rivera","closeDate":"2026-04-15","daysInStage":12,"nextStep":"Final pricing review"},
+    {"id":"d002","name":"TechForward Inc — Expansion","value":280000,"stage":"Proposal","probability":55,"owner":"Jordan Lee","closeDate":"2026-05-01","daysInStage":8,"nextStep":"Technical demo scheduled"},
+    {"id":"d003","name":"Pacific Health — New Logo","value":350000,"stage":"Qualification","probability":30,"owner":"Sam Torres","closeDate":"2026-06-15","daysInStage":5,"nextStep":"Discovery call"},
+    {"id":"d004","name":"Cascade Financial — Upsell","value":180000,"stage":"Negotiation","probability":75,"owner":"Alex Rivera","closeDate":"2026-04-10","daysInStage":18,"nextStep":"Legal review"},
+    {"id":"d005","name":"Digital Edge — New Logo","value":520000,"stage":"Discovery","probability":15,"owner":"Jordan Lee","closeDate":"2026-07-01","daysInStage":3,"nextStep":"Initial meeting"}
+  ],
+  "reps": [
+    {"name":"Alex Rivera","role":"CRO","quota":1800000,"attainment":1240000,"attainmentPct":69,"deals":14,"winRate":42},
+    {"name":"Jordan Lee","role":"AE","quota":1200000,"attainment":890000,"attainmentPct":74,"deals":18,"winRate":33},
+    {"name":"Sam Torres","role":"AE","quota":1200000,"attainment":720000,"attainmentPct":60,"deals":15,"winRate":27}
+  ],
+  "winLoss": {
+    "wins": 12,
+    "losses": 23,
+    "topWinReasons": ["Product fit","Integration capabilities","Support quality"],
+    "topLossReasons": ["Price too high","Missing feature: mobile offline","Competitor: Salesforce"],
+    "competitorWins": {"Salesforce":8,"HubSpot":5,"CustomBuild":4,"Other":6}
+  }
+}

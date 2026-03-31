@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPO Portal — ArcusSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
+:root {--accent:#e11d48;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
+  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
+  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
+  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --rose:#e11d48;--rose-soft:#fff1f2;--rose-text:#be123c;--rose-deep:#9f1239;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
+  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection {background:var(--rose);color:#fff}
+a {color:inherit}
+.hdr-r a.on {background:var(--rose);color:#fff;box-shadow:0 2px 8px rgba(225,29,72,.25)}
+.hdr-r .live {display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;color:var(--rose);margin-left:12px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
+.hdr-r .live i {width:7px;height:7px;border-radius:50%;background:var(--rose);box-shadow:0 0 8px var(--rose);animation:pulse 2s ease-in-out infinite}
+.tab.on {color:var(--rose);border-bottom-color:var(--rose);background:var(--rose-soft)}
+.sh h2 em {font-style:italic;color:var(--rose)}
+.kc.accent-rose {border-top:3px solid var(--rose)}
+.kc.accent-rose .kv {color:var(--rose-text)}
+.crossed td {background:var(--surface3)!important}
+.crossed td,.crossed td * {text-decoration:line-through;color:var(--ink4)!important}
+.btn {display:inline-flex;align-items:center;gap:4px;padding:7px 16px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s;box-shadow:var(--shadow)}
+.btn-p {background:var(--rose);color:#fff;border-color:var(--rose);box-shadow:0 2px 8px rgba(225,29,72,.25)}
+.story {background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 32px;color:var(--ink);margin-bottom:18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.story::before {content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(225,29,72,.08),transparent 70%)}
+.story .s-num {font-size:48px;font-weight:900;opacity:.05;position:absolute;top:4px;right:28px;font-variant-numeric:tabular-nums;color:var(--rose)}
+.story .s-body strong {color:var(--amber-text);font-weight:600}
+.cl-rose {background:var(--rose-soft);border-color:rgba(225,29,72,.15);color:var(--rose-deep)}
+.df-node.yes {border-left:3px solid var(--green);background:var(--green-soft)}
+.df-tag.y {background:var(--green);color:#fff}
+.pbs {display:flex;flex-direction:column;gap:6px}
+.pb-step.cur {background:var(--rose-soft);border-color:rgba(225,29,72,.2)}
+.pb-num {width:28px;height:28px;border-radius:50%;background:var(--rose);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(225,29,72,.25)}
+.pb-step.done .pb-num {background:var(--rose)}
+.prog-rose {background:linear-gradient(90deg,#fda4af,#e11d48)}
+.crs {color:var(--rose-text)}
+@media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
+<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="brand">ArcusSoft · Decision OS</div><div class="sep"></div>
+  <div class="co">CPO Portal</div>
+  <div class="hdr-r"><div class="live"><i></i>Live</div><div class="sep"></div>
+    <a href="dsl-ceo.html">CEO</a><a href="dsl-cro.html">CRO</a><a href="dsl-cfo.html">CFO</a><a href="dsl-coo.html">COO</a><a href="dsl-cs.html">CS</a><a href="dsl-cto.html">CTO</a><a href="dsl-cmo.html">CMO</a><a href="dsl-cpo.html" class="on">CPO</a><div class="sep"></div><a href="calculators.html">Calculators</a><a href="outcomes.html">Outcomes</a><a href="alerts.html">Alerts</a><a href="learning.html">Learning</a><div class="auth-area" style="position:relative"></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab on" onclick="show('adoption',this)">Adoption</button>
+  <button class="tab" onclick="show('roadmap',this)">Roadmap</button>
+  <button class="tab" onclick="show('plg',this)">PLG</button>
+  <button class="tab" onclick="show('pmf',this)">PMF</button>
+  <button class="tab" onclick="show('competitive',this)">Competitive</button>
+</div>
+<div class="layout">
+<div class="main">
+
+<!-- ADOPTION -->
+<div id="s-adoption" class="scr on">  <div class="sh"><div class="sh-over">CPO · Product Layer · Adoption</div><h2>What users <em>actually use.</em></h2><div class="sh-sub">Feature adoption, TTFV, and the gap between shipped features and adopted features. Including a painful AI scheduling lesson.</div></div>
+  <div class="story"><div class="s-num">3%</div><div class="s-label">The AI Scheduling Story</div><div class="s-title">We built AI scheduling. 97% of users ignored it.</div><div class="s-body">Six months ago, we shipped <strong>AI Schedule Optimizer</strong> — the #1 feature request from our enterprise roadmap. It consumed <strong>4,200 engineering hours</strong> and 2 dedicated sprints. Adoption after 6 months: <strong>3.1%</strong>. Users found it inaccurate, slow, and disconnected from their actual workflow. The lesson: voice-of-customer doesn't always mean product-market. The feature was a <strong>$630K opportunity cost</strong> — time that could have gone to mobile offline (our #1 churn reason). We've killed the project and reallocated capacity.</div><button class="s-cta" onclick="show('roadmap',document.querySelector('.tab:nth-child(2)'))">See reallocated roadmap →</button></div>
+  <div class="krow kr4">
+    <div class="kc accent-rose"><div class="kl">DAU / MAU</div><div class="kv">38%</div><div class="ks"><span class="up">↑ from 34%</span> last quarter</div></div>
+    <div class="kc accent-green"><div class="kl">Core Feature Adoption</div><div class="kv">72%</div><div class="ks">5 of 7 core features >60%</div></div>
+    <div class="kc accent-amber"><div class="kl">TTFV</div><div class="kv">4.2<span style="font-size:16px;color:var(--ink4)"> days</span></div><div class="ks"><span class="up">↓ from 6.1 days</span> post-onboarding revamp</div></div>
+    <div class="kc accent-purple"><div class="kl">Features per User</div><div class="kv">3.8</div><div class="ks">Median active user uses 4 features</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Feature usage matrix <span>— 30-day active</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Feature</th><th>Users</th><th>Adoption %</th><th>Sessions/User</th><th>Trend</th><th>Status</th></tr></thead>
+    <tbody><tr class="good"><td class="fw6">Project Dashboard</td><td>1,842</td><td class="cgrn fw6">89%</td><td>14.2</td><td><span class="up">↑ stable</span></td><td><span class="bdg bdg-green">Core</span></td></tr>
+    <tr class="good"><td class="fw6">Task Management</td><td>1,756</td><td class="cgrn fw6">85%</td><td>22.8</td><td><span class="up">↑ +3%</span></td><td><span class="bdg bdg-green">Core</span></td></tr>
+    <tr class="good"><td class="fw6">Document Sharing</td><td>1,580</td><td class="cgrn fw6">76%</td><td>8.4</td><td><span class="up">↑ +5%</span></td><td><span class="bdg bdg-green">Core</span></td></tr>
+    <tr class="good"><td class="fw6">Gantt Charts</td><td>1,420</td><td class="cgrn fw6">69%</td><td>6.1</td><td><span class="up">↑ +2%</span></td><td><span class="bdg bdg-green">Core</span></td></tr>
+    <tr class="good"><td class="fw6">Reporting Engine</td><td>1,322</td><td class="cgrn fw6">64%</td><td>4.8</td><td>Stable</td><td><span class="bdg bdg-green">Core</span></td></tr>
+    <tr><td class="fw6">Resource Allocation</td><td>968</td><td class="camb fw6">47%</td><td>3.2</td><td><span class="up">↑ +8%</span></td><td><span class="bdg bdg-amber">Growing</span></td></tr>
+    <tr><td class="fw6">Time Tracking</td><td>876</td><td class="camb fw6">42%</td><td>18.6</td><td><span class="up">↑ +12%</span></td><td><span class="bdg bdg-amber">Growing</span></td></tr>
+    <tr class="crossed"><td class="fw6">AI Schedule Optimizer</td><td>64</td><td class="cred fw6">3.1%</td><td>1.4</td><td><span class="dn">↓ declining</span></td><td><span class="bdg bdg-red">Killed</span></td></tr>
+    <tr class="crossed"><td class="fw6">AI Resource Suggestions</td><td>38</td><td class="cred fw6">1.8%</td><td>0.8</td><td><span class="dn">↓ declining</span></td><td><span class="bdg bdg-red">Killed</span></td></tr>
+    <tr class="crossed"><td class="fw6">AI Risk Predictor</td><td>21</td><td class="cred fw6">1.0%</td><td>0.4</td><td><span class="dn">↓ abandoned</span></td><td><span class="bdg bdg-red">Killed</span></td></tr></tbody></table>
+    <div class="cl cl-rose mt8">All three AI features have been killed. Combined adoption: <strong>5.9%</strong> across 123 users. The 4,200 engineering hours are being reallocated to mobile offline (32% of churn reasons).</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Feature retention <span>— week-over-week</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-ret"></canvas></div></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Adoption by segment</span></div><div class="cd-b">
+      <table><thead><tr><th>Segment</th><th>Core Features</th><th>DAU/MAU</th><th>TTFV</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Enterprise</td><td class="cgrn fw6">82%</td><td class="cgrn fw6">44%</td><td>3.1 days</td></tr>
+      <tr><td class="fw6">Mid-Market</td><td class="fw6">74%</td><td class="fw6">38%</td><td>4.4 days</td></tr>
+      <tr class="alert"><td class="fw6">SMB</td><td class="cred fw6">58%</td><td class="cred fw6">26%</td><td class="cred">6.8 days</td></tr></tbody></table>
+      <div class="cl cl-amber mt8">SMB adoption lags at 58% core features and 6.8-day TTFV. The onboarding flow designed for enterprise doesn't scale down. SMB needs a simplified first-run experience.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div id="s-roadmap" class="scr">  <div class="sh"><div class="sh-over">CPO · Product Layer · Roadmap</div><h2>Q2 <b>roadmap.</b> Prioritized by <em>revenue impact.</em></h2><div class="sh-sub">Engineering capacity allocated to what closes deals and stops churn. Every item maps to a dollar outcome.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-rose"><div class="kl">Engineering Headcount</div><div class="kv">42</div><div class="ks">3 squads · 14 eng each</div></div>
+    <div class="kc accent-green"><div class="kl">Velocity (Sprint Avg)</div><div class="kv">87<span style="font-size:16px;color:var(--ink4)"> pts</span></div><div class="ks"><span class="up">↑ from 74</span> post-reorg</div></div>
+    <div class="kc accent-blue"><div class="kl">Roadmap Confidence</div><div class="kv">78%</div><div class="ks">Based on historical delivery</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Q2 2026 Roadmap <span>— prioritized by revenue impact</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Priority</th><th>Initiative</th><th>Squad</th><th>Revenue Impact</th><th>Story Pts</th><th>Status</th></tr></thead>
+    <tbody><tr class="good"><td><span class="bdg bdg-red">P0</span></td><td class="fw6">Mobile Offline Mode</td><td>Platform</td><td class="cgrn fw6">$480K saved churn</td><td>120</td><td><span class="bdg bdg-amber">In Progress</span></td></tr>
+    <tr class="good"><td><span class="bdg bdg-red">P0</span></td><td class="fw6">SMB Onboarding Redesign</td><td>Growth</td><td class="cgrn fw6">$320K NRR lift</td><td>80</td><td><span class="bdg bdg-blue">Scoping</span></td></tr>
+    <tr><td><span class="bdg bdg-amber">P1</span></td><td class="fw6">Enterprise SSO / SCIM</td><td>Platform</td><td class="fw6">$280K pipeline</td><td>60</td><td><span class="bdg bdg-blue">Scoping</span></td></tr>
+    <tr><td><span class="bdg bdg-amber">P1</span></td><td class="fw6">Reporting API v2</td><td>Core</td><td class="fw6">$240K expansion</td><td>55</td><td><span class="bdg bdg-green">Ready</span></td></tr>
+    <tr><td><span class="bdg bdg-amber">P1</span></td><td class="fw6">Gantt Chart Performance</td><td>Core</td><td class="fw6">$180K retention</td><td>40</td><td><span class="bdg bdg-green">Ready</span></td></tr>
+    <tr><td><span class="bdg bdg-blue">P2</span></td><td class="fw6">Resource Heatmap</td><td>Core</td><td class="fw6">$120K expansion</td><td>35</td><td><span class="bdg bdg-rose">Backlog</span></td></tr>
+    <tr><td><span class="bdg bdg-blue">P2</span></td><td class="fw6">Slack Integration v2</td><td>Growth</td><td class="fw6">$90K PLG</td><td>30</td><td><span class="bdg bdg-rose">Backlog</span></td></tr>
+    <tr><td><span class="bdg bdg-blue">P2</span></td><td class="fw6">Custom Fields Engine</td><td>Core</td><td class="fw6">$80K retention</td><td>45</td><td><span class="bdg bdg-rose">Backlog</span></td></tr></tbody></table>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Engineering capacity allocation <span>— Q2</span></span></div><div class="cd-b">
+      <div style="margin:12px 0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:600">Platform Squad (Mobile + SSO)</span><span style="font-size:11px;font-weight:600" class="crs">45%</span></div>
+        <div class="prog"><div class="prog-fill prog-rose" style="width:45%"></div></div>
+      </div>
+      <div style="margin:12px 0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:600">Growth Squad (Onboarding + PLG)</span><span style="font-size:11px;font-weight:600" class="cgrn">30%</span></div>
+        <div class="prog"><div class="prog-fill prog-green" style="width:30%"></div></div>
+      </div>
+      <div style="margin:12px 0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:600">Core Squad (Features + Perf)</span><span style="font-size:11px;font-weight:600" style="color:var(--blue-text)">25%</span></div>
+        <div class="prog"><div class="prog-fill prog-blue" style="width:25%"></div></div>
+      </div>
+      <div class="cl cl-rose mt8">Platform squad at 45% capacity — mobile offline is the single biggest bet. If it ships on time, we prevent <strong>$480K in churned ARR</strong>.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Velocity trend <span>— sprint by sprint</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-vel"></canvas></div></div></div>
+  </div>
+</div>
+
+<!-- PLG -->
+<div id="s-plg" class="scr">  <div class="sh"><div class="sh-over">CPO · Product Layer · PLG</div><h2>The <em>self-serve engine.</em></h2><div class="sh-sub">Product-led growth funnel, activation events, and viral loops. How the product sells itself.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-rose"><div class="kl">Free Signups (30d)</div><div class="kv">1,240</div><div class="ks"><span class="up">↑ 18%</span> vs last month</div></div>
+    <div class="kc accent-green"><div class="kl">Free → Paid Conv.</div><div class="kv">8.4%</div><div class="ks">Target: >10%</div></div>
+    <div class="kc accent-amber"><div class="kl">Viral Coefficient</div><div class="kv">0.34</div><div class="ks">Each user invites 0.34 others</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">PLG funnel <span>— 30-day snapshot</span></span></div><div class="cd-b">
+    <div style="display:flex;flex-direction:column;gap:4px;margin:12px 0">
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font-size:11px;font-weight:600;text-align:right">Signups</span><div style="flex:1;height:32px;background:var(--rose);border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600">1,240</div></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 68% activate</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font-size:11px;font-weight:600;text-align:right">Activated</span><div style="flex:1;height:28px;background:var(--rose);opacity:.8;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:68%"></div><span style="font-size:11px;color:var(--ink3)">843</span></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 42% become weekly active</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font-size:11px;font-weight:600;text-align:right">Weekly Active</span><div style="flex:1;height:24px;background:var(--rose);opacity:.6;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:28%"></div><span style="font-size:11px;color:var(--ink3)">354</span></div>
+      <div style="text-align:center;color:var(--ink4);font-size:10px">↓ 20% convert to paid</div>
+      <div style="display:flex;align-items:center;gap:12px"><span style="width:110px;font-size:11px;font-weight:600;text-align:right">Paid</span><div style="flex:1;height:20px;background:var(--rose);opacity:.45;border-radius:4px;display:flex;align-items:center;padding:0 12px;color:#fff;font-size:11px;font-weight:600;width:5.5%"></div><span style="font-size:11px;color:var(--ink3)">104</span></div>
+    </div>
+    <div class="cl cl-rose">The funnel narrows sharply at "Weekly Active → Paid" (20%). Users love the free tier but don't see enough value to pay. The gap is <strong>collaboration features</strong> — the #1 reason free users upgrade.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Activation events</span></div><div class="cd-b">
+      <table><thead><tr><th>Event</th><th>Completion</th><th>Impact on Conv.</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Created first project</td><td class="cgrn fw6">72%</td><td class="cgrn fw6">+3.2× conversion</td></tr>
+      <tr class="good"><td class="fw6">Invited a teammate</td><td class="cgrn fw6">48%</td><td class="cgrn fw6">+4.8× conversion</td></tr>
+      <tr><td class="fw6">Used Gantt chart</td><td class="fw6">34%</td><td class="camb fw6">+2.1× conversion</td></tr>
+      <tr><td class="fw6">Connected integration</td><td class="fw6">22%</td><td class="fw6">+1.8× conversion</td></tr>
+      <tr class="alert"><td class="fw6">Shared document externally</td><td class="cred fw6">8%</td><td class="fw6">+5.4× conversion</td></tr></tbody></table>
+      <div class="cl cl-amber mt8">External sharing has the highest conversion impact (+5.4×) but lowest completion (8%). Making sharing easier is the highest-leverage PLG intervention.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Viral loops</span></div><div class="cd-b">
+      <table><thead><tr><th>Loop</th><th>Invites/User</th><th>Accept Rate</th><th>K-factor</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Project invite</td><td>2.4</td><td class="cgrn fw6">62%</td><td class="cgrn fw6">0.18</td></tr>
+      <tr><td class="fw6">Document share</td><td>1.8</td><td>44%</td><td>0.10</td></tr>
+      <tr><td class="fw6">Task assignment</td><td>3.2</td><td>28%</td><td>0.06</td></tr></tbody></table>
+      <div class="cl cl-green mt8">Project invites are the strongest viral loop. Each user who invites teammates generates 0.18 new signups. If we can push invite rate to 3.0/user, k-factor hits 0.42.</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- PMF -->
+<div id="s-pmf" class="scr">
+  <div class="sh"><div class="sh-over">CPO · Product Layer · PMF</div><h2>Product-market fit is <em>segment-specific.</em></h2><div class="sh-sub">Sean Ellis scores, verbatim feedback, and the uncomfortable truth: we have strong PMF in enterprise and weak PMF in SMB.</div></div>
+  <div class="story"><div class="s-num">PMF</div><div class="s-label">Segment Reality</div><div class="s-title">Enterprise says "can't live without it." SMB says "it's fine."</div><div class="s-body">Our aggregate Sean Ellis score is <strong>58% "very disappointed"</strong> — above the 40% threshold. But that average hides a massive split: Enterprise scores <strong>74%</strong>, while SMB scores <strong>38%</strong>. Enterprise users describe us as <strong>"mission-critical infrastructure"</strong>. SMB users say <strong>"it's more than I need but less than I want."</strong> The PMF gap explains our NRR divergence: Enterprise at 112%, SMB at 96%. We're not one product — we're two products pretending to be one.</div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Sean Ellis survey <span>— "How would you feel if you could no longer use ArcusSoft?"</span></span></div><div class="cd-b">
+    <div style="margin:16px 0">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="width:140px;font-size:11px;font-weight:600">Overall</span>
+        <div style="flex:1;display:flex;height:24px;border-radius:4px;overflow:hidden">
+          <div style="width:58%;background:var(--rose);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">58% Very Disappointed</div>
+          <div style="width:26%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;color:var(--rose-deep);font-size:10px;font-weight:600">26% Somewhat</div>
+          <div style="width:16%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:10px;font-weight:600">16% Not</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="width:140px;font-size:11px;font-weight:600">Enterprise</span>
+        <div style="flex:1;display:flex;height:24px;border-radius:4px;overflow:hidden">
+          <div style="width:74%;background:var(--rose);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">74%</div>
+          <div style="width:18%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;color:var(--rose-deep);font-size:10px;font-weight:600">18%</div>
+          <div style="width:8%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:10px;font-weight:600">8%</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <span style="width:140px;font-size:11px;font-weight:600">Mid-Market</span>
+        <div style="flex:1;display:flex;height:24px;border-radius:4px;overflow:hidden">
+          <div style="width:62%;background:var(--rose);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">62%</div>
+          <div style="width:28%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;color:var(--rose-deep);font-size:10px;font-weight:600">28%</div>
+          <div style="width:10%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:10px;font-weight:600">10%</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="width:140px;font-size:11px;font-weight:600">SMB</span>
+        <div style="flex:1;display:flex;height:24px;border-radius:4px;overflow:hidden">
+          <div style="width:38%;background:var(--rose);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700">38%</div>
+          <div style="width:34%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;color:var(--rose-deep);font-size:10px;font-weight:600">34%</div>
+          <div style="width:28%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:var(--ink4);font-size:10px;font-weight:600">28%</div>
+        </div>
+      </div>
+    </div>
+    <div class="cl cl-red">SMB at 38% is <strong>below the 40% PMF threshold</strong>. This segment is at-risk. We either fix SMB PMF in Q2 (via simplified onboarding) or accept that SMB is a churn machine and adjust GTM accordingly.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Verbatim quotes</span></div><div class="cd-b">
+      <div style="padding:14px 18px;border-left:3px solid var(--rose);background:var(--rose-soft);border-radius:0 6px 6px 0;margin-bottom:10px;font-size:12px;line-height:1.7"><em>"We literally cannot run our projects without ArcusSoft. It's the single source of truth for 200+ people."</em><div style="margin-top:6px;font-size:10px;color:var(--ink4);font-weight:600">— VP of Ops, Enterprise (500+ seats)</div></div>
+      <div style="padding:14px 18px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;margin-bottom:10px;font-size:12px;line-height:1.7"><em>"It does the job. There are simpler tools but we're already here. Switching cost keeps us."</em><div style="margin-top:6px;font-size:10px;color:var(--ink4);font-weight:600">— PM, Mid-Market (45 seats)</div></div>
+      <div style="padding:14px 18px;border-left:3px solid var(--red);background:var(--red-soft);border-radius:0 6px 6px 0;font-size:12px;line-height:1.7"><em>"It's more than I need but less than I want. I use 3 features and the rest is clutter. Monday.com is simpler."</em><div style="margin-top:6px;font-size:10px;color:var(--ink4);font-weight:600">— Founder, SMB (8 seats)</div></div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">PMF by segment</span></div><div class="cd-b">
+      <table><thead><tr><th>Metric</th><th>Enterprise</th><th>Mid-Market</th><th>SMB</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">Sean Ellis Score</td><td class="cgrn fw6">74%</td><td class="fw6">62%</td><td class="cred fw6">38%</td></tr>
+      <tr><td class="fw6">NRR</td><td class="cgrn fw6">112%</td><td class="fw6">106%</td><td class="cred fw6">96%</td></tr>
+      <tr><td class="fw6">DAU/MAU</td><td class="cgrn fw6">44%</td><td class="fw6">38%</td><td class="cred fw6">26%</td></tr>
+      <tr><td class="fw6">Core Feature Adoption</td><td class="cgrn fw6">82%</td><td class="fw6">74%</td><td class="cred fw6">58%</td></tr>
+      <tr><td class="fw6">Churn Rate (monthly)</td><td class="cgrn fw6">0.6%</td><td class="fw6">1.2%</td><td class="cred fw6">2.8%</td></tr></tbody></table>
+    </div></div>
+  </div>
+</div>
+
+<!-- COMPETITIVE -->
+<div id="s-competitive" class="scr">  <div class="sh"><div class="sh-over">CPO · Product Layer · Competitive</div><h2>Where we <b>win. Where we <em>don't.</em></b></h2><div class="sh-sub">Feature parity, win/loss by competitor, and market movements to watch.</div></div>
+  <div class="krow kr3">
+    <div class="kc accent-rose"><div class="kl">Feature Parity Score</div><div class="kv">78%</div><div class="ks">vs top 4 competitors avg</div></div>
+    <div class="kc accent-green"><div class="kl">Product Win Rate</div><div class="kv">54%</div><div class="ks"><span class="up">↑ from 48%</span> last quarter</div></div>
+    <div class="kc accent-amber"><div class="kl">Feature Gaps (Critical)</div><div class="kv">3</div><div class="ks">Mobile offline, SSO, API depth</div></div>
+  </div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Feature comparison <span>— ArcusSoft vs competitors</span></span></div><div class="cd-b">
+    <table><thead><tr><th>Feature</th><th>ArcusSoft</th><th>Procore</th><th>PlanGrid</th><th>Buildertrend</th><th>CoConstruct</th></tr></thead>
+    <tbody><tr><td class="fw6">Project Dashboards</td><td class="cgrn fw6">●●●●</td><td class="cgrn">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td></tr>
+    <tr><td class="fw6">Gantt / Scheduling</td><td class="cgrn fw6">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td><td class="cgrn">●●●●</td><td class="cgrn">●●●○</td></tr>
+    <tr><td class="fw6">Mobile App</td><td class="camb fw6">●●○○</td><td class="cgrn">●●●●</td><td class="cgrn">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td></tr>
+    <tr><td class="fw6">Mobile Offline</td><td class="cred fw6">○○○○</td><td class="cgrn">●●●●</td><td class="cgrn">●●●●</td><td class="cgrn">●●○○</td><td class="cred">○○○○</td></tr>
+    <tr><td class="fw6">SSO / SCIM</td><td class="cred fw6">○○○○</td><td class="cgrn">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td><td class="cred">○○○○</td></tr>
+    <tr><td class="fw6">Reporting / Analytics</td><td class="cgrn fw6">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td></tr>
+    <tr><td class="fw6">API / Integrations</td><td class="camb fw6">●●○○</td><td class="cgrn">●●●●</td><td class="cgrn">●●●○</td><td class="cgrn">●●○○</td><td class="cgrn">●●○○</td></tr>
+    <tr><td class="fw6">Residential PMF</td><td class="camb fw6">●●○○</td><td class="cgrn">●●○○</td><td class="cgrn">●●○○</td><td class="cgrn fw6">●●●●</td><td class="cgrn fw6">●●●●</td></tr>
+    <tr><td class="fw6">Pricing ($/user/mo)</td><td class="fw6">$38</td><td>$68</td><td>$54</td><td>$42</td><td>$34</td></tr></tbody></table>
+    <div class="cl cl-rose mt8">Three critical gaps: <strong>Mobile offline</strong> (Procore & PlanGrid have it), <strong>SSO/SCIM</strong> (enterprise deals blocked), <strong>API depth</strong> (Procore leads). Mobile offline ships Q2. SSO in scoping.</div>
+  </div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Win/loss by competitor</span></div><div class="cd-b">
+      <table><thead><tr><th>Competitor</th><th>Deals</th><th>Won</th><th>Lost</th><th>Win Rate</th><th>#1 Loss Reason</th></tr></thead>
+      <tbody><tr class="good"><td class="fw6">vs Procore</td><td>28</td><td class="cgrn">18</td><td>10</td><td class="cgrn fw6">64%</td><td>Price (they're $68/user)</td></tr>
+      <tr><td class="fw6">vs PlanGrid</td><td>23</td><td>12</td><td>11</td><td class="camb fw6">52%</td><td>Mobile offline</td></tr>
+      <tr class="alert"><td class="fw6">vs Buildertrend</td><td>18</td><td>8</td><td>10</td><td class="cred fw6">44%</td><td>Residential features</td></tr>
+      <tr class="good"><td class="fw6">vs CoConstruct</td><td>15</td><td class="cgrn">10</td><td>5</td><td class="cgrn fw6">67%</td><td>Reporting depth</td></tr></tbody></table>
+      <div class="cl cl-amber mt8">Buildertrend is our weakest matchup (44%). They dominate residential construction with purpose-built features. We lose every residential deal against them.</div>
+    </div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Market movements</span></div><div class="cd-b">
+      <div style="padding:14px 18px;border-left:3px solid var(--red);background:var(--red-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Autodesk acquired PlanGrid competitor.</strong> Expect consolidation pressure. PlanGrid may get bundled with Autodesk suite at below-market pricing.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px"><strong>Buildertrend raised $80M Series C.</strong> Accelerating residential features and SMB GTM. Direct competitive threat in our weakest segment.</div>
+      <div style="padding:14px 18px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Procore price increase to $72/user.</strong> Creates pricing gap we can exploit. Our $38/user is now 47% cheaper — update sales collateral.</div>
+    </div></div>
+  </div>
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="rp">
+  <div class="rp-header">
+    <div class="freshness-wrap" style="text-align:right;margin-bottom:12px"></div>
+    <h4>Intelligence Layer</h4>
+    <div class="rp-title">Product Intelligence</div>
+    <div class="rp-sub">Adoption · Roadmap · Outcomes</div>
+  </div>
+    <div class="rp-body">
+    <div class="rp-section accent-rose">
+      <div class="rs-title">Last Decision Outcome</div>
+      <div class="rs-val rose">3.1%</div>
+      <div class="rs-row"><span class="rl">AI Scheduling</span><span class="rv dn">Killed</span></div>
+      <div class="rs-row"><span class="rl">Hours sunk</span><span class="rv dn">4,200</span></div>
+      <div class="rs-row"><span class="rl">Reallocated to</span><span class="rv up">Mobile offline</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Product Health</div>
+      <div class="rs-row"><span class="rl">TTFV</span><span class="rv dn">11 days (was 8)</span></div>
+      <div class="rs-bar"><div class="rs-bar-fill" style="width:73%;background:var(--amber)"></div></div>
+      <div class="rs-row"><span class="rl">Feature adoption</span><span class="rv">87%</span></div>
+      <div class="rs-row"><span class="rl">Mobile activation</span><span class="rv dn">44%</span></div>
+    </div>
+
+    <div class="rp-section accent-green">
+      <div class="rs-title">Roadmap Impact</div>
+      <div class="rs-val green">+24%</div>
+      <div class="rs-row"><span class="rl">Mobile offline →</span><span class="rv up">retention +24%</span></div>
+      <div class="rs-row"><span class="rl">Churn reason #1</span><span class="rv dn">32% cite it</span></div>
+      <div class="rs-row"><span class="rl">Blocked deals</span><span class="rv dn">3 ($480K)</span></div>
+    </div>
+
+    <div class="rp-section">
+      <div class="rs-title">Cross-Portal Alerts</div>
+      <div class="rs-alerts">
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--purple)">CTO</span><span class="ra-text">Eng at 91% util</span><span class="ra-val" style="color:var(--red-text)">Block</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--red)">CS</span><span class="ra-text">Mobile cited exits</span><span class="ra-val">5 accounts</span></div>
+        <div class="rs-alert"><span class="ra-badge" style="background:var(--green)">CRO</span><span class="ra-text">Feature gap blocking</span><span class="ra-val" style="color:var(--amber-text)">$480K</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /layout -->
+
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const r=document.getElementById('ch-ret');if(r){if(r._chart)r._chart.destroy();r._chart=new Chart(r,{type:'line',data:{labels:['W1','W2','W3','W4','W5','W6','W7','W8'],datasets:[{label:'Project Dashboard',data:[100,96,94,92,91,90,89,89],borderColor:'#e11d48',backgroundColor:'rgba(225,29,72,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#e11d48',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Task Management',data:[100,94,90,87,86,85,85,84],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#16a34a',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Gantt Charts',data:[100,82,72,66,63,61,60,60],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#3b82f6',pointBorderColor:'#fff',pointBorderWidth:2},{label:'AI Schedule',data:[100,42,18,9,6,4,3,3],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:true,max:105,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const v=document.getElementById('ch-vel');if(v){if(v._chart)v._chart.destroy();v._chart=new Chart(v,{type:'bar',data:{labels:['S21','S22','S23','S24','S25','S26','S27','S28','S29','S30'],datasets:[{label:'Story Points',data:[68,72,74,71,76,80,82,85,84,87],backgroundColor:'rgba(225,29,72,.7)',borderRadius:3},{label:'Target (80pts)',data:[80,80,80,80,80,80,80,80,80,80],type:'line',borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:50,max:100,ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+
+// ── Breadcrumbs ──
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cpo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — ArcusSoft Decision OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/dss-shared.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --accent:#1a1916;
+  --bg:#f8f7f4;--bg2:#f0eeea;--surface:#ffffff;--surface3:#f9f8f5;
+  --border:#e4e2dc;--border2:#d6d4ce;
+  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
+  --blue:#3b82f6;--blue-deep:#1d4ed8;--blue-soft:#dbeafe;
+  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
+  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
+  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
+  --purple:#7c3aed;--purple-soft:#ede9fe;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
+  --radius:12px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
+  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);
+}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);box-shadow:0 1px 0 var(--accent);display:flex;align-items:center;padding:0 32px;gap:18px}
+.hdr .brand{font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase}
+.hdr .brand b{color:var(--ink);font-weight:700;font-size:11px}
+.hdr .sep{width:1px;height:22px;background:var(--border2)}
+.hdr .co{font-size:14px;font-weight:700;color:var(--ink)}
+.hdr .co span{color:var(--ink3);font-weight:400;font-size:11px;margin-left:8px}
+.hdr-nav{margin-left:auto;display:flex;gap:4px;align-items:center}
+.hdr-nav a{font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;color:var(--ink4);transition:all .15s}
+.hdr-nav a:hover{color:var(--ink2);background:var(--bg2)}
+.hdr-nav a.on{background:var(--ink);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.auth-badge-wrap{margin-left:12px}
+
+/* AUTH BADGE */
+.auth-badge{display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:8px;cursor:pointer;transition:all .15s;position:relative}
+.auth-badge:hover{background:var(--bg2)}
+.auth-avatar{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0}
+.auth-info{line-height:1.3}
+.auth-name{font-size:11px;font-weight:600}
+.auth-role{font-size:9px;color:var(--ink4)}
+.auth-chevron{font-size:10px;color:var(--ink4);margin-left:4px}
+.auth-dropdown{display:none;position:absolute;top:calc(100% + 4px);right:0;width:260px;background:white;border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.1);padding:8px;z-index:300}
+.auth-dropdown.show{display:block}
+.auth-dd-header{display:flex;align-items:center;gap:10px;padding:10px 8px}
+.auth-avatar-lg{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white}
+.auth-dd-name{font-size:12px;font-weight:600}
+.auth-dd-email{font-size:10px;color:var(--ink3)}
+.auth-dd-divider{height:1px;background:var(--border);margin:6px 0}
+.auth-dd-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;font-size:11px;color:var(--ink2);cursor:pointer;transition:all .15s}
+.auth-dd-item:hover{background:var(--bg2)}
+.auth-dd-logout{color:var(--red-text)}
+.auth-dd-icon{font-size:13px}
+
+/* TABS */
+.tabs{position:fixed;top:56px;left:0;right:0;z-index:199;height:46px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);display:flex;padding:0 32px;gap:2px}
+.tab{padding:0 18px;height:100%;font-size:12px;font-weight:500;color:var(--ink4);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1px;transition:all .2s;white-space:nowrap;background:none;border:none;font-family:var(--sans);border-radius:6px 6px 0 0}
+.tab:hover{color:var(--ink2);background:var(--bg2)}
+.tab.on{color:var(--ink);border-bottom-color:var(--ink);background:var(--surface)}
+.tab:hover{color:var(--ink2);background:var(--bg2)}
+.tab.on{color:var(--ink);border-bottom-color:var(--ink);background:var(--surface)}
+
+/* MAIN */
+.main{margin-top:102px;padding:28px 32px;max-width:1100px;margin-left:auto;margin-right:auto}
+
+/* SECTION */
+.sh{margin-bottom:24px}
+.sh-over{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sh h2{font-size:26px;font-weight:300;letter-spacing:-.03em}
+.sh h2 b{font-weight:700}
+.sh-sub{font-size:13px;color:var(--ink3);margin-top:6px}
+
+/* CARD */
+.cd{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin-bottom:14px;box-shadow:var(--shadow)}
+.cd-title{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* KPI */
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.kc .kl{font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.kc .kv{font-size:24px;font-weight:800;letter-spacing:-.03em}
+.kc .ks{font-size:10px;color:var(--ink3);margin-top:4px}
+.kc.at-blue{border-top:3px solid var(--blue)}.kc.at-green{border-top:3px solid var(--green)}.kc.at-amber{border-top:3px solid var(--amber)}.kc.at-red{border-top:3px solid var(--red)}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 12px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);border-bottom:2px solid var(--border);background:var(--surface3);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid var(--bg2);color:var(--ink2)}
+tbody tr{transition:background .15s}tbody tr:hover td{background:var(--surface3)}
+
+/* BADGES */
+.bdg{display:inline-flex;font-size:9px;font-weight:600;padding:3px 10px;border-radius:5px;font-family:var(--mono)}
+.bdg-blue{background:var(--blue-soft);color:var(--blue-deep)}.bdg-green{background:var(--green-soft);color:var(--green-text)}
+.bdg-red{background:var(--red-soft);color:var(--red-text)}.bdg-amber{background:var(--amber-soft);color:var(--amber-text)}
+.bdg-purple{background:var(--purple-soft);color:var(--purple)}.bdg-gray{background:var(--bg2);color:var(--ink3)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:4px;padding:7px 14px;border-radius:8px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink2);transition:all .15s}
+.btn:hover{box-shadow:var(--shadow)}
+.btn-sm{padding:5px 10px;font-size:10px}
+.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-green{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* FORM */
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:10px;font-weight:600;color:var(--ink2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.fi{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:12px;color:var(--ink);background:var(--bg);outline:none;transition:all .15s}
+.fi:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+select.fi{cursor:pointer}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,25,22,.4);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:white;border:1px solid var(--border);border-radius:var(--radius-lg);max-width:520px;width:90%;padding:28px;animation:modalIn .35s cubic-bezier(.22,1,.36,1);box-shadow:0 24px 80px rgba(0,0,0,.12)}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(12px)}to{opacity:1;transform:none}}
+.modal h3{font-size:18px;font-weight:700;margin-bottom:16px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:20px}
+
+/* TOAST */
+.toast{position:fixed;top:24px;right:24px;z-index:600;padding:14px 20px;border-radius:10px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:10px;animation:toastIn .4s cubic-bezier(.22,1,.36,1);box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.toast.success{background:var(--green-soft);border:1px solid rgba(22,163,74,.2);color:var(--green-text)}
+.toast.error{background:var(--red-soft);border:1px solid rgba(220,38,38,.15);color:var(--red-text)}
+@keyframes toastIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes toastOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-12px)}}
+.toast.removing{animation:toastOut .3s ease forwards}
+
+/* PANELS */
+.scr{display:none}.scr.on{display:block}
+
+/* ACCESS GRID */
+.access-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}
+.access-chip{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;text-align:center}
+.access-chip.selected{border-color:var(--blue);background:var(--blue-soft);color:var(--blue-deep)}
+.access-chip:not(.selected){color:var(--ink4)}
+.access-chip:hover{border-color:var(--border2)}
+.perm-toggle{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;border-radius:50%;line-height:0;padding:2px}
+.perm-toggle:hover{transform:scale(1.2);opacity:.85}
+.perm-toggle:active{transform:scale(.9)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="brand"><b>ArcusSoft</b> · Decision OS</div>
+  <div class="sep"></div>
+  <div class="co">Administration <span>User management & settings</span></div>
+  <div class="hdr-nav">
+    <a href="dsl-ceo.html">CEO</a>
+    <a href="dsl-cro.html">CRO</a>
+    <a href="dsl-cfo.html">CFO</a>
+    <a href="dsl-coo.html">COO</a>
+    <a href="dsl-cs.html">CS</a>
+    <a href="dsl-cto.html">CTO</a>
+    <a href="dsl-cmo.html">CMO</a>
+    <a href="dsl-cpo.html">CPO</a>
+    <div class="sep"></div>
+    <a href="admin.html" class="on">Admin</a>
+    <div class="auth-badge-wrap" id="auth-badge"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab on" onclick="show('users',this)">Users</button>
+  <button class="tab" onclick="show('roles',this)">Roles & Permissions</button>
+  <button class="tab" onclick="show('activity',this)">Activity Log</button>
+  <button class="tab" onclick="show('settings',this)">Settings</button>
+  <button class="tab" onclick="show('security',this)">Security</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- USERS PANEL -->
+<div id="s-users" class="scr on">
+  <div class="sh">
+    <div class="sh-over">Admin · User Management</div>
+    <h2><b>10</b> accounts. <b>8</b> executives.</h2>
+    <div class="sh-sub">Manage access, roles, and portal permissions for all Decision OS users.</div>
+  </div>
+
+  <div class="krow">
+    <div class="kc at-blue"><div class="kl">Total Users</div><div class="kv" id="stat-total">10</div></div>
+    <div class="kc at-green"><div class="kl">Active Sessions</div><div class="kv" id="stat-active">0</div></div>
+    <div class="kc at-amber"><div class="kl">Locked Accounts</div><div class="kv" id="stat-locked">0</div></div>
+    <div class="kc at-red"><div class="kl">Admin Accounts</div><div class="kv" id="stat-admin">1</div></div>
+  </div>
+
+  <div class="cd">
+    <div class="cd-title" style="justify-content:space-between">
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> All Users</span>
+      <button class="btn btn-blue" onclick="showCreateModal()">+ Add User</button>
+    </div>
+    <table>
+      <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Portals</th><th>Last Login</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="users-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ROLES PANEL -->
+<div id="s-roles" class="scr">
+  <div class="sh">
+    <div class="sh-over">Admin · Roles & Permissions</div>
+    <h2>Who can access <b>what.</b></h2>
+  </div>
+
+  <div class="cd">
+    <div class="cd-title">Role Definitions</div>
+    <p style="font-size:11px;color:var(--ink3);margin:-8px 0 12px">Click any permission to toggle it.</p>
+    <table>
+      <thead><tr><th>Role</th><th>Description</th><th>Portals</th><th>Can Edit</th><th>Can Manage Users</th></tr></thead>
+      <tbody id="role-defs-body">
+        <tr><td class="fw6"><span class="bdg bdg-blue">CEO</span></td><td>Full strategic access. Views all portals. Controls board narrative.</td><td>All 8</td><td><span class="perm-toggle on" data-role="CEO" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="perm-toggle" data-role="CEO" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td></tr>
+        <tr><td class="fw6"><span class="bdg bdg-green">CRO</span></td><td>Revenue intelligence. Access to CEO, CFO, CS, CMO portals.</td><td>5 portals</td><td><span class="perm-toggle on" data-role="CRO" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="perm-toggle" data-role="CRO" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td></tr>
+        <tr><td class="fw6"><span class="bdg bdg-amber">CFO</span></td><td>Financial command. Access to CEO, COO, CRO portals.</td><td>4 portals</td><td><span class="perm-toggle on" data-role="CFO" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="perm-toggle" data-role="CFO" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td></tr>
+        <tr><td class="fw6"><span class="bdg bdg-purple">CTO</span></td><td>Engineering intelligence. Access to CEO, COO, CPO, CFO portals.</td><td>5 portals</td><td><span class="perm-toggle on" data-role="CTO" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="perm-toggle" data-role="CTO" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td></tr>
+        <tr><td class="fw6"><span class="bdg bdg-gray">VIEWER</span></td><td>Read-only demo access. Can view all portals but not edit.</td><td>All 8</td><td><span class="perm-toggle" data-role="VIEWER" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td><td><span class="perm-toggle" data-role="VIEWER" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span></td></tr>
+        <tr><td class="fw6"><span class="bdg bdg-red">ADMIN</span></td><td>System administrator. Full access + user management.</td><td>All 8 + Admin</td><td><span class="perm-toggle on" data-role="ADMIN" data-perm="canEdit" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><span class="perm-toggle on" data-role="ADMIN" data-perm="canManage" onclick="togglePerm(this)"><svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cd">
+    <div class="cd-title">Portal Access Matrix <span id="matrix-saved" style="font-size:10px;font-weight:600;color:var(--green-text);opacity:0;transition:opacity .3s;margin-left:8px"></span></div>
+    <p style="font-size:11px;color:var(--ink3);margin:-8px 0 12px">Click any cell to grant or revoke portal access for a role.</p>
+    <table>
+      <thead><tr><th>Role</th><th>CEO</th><th>CRO</th><th>CFO</th><th>COO</th><th>CS</th><th>CTO</th><th>CMO</th><th>CPO</th></tr></thead>
+      <tbody id="portal-matrix-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ACTIVITY PANEL -->
+<div id="s-activity" class="scr">
+  <div class="sh">
+    <div class="sh-over">Admin · Activity Log</div>
+    <h2>Who did <b>what, when.</b></h2>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Recent Activity</div>
+    <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap">
+      <div class="fg" style="margin:0;flex:1;min-width:160px"><label class="fl">Filter by User</label><select class="fi" id="act-filter-user" onchange="renderActivity()"><option value="all">All Users</option></select></div>
+      <div class="fg" style="margin:0"><label class="fl">From</label><input class="fi" type="date" id="act-filter-from" onchange="renderActivity()" style="padding:8px 10px"></div>
+      <div class="fg" style="margin:0"><label class="fl">To</label><input class="fi" type="date" id="act-filter-to" onchange="renderActivity()" style="padding:8px 10px"></div>
+      <button class="btn btn-sm" onclick="clearActivityFilters()" style="height:36px">Clear</button>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <button class="btn btn-sm" onclick="exportActivityXLS()" style="height:36px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Export Excel</button>
+        <button class="btn btn-sm btn-blue" onclick="exportActivityPDF()" style="height:36px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Export PDF</button>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Detail</th><th>Device</th></tr></thead>
+      <tbody id="activity-table"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="s-settings" class="scr">
+  <div class="sh">
+    <div class="sh-over">Admin · Settings</div>
+    <h2>System <b>configuration.</b></h2>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Session Settings</div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Session Timeout (hours)</label><input class="fi" type="number" value="8" min="1" max="720"></div>
+      <div class="fg"><label class="fl">Remember Me Duration (days)</label><input class="fi" type="number" value="30" min="1" max="365"></div>
+    </div>
+    <div class="fg"><label class="fl">Require MFA for Admin</label>
+      <select class="fi"><option>Disabled (Demo Mode)</option><option>Enabled (Production)</option></select>
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-blue" onclick="showToast('success','Settings saved (demo mode)')">Save Settings</button></div>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Data Management</div>
+    <p style="font-size:12px;color:var(--ink3);margin-bottom:12px">These actions affect the prototype demo data. Use with caution.</p>
+    <div style="display:flex;gap:8px">
+      <button class="btn" onclick="if(confirm('Reset all users to defaults?')){localStorage.removeItem('dsl_users');DSLAuth.initUsers();
+buildMatrix();renderUsers();showToast('success','Users reset to defaults')}">Reset Users</button>
+      <button class="btn" onclick="if(confirm('Clear all activity logs?')){localStorage.removeItem('dsl_activity');renderActivity();showToast('success','Activity log cleared')}">Clear Activity Log</button>
+      <button class="btn btn-red" onclick="if(confirm('Clear ALL data including sessions?')){localStorage.removeItem('dsl_session');localStorage.removeItem('dsl_users');localStorage.removeItem('dsl_activity');location.reload()}">Factory Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY PANEL -->
+<div id="s-security" class="scr">
+  <div class="sh">
+    <div class="sh-over">Admin · Security</div>
+    <h2>Authentication <b>overview.</b></h2>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Current Session</div>
+    <table>
+      <thead><tr><th>Property</th><th>Value</th></tr></thead>
+      <tbody id="session-info"></tbody>
+    </table>
+  </div>
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Password Policy (Demo)</div>
+    <table>
+      <thead><tr><th>Rule</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Minimum length</td><td><span class="bdg bdg-green">6 characters</span></td></tr>
+        <tr><td>Complexity requirements</td><td><span class="bdg bdg-amber">None (demo mode)</span></td></tr>
+        <tr><td>Expiration</td><td><span class="bdg bdg-gray">Never (demo mode)</span></td></tr>
+        <tr><td>Lockout after failed attempts</td><td><span class="bdg bdg-gray">Disabled (demo mode)</span></td></tr>
+        <tr><td>Multi-factor authentication</td><td><span class="bdg bdg-gray">Disabled (demo mode)</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;padding:12px 16px;background:var(--amber-soft);border-radius:8px;font-size:11px;color:var(--amber-text)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> <strong>Demo Mode:</strong> This prototype uses client-side localStorage for authentication. In production, this would be replaced with server-side JWT sessions, bcrypt password hashing, and OAuth2/OIDC integration.
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- CREATE USER MODAL -->
+<div class="modal-overlay" id="create-modal">
+  <div class="modal">
+    <h3>Add New User</h3>
+    <div class="fr">
+      <div class="fg"><label class="fl">Full Name</label><input class="fi" id="new-name" placeholder="Jane Doe"></div>
+      <div class="fg"><label class="fl">Email</label><input class="fi" id="new-email" placeholder="jane@arcussoft.com"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Role</label>
+        <select class="fi" id="new-role">
+          <option value="VIEWER">Viewer (Read-Only)</option>
+          <option value="CEO">CEO</option>
+          <option value="CRO">CRO</option>
+          <option value="CFO">CFO</option>
+          <option value="COO">COO</option>
+          <option value="CS">CS Head</option>
+          <option value="CTO">CTO</option>
+          <option value="CMO">CMO</option>
+          <option value="CPO">CPO</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Title</label><input class="fi" id="new-title" placeholder="Job title"></div>
+    </div>
+    <div class="fg"><label class="fl">Portal Access</label>
+      <div class="access-grid" id="new-access">
+        <div class="access-chip selected" data-p="ceo" onclick="this.classList.toggle('selected')">CEO</div>
+        <div class="access-chip" data-p="cro" onclick="this.classList.toggle('selected')">CRO</div>
+        <div class="access-chip" data-p="cfo" onclick="this.classList.toggle('selected')">CFO</div>
+        <div class="access-chip" data-p="coo" onclick="this.classList.toggle('selected')">COO</div>
+        <div class="access-chip" data-p="cs" onclick="this.classList.toggle('selected')">CS</div>
+        <div class="access-chip" data-p="cto" onclick="this.classList.toggle('selected')">CTO</div>
+        <div class="access-chip" data-p="cmo" onclick="this.classList.toggle('selected')">CMO</div>
+        <div class="access-chip" data-p="cpo" onclick="this.classList.toggle('selected')">CPO</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeCreateModal()">Cancel</button>
+      <button class="btn btn-blue" onclick="handleCreate()">Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PORTALS MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <h3>Edit Portal Access</h3>
+    <p style="font-size:12px;color:var(--ink3);margin-bottom:16px" id="edit-user-name"></p>
+    <div class="access-grid" id="edit-access"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-blue" onclick="handleEditSave()">Save Access</button>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+// ── Guard ──
+if (!DSLAuth.isAuthenticated()) { window.location.href = 'login.html'; }
+const session = DSLAuth.getSession();
+if (session.role !== 'ADMIN') {
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#f8f7f4;font-family:Inter,sans-serif"><div style="text-align:center"><div style="margin-bottom:16px"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7a7770" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h2>Admin Access Required</h2><p style="color:#7a7770;margin:8px 0 20px">Only system administrators can access this page.</p><a href="login.html" style="display:inline-block;padding:10px 24px;background:#3b82f6;color:#fff;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600">Return to Login</a></div></div>';
+}
+
+// ── Render User Badge ──
+DSLAuth.renderUserBadge('#auth-badge');
+
+// ── SVG Icons ──
+const svgCheck = '<svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const svgCross = '<svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#e5e5e5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
+const svgCheckSm = '<svg width="20" height="20" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#16a34a"/><path d="M5 8l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const svgCrossSm = '<svg width="20" height="20" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#d1d1d1"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#888" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>';
+
+// ── Permission Toggles ──
+function togglePerm(el) {
+  const isOn = el.classList.toggle('on');
+  const role = el.getAttribute('data-role');
+  const perm = el.getAttribute('data-perm');
+  el.innerHTML = isOn ? svgCheck : svgCross;
+  showToast('success', role + ' — ' + perm + ' ' + (isOn ? 'enabled' : 'disabled'));
+}
+
+// ── Portal Access Matrix (dynamic render) ──
+const MATRIX_ROLES = [
+  { name: 'CEO',  cls: 'bdg-blue',   portals: {ceo:true, cro:true, cfo:true, coo:true, cs:true, cto:true, cmo:true, cpo:true} },
+  { name: 'CRO',  cls: 'bdg-green',  portals: {ceo:true, cro:true, cfo:true, coo:false, cs:true, cto:false, cmo:true, cpo:false} },
+  { name: 'CFO',  cls: 'bdg-amber',  portals: {ceo:true, cro:true, cfo:true, coo:true, cs:false, cto:false, cmo:false, cpo:false} },
+  { name: 'COO',  cls: 'bdg-orange', portals: {ceo:true, cro:true, cfo:false, coo:true, cs:true, cto:true, cmo:false, cpo:false} },
+  { name: 'CS',   cls: 'bdg-red',    portals: {ceo:true, cro:true, cfo:false, coo:false, cs:true, cto:true, cmo:false, cpo:false} },
+  { name: 'CTO',  cls: 'bdg-purple', portals: {ceo:true, cro:false, cfo:true, coo:true, cs:false, cto:true, cmo:false, cpo:true} },
+  { name: 'CMO',  cls: 'bdg-teal',   portals: {ceo:true, cro:true, cfo:true, coo:false, cs:false, cto:false, cmo:true, cpo:false} },
+  { name: 'CPO',  cls: 'bdg-rose',   portals: {ceo:true, cro:true, cfo:false, coo:false, cs:true, cto:true, cmo:false, cpo:true} },
+];
+const MATRIX_PORTALS = ['ceo','cro','cfo','coo','cs','cto','cmo','cpo'];
+
+function buildMatrix() {
+  const saved = JSON.parse(localStorage.getItem('dsl_matrix') || 'null');
+  const tbody = document.getElementById('portal-matrix-body');
+  if (!tbody) return;
+  let html = '';
+  MATRIX_ROLES.forEach(role => {
+    html += '<tr><td class="fw6"><span class="bdg ' + role.cls + '">' + role.name + '</span></td>';
+    MATRIX_PORTALS.forEach(p => {
+      const granted = saved ? (saved[role.name] && saved[role.name].includes(p)) : role.portals[p];
+      html += '<td><span class="perm-toggle' + (granted ? ' on' : '') + '" data-role="' + role.name + '" data-portal="' + p + '">' + (granted ? svgCheckSm : svgCrossSm) + '</span></td>';
+    });
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+// Event delegation for matrix toggles
+document.getElementById('portal-matrix-body').addEventListener('click', function(e) {
+  const el = e.target.closest('.perm-toggle');
+  if (!el) return;
+  const isOn = el.classList.toggle('on');
+  el.innerHTML = isOn ? svgCheckSm : svgCrossSm;
+  const role = el.getAttribute('data-role');
+  const portal = el.getAttribute('data-portal');
+  if (!role || !portal) return;
+  showToast(isOn ? 'success' : 'error', role + ' → ' + portal.toUpperCase() + ' ' + (isOn ? 'granted' : 'revoked'));
+  saveMatrixState();
+});
+
+function saveMatrixState() {
+  const state = {};
+  document.querySelectorAll('#portal-matrix-body tr').forEach(row => {
+    const badge = row.querySelector('.bdg');
+    if (!badge) return;
+    const role = badge.textContent.trim();
+    state[role] = [];
+    row.querySelectorAll('.perm-toggle').forEach(cell => {
+      const portal = cell.getAttribute('data-portal');
+      if (portal && cell.classList.contains('on')) state[role].push(portal);
+    });
+  });
+  localStorage.setItem('dsl_matrix', JSON.stringify(state));
+  syncMatrixToAuth(state);
+  const indicator = document.getElementById('matrix-saved');
+  if (indicator) {
+    indicator.textContent = 'Saved';
+    indicator.style.opacity = '1';
+    clearTimeout(indicator._timer);
+    indicator._timer = setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
+  }
+}
+
+function syncMatrixToAuth(state) {
+  // Update auth.js default users portal arrays based on role
+  const users = DSLAuth.getUsers();
+  const roleMap = { CEO:'CEO', CRO:'CRO', CFO:'CFO', COO:'COO', CS:'CS', CTO:'CTO', CMO:'CMO', CPO:'CPO' };
+  users.forEach(u => {
+    if (state[u.role]) {
+      DSLAuth.updateUser(u.id, { portals: state[u.role] });
+    }
+  });
+}
+document.addEventListener('click', e => {
+  const dd = document.getElementById('auth-dropdown');
+  if (dd && !e.target.closest('.auth-badge') && !e.target.closest('.auth-dropdown')) dd.classList.remove('show');
+});
+
+// ── Tab Switch ──
+function show(id, el) {
+  document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById('s-' + id).classList.add('on');
+  if (el) el.classList.add('on');
+}
+
+// ── Render Users Table ──
+function renderUsers() {
+  const users = DSLAuth.getUsers();
+  const currentSession = DSLAuth.getSession();
+  const tbody = document.getElementById('users-table');
+
+  let activeCount = currentSession ? 1 : 0;
+  let lockedCount = users.filter(u => u.locked).length;
+  let adminCount = users.filter(u => u.role === 'ADMIN').length;
+
+  document.getElementById('stat-total').textContent = users.length;
+  document.getElementById('stat-active').textContent = activeCount;
+  document.getElementById('stat-locked').textContent = lockedCount;
+  document.getElementById('stat-admin').textContent = adminCount;
+
+  tbody.innerHTML = users.map(u => {
+    const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleDateString('en-US', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : 'Never';
+    const isOnline = currentSession && currentSession.userId === u.id;
+    const roleBdg = u.role === 'ADMIN' ? 'bdg-red' : u.role === 'VIEWER' ? 'bdg-gray' : 'bdg-blue';
+    const statusBdg = u.locked ? '<span class="bdg bdg-red">Locked</span>' : isOnline ? '<span class="bdg bdg-green">Online</span>' : '<span class="bdg bdg-gray">Offline</span>';
+
+    return `<tr>
+      <td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:6px;background:${u.color};color:white;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700">${u.avatar}</div><div><div class="fw6">${u.name}</div><div style="font-size:10px;color:var(--ink4)">${u.title}</div></div></div></td>
+      <td style="font-family:var(--mono);font-size:11px">${u.email}</td>
+      <td><span class="bdg ${roleBdg}">${u.role}</span></td>
+      <td style="font-size:10px">${u.portals.map(p => `<span class="bdg bdg-blue" style="font-size:8px;padding:1px 5px">${p.toUpperCase()}</span>`).join(' ')}</td>
+      <td style="font-size:10px;color:var(--ink3)">${lastLogin}</td>
+      <td>${statusBdg}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-sm" onclick="editPortals('${u.id}')">Edit</button>
+          ${u.id !== 'u009' ? (u.locked ? `<button class="btn btn-sm btn-green" onclick="DSLAuth.unlockUser('${u.id}');renderUsers();showToast('success','User unlocked')">Unlock</button>` : `<button class="btn btn-sm" onclick="DSLAuth.lockUser('${u.id}');renderUsers();showToast('success','User locked')">Lock</button>`) : ''}
+          ${u.id !== 'u009' ? `<button class="btn btn-sm btn-red" onclick="if(confirm('Delete ${u.name}?')){DSLAuth.deleteUser('${u.id}');renderUsers();showToast('success','User deleted')}">Delete</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Filtered Activity ──
+function getFilteredActivity() {
+  const log = DSLAuth.getActivity();
+  const userId = document.getElementById('act-filter-user').value;
+  const fromDate = document.getElementById('act-filter-from').value;
+  const toDate = document.getElementById('act-filter-to').value;
+  return log.filter(l => {
+    if (userId !== 'all' && l.userId !== userId) return false;
+    const d = new Date(l.timestamp).toISOString().slice(0, 10);
+    if (fromDate && d < fromDate) return false;
+    if (toDate && d > toDate) return false;
+    return true;
+  });
+}
+
+function populateActivityUserFilter() {
+  const sel = document.getElementById('act-filter-user');
+  const current = sel.value;
+  const users = DSLAuth.getUsers();
+  sel.innerHTML = '<option value="all">All Users</option>' + users.map(u => `<option value="${u.id}">${u.name} (${u.role})</option>`).join('');
+  if (current) sel.value = current;
+}
+
+function clearActivityFilters() {
+  document.getElementById('act-filter-user').value = 'all';
+  document.getElementById('act-filter-from').value = '';
+  document.getElementById('act-filter-to').value = '';
+  renderActivity();
+}
+
+// ── Render Activity ──
+function renderActivity() {
+  populateActivityUserFilter();
+  const log = getFilteredActivity();
+  const tbody = document.getElementById('activity-table');
+  if (log.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--ink4);padding:24px">No activity recorded yet. Sign in/out to generate logs.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = log.slice(0, 50).map(l => {
+    const user = DSLAuth.getUser(l.userId);
+    const name = user ? user.name : l.userId;
+    const time = new Date(l.timestamp).toLocaleString('en-US', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const actionColor = l.action === 'login' ? 'bdg-green' : l.action === 'logout' ? 'bdg-gray' : l.action.includes('delete') || l.action.includes('lock') ? 'bdg-red' : 'bdg-blue';
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:10px;white-space:nowrap">${time}</td>
+      <td class="fw6">${name}</td>
+      <td><span class="bdg ${actionColor}">${l.action.replace(/_/g,' ')}</span></td>
+      <td style="font-size:11px;color:var(--ink3)">${l.detail}</td>
+      <td style="font-size:9px;color:var(--ink4);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.ua}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Export Excel ──
+function exportActivityXLS() {
+  const log = getFilteredActivity();
+  if (log.length === 0) { showToast('error', 'No activity data to export.'); return; }
+  let rows = '<tr style="background:#f3f4f6"><td colspan="6" style="font-size:14px;font-weight:700;padding:12px 8px;border-bottom:2px solid #d1d5db">ArcusSoft Decision OS — Activity Report</td></tr>';
+  rows += '<tr style="background:#f9fafb"><td colspan="3" style="font-size:10px;color:#6b7280;padding:6px 8px;border-bottom:1px solid #e5e7eb">Generated: ' + new Date().toLocaleString() + '</td><td colspan="3" style="font-size:10px;color:#6b7280;padding:6px 8px;border-bottom:1px solid #e5e7eb;text-align:right">' + log.length + ' records</td></tr>';
+  rows += '<tr style="background:#1f2937;color:#fff"><th style="padding:8px;text-align:left">Timestamp</th><th style="padding:8px;text-align:left">User</th><th style="padding:8px;text-align:left">Action</th><th style="padding:8px;text-align:left">Detail</th><th style="padding:8px;text-align:left">IP</th><th style="padding:8px;text-align:left">Device</th></tr>';
+  log.forEach((l, i) => {
+    const user = DSLAuth.getUser(l.userId);
+    const name = user ? user.name : l.userId;
+    const time = new Date(l.timestamp).toLocaleString();
+    const bg = i % 2 === 0 ? '#ffffff' : '#f9fafb';
+    rows += `<tr style="background:${bg}"><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6;font-family:monospace;font-size:10px">${time}</td><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6;font-weight:600">${name}</td><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6">${l.action.replace(/_/g,' ')}</td><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6">${l.detail}</td><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6;font-family:monospace;font-size:10px">${l.ip}</td><td style="padding:6px 8px;border-bottom:1px solid #f3f4f6;font-size:9px">${l.ua}</td></tr>`;
+  });
+  rows += '<tr><td colspan="6" style="padding:8px;font-size:9px;color:#9ca3af;text-align:center;border-top:1px solid #e5e7eb">ArcusSoft Decision OS · Confidential · Page 1 of 1</td></tr>';
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Activity Log</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png"><style>table{border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:11px}td,th{border:1px solid #e5e7eb}</style></head><body><table>${rows}</table>
+
+
+</body></html>`;
+  const blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ArcusSoft_Activity_' + new Date().toISOString().slice(0, 10) + '.xls';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('success', 'Excel report downloaded.');
+}
+
+// ── Export PDF ──
+function exportActivityPDF() {
+  const log = getFilteredActivity();
+  if (log.length === 0) { showToast('error', 'No activity data to export.'); return; }
+  const w = window.open('', '_blank');
+  let rows = '';
+  log.forEach((l, i) => {
+    const user = DSLAuth.getUser(l.userId);
+    const name = user ? user.name : l.userId;
+    const time = new Date(l.timestamp).toLocaleString();
+    const bg = i % 2 === 0 ? '#ffffff' : '#f8f9fa';
+    rows += `<tr style="background:${bg}"><td>${time}</td><td style="font-weight:600">${name}</td><td>${l.action.replace(/_/g,' ')}</td><td>${l.detail}</td><td style="font-size:9px">${l.ua}</td></tr>`;
+  });
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png"><title>ArcusSoft Activity Report</title><style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Calibri,Arial,Helvetica,sans-serif;color:#1a1916;padding:40px 48px;font-size:10px}
+    .header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #3b82f6;padding-bottom:12px;margin-bottom:20px}
+    .header h1{font-size:18px;font-weight:700;letter-spacing:-0.02em}
+    .header h1 span{color:#3b82f6}
+    .meta{font-size:9px;color:#6b7280;text-align:right;line-height:1.6}
+    .badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:600}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th{background:#1f2937;color:#fff;padding:8px 10px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.04em}
+    td{padding:7px 10px;border-bottom:1px solid #e5e7eb;font-size:10px}
+    .footer{margin-top:24px;padding-top:8px;border-top:1px solid #e5e7eb;font-size:8px;color:#9ca3af;display:flex;justify-content:space-between}
+    @media print{body{padding:20px 24px} .no-print{display:none}}
+    .no-print{margin-bottom:16px}
+    .no-print button{padding:8px 20px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+  </style></head><body>
+    <div class="no-print"><button onclick="window.print()">Print / Save as PDF</button></div>
+    <div class="header"><h1><span>ArcusSoft</span> Decision OS<br><span style="font-size:11px;font-weight:400;color:#6b7280">Activity Audit Report</span></h1><div class="meta">Generated: ${new Date().toLocaleString()}<br>Records: ${log.length}<br>Filter: ${document.getElementById('act-filter-user').selectedOptions[0].text}</div></div>
+    <table><thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Detail</th><th>Device</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="footer"><span>ArcusSoft Decision OS · Confidential</span><span>Page 1 of 1 · Generated by System Admin</span></div>
+  
+
+
+</body></html>`);
+  w.document.close();
+  showToast('success', 'PDF report opened. Use Print to save.');
+}
+
+// ── Render Session Info ──
+function renderSessionInfo() {
+  const s = DSLAuth.getSession();
+  if (!s) return;
+  const tbody = document.getElementById('session-info');
+  const rows = [
+    ['Session ID', s.sessionId],
+    ['User', s.name + ' (' + s.email + ')'],
+    ['Role', s.role],
+    ['Login Time', new Date(s.loginTime).toLocaleString()],
+    ['Expires', new Date(s.expiresAt).toLocaleString()],
+    ['Remember Me', s.remember ? 'Yes (30 days)' : 'No (8 hours)'],
+    ['Accessible Portals', s.portals.map(p => p.toUpperCase()).join(', ')],
+  ];
+  tbody.innerHTML = rows.map(([k,v]) => `<tr><td class="fw6">${k}</td><td style="font-family:var(--mono);font-size:11px">${v}</td></tr>`).join('');
+}
+
+// ── Create User Modal ──
+let editUserId = null;
+function showCreateModal() { document.getElementById('create-modal').classList.add('show'); }
+function closeCreateModal() { document.getElementById('create-modal').classList.remove('show'); }
+
+function handleCreate() {
+  const name = document.getElementById('new-name').value.trim();
+  const email = document.getElementById('new-email').value.trim();
+  const role = document.getElementById('new-role').value;
+  const title = document.getElementById('new-title').value.trim();
+  const portals = [...document.querySelectorAll('#new-access .access-chip.selected')].map(c => c.dataset.p);
+
+  if (!name || !email) { showToast('error', 'Name and email are required.'); return; }
+  if (portals.length === 0) { showToast('error', 'Select at least one portal.'); return; }
+
+  const colors = ['#3b82f6','#16a34a','#d97706','#ea580c','#dc2626','#7c3aed','#0d9488','#e11d48'];
+  const result = DSLAuth.createUser({ name, email, role, title, portals, color: colors[Math.floor(Math.random()*colors.length)] });
+  closeCreateModal();
+  if (result.success) {
+    showToast('success', `User ${name} created. Default password: changeme123`);
+    renderUsers();
+  } else {
+    showToast('error', result.error);
+  }
+}
+
+// ── Edit Portals ──
+function editPortals(userId) {
+  editUserId = userId;
+  const user = DSLAuth.getUser(userId);
+  document.getElementById('edit-user-name').textContent = `Editing: ${user.name} (${user.role})`;
+
+  const allPortals = ['ceo','cro','cfo','coo','cs','cto','cmo','cpo'];
+  const grid = document.getElementById('edit-access');
+  grid.innerHTML = allPortals.map(p =>
+    `<div class="access-chip ${user.portals.includes(p) ? 'selected' : ''}" data-p="${p}" onclick="this.classList.toggle('selected')">${p.toUpperCase()}</div>`
+  ).join('');
+
+  document.getElementById('edit-modal').classList.add('show');
+}
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('show'); editUserId = null; }
+
+function handleEditSave() {
+  if (!editUserId) return;
+  const portals = [...document.querySelectorAll('#edit-access .access-chip.selected')].map(c => c.dataset.p);
+  if (portals.length === 0) { showToast('error', 'Select at least one portal.'); return; }
+  DSLAuth.updateUser(editUserId, { portals });
+  closeEditModal();
+  renderUsers();
+  showToast('success', 'Portal access updated.');
+}
+
+// ── Toast ──
+function showToast(type, msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${type==='success'?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'}</span> ${msg}`;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+
+// ── Init ──
+DSLAuth.initUsers();
+buildMatrix();
+renderUsers();
+renderActivity();
+renderSessionInfo();
+
+// Handle hash navigation
+if (location.hash === '#users') show('users', document.querySelectorAll('.tab')[0]);
+if (location.hash === '#activity') show('activity', document.querySelectorAll('.tab')[2]);
+</script>
+
+
+
+
+<script src="dark-mode.js"></script>
+</body>
+</html>
