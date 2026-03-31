@@ -283,14 +283,14 @@ const DSLAuth = (() => {
     if (!el) return;
 
     const portalMap = {
-      ceo: { name: 'CEO', file: 'dsl-ceo.html', color: '#3b82f6' },
-      cro: { name: 'CRO', file: 'dsl-cro.html', color: '#16a34a' },
-      cfo: { name: 'CFO', file: 'dsl-cfo.html', color: '#d97706' },
-      coo: { name: 'COO', file: 'dsl-coo.html', color: '#ea580c' },
-      cs:  { name: 'CS',  file: 'dsl-cs.html',  color: '#dc2626' },
-      cto: { name: 'CTO', file: 'dsl-cto.html', color: '#7c3aed' },
-      cmo: { name: 'CMO', file: 'dsl-cmo.html', color: '#0d9488' },
-      cpo: { name: 'CPO', file: 'dsl-cpo.html', color: '#e11d48' },
+      ceo: { name: 'CEO', file: 'ceo.html', color: '#3b82f6' },
+      cro: { name: 'CRO', file: 'cro.html', color: '#16a34a' },
+      cfo: { name: 'CFO', file: 'cfo.html', color: '#d97706' },
+      coo: { name: 'COO', file: 'coo.html', color: '#ea580c' },
+      cs:  { name: 'CS',  file: 'cs.html',  color: '#dc2626' },
+      cto: { name: 'CTO', file: 'cto.html', color: '#7c3aed' },
+      cmo: { name: 'CMO', file: 'cmo.html', color: '#0d9488' },
+      cpo: { name: 'CPO', file: 'cpo.html', color: '#e11d48' },
     };
 
     const currentPage = window.location.pathname.split('/').pop();

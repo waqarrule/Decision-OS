@@ -292,7 +292,7 @@ function handleLogin(e) {
       showToast('success', `Welcome back, ${result.user.name}. Redirecting...`);
       setTimeout(() => {
         var p = result.user.role.toLowerCase();
-        window.location.href = p === 'admin' ? 'admin.html' : 'dsl-' + p + '.html';
+        window.location.href = p === 'admin' ? 'admin.html' : p + '.html';
       }, 800);
     } else {
       showError(result.error);
