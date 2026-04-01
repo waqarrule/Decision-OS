@@ -346,6 +346,31 @@ a {color:inherit}
 
 </div>
 </div><!-- /layout -->
+<script>
+function show(id,el){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');if(el)el.classList.add('on');initCharts()}
+function initCharts(){
+  const r=document.getElementById('ch-ret');if(r){if(r._chart)r._chart.destroy();r._chart=new Chart(r,{type:'line',data:{labels:['W1','W2','W3','W4','W5','W6','W7','W8'],datasets:[{label:'Project Dashboard',data:[100,96,94,92,91,90,89,89],borderColor:'#e11d48',backgroundColor:'rgba(225,29,72,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#e11d48',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Task Management',data:[100,94,90,87,86,85,85,84],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#16a34a',pointBorderColor:'#fff',pointBorderWidth:2},{label:'Gantt Charts',data:[100,82,72,66,63,61,60,60],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.06)',fill:true,tension:.35,borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#3b82f6',pointBorderColor:'#fff',pointBorderWidth:2},{label:'AI Schedule',data:[100,42,18,9,6,4,3,3],borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:true,max:105,ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+  const v=document.getElementById('ch-vel');if(v){if(v._chart)v._chart.destroy();v._chart=new Chart(v,{type:'bar',data:{labels:['S21','S22','S23','S24','S25','S26','S27','S28','S29','S30'],datasets:[{label:'Story Points',data:[68,72,74,71,76,80,82,85,84,87],backgroundColor:'rgba(225,29,72,.7)',borderRadius:3},{label:'Target (80pts)',data:[80,80,80,80,80,80,80,80,80,80],type:'line',borderColor:'#ccc9c2',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:11},boxWidth:12,padding:16,color:'#7a7770'}}},scales:{y:{beginAtZero:false,min:50,max:100,ticks:{font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}}}})}
+}
+initCharts();
+</script>
+
+<script src="auth.js"></script>
+<script src="js/dss-core.js"></script>
+<script src="js/dss-data.js"></script>
+<script>
+// ── Data Freshness ──
+(async function() {
+  const company = await DSSData.load('company.json');
+  if (company) renderFreshness('.freshness-wrap', company.company.lastUpdated);
+})();
+
+// ── Auth Guard ──
+if (typeof DSLAuth !== 'undefined') {
+  DSLAuth.injectGuard('cpo');
+  DSLAuth.renderUserBadge('.auth-area');
+}
+</script>
 <script src="dark-mode.js"></script>
 </body>
 </html>
