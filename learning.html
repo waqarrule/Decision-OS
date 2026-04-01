@@ -148,44 +148,190 @@ tbody tr{transition:background .15s}tbody tr:hover td{background:var(--surface3)
 </div>
 
 <div id="s-log" style="display:none">
-  <div class="sh"><div class="sh-over">Learning System · Decision Log</div><h2>Every decision, <b>structured.</b></h2><div class="sh-sub">Machine-readable decision records for retrospective analysis.</div></div>
-  <div class="cd"><div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Recent Decision Records</div>
+  <div class="sh"><div class="sh-over">Learning System · Decision Log</div><h2>Every decision, <b>tracked, scored, learned.</b></h2><div class="sh-sub">Complete decision records with prediction accuracy, outcome attribution, and cross-decision pattern analysis. Every entry feeds back into model improvement.</div></div>
+
+  <!-- KPI Dashboard -->
+  <div class="krow">
+    <div class="kc at-purple"><div class="kl">Total Decisions (Q1)</div><div class="kv" style="color:var(--purple-text)">47</div><div class="ks"><span class="cgrn">↑ 34%</span> vs Q4 2025</div></div>
+    <div class="kc at-green"><div class="kl">Decision Accuracy</div><div class="kv" style="color:var(--green-text)">94%</div><div class="ks">Predicted vs actual outcome</div></div>
+    <div class="kc at-amber"><div class="kl">Revenue Impacted</div><div class="kv" style="color:var(--amber-text)">$4.8M</div><div class="ks">$3.9M retained · $0.9M lost</div></div>
+    <div class="kc at-red"><div class="kl">Avg Confidence Interval</div><div class="kv" style="color:var(--red-text)">±8.2%</div><div class="ks">Tightening since Q4</div></div>
+  </div>
+
+  <!-- Decision Summary Table -->
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Decision Summary by Type (Q1 2026)</div>
+    <table>
+      <thead><tr><th>Decision Type</th><th>Count</th><th>Accuracy</th><th>Correct</th><th>Misses</th><th>Revenue at Stake</th><th>Net Impact</th><th>Key Learning</th></tr></thead>
+      <tbody>
+        <tr><td class="fw6">Churn Prevention</td><td class="mono">18</td><td class="mono cgrn fw6">94%</td><td class="mono cgrn">17</td><td class="mono cred">1</td><td class="mono">$2.4M</td><td class="mono cgrn fw6">+$2.1M</td><td>Contract signals > usage signals</td></tr>
+        <tr><td class="fw6">Expansion / Upsell</td><td class="mono">12</td><td class="mono cgrn fw6">92%</td><td class="mono cgrn">11</td><td class="mono cred">1</td><td class="mono">$1.8M</td><td class="mono cgrn fw6">+$1.5M</td><td>Seat usage alone insufficient; need NPS + tenure</td></tr>
+        <tr><td class="fw6">Pipeline Forecast</td><td class="mono">8</td><td class="mono cgrn fw6">91%</td><td class="mono cgrn">7</td><td class="mono cred">1</td><td class="mono">$3.2M</td><td class="mono cgrn">+$2.9M</td><td>Seasonal Q1 softness was underweighted</td></tr>
+        <tr><td class="fw6">Hiring ROI</td><td class="mono">5</td><td class="mono cgrn fw6">98%</td><td class="mono cgrn">5</td><td class="mono cred">0</td><td class="mono">$620K</td><td class="mono cgrn fw6">+$620K</td><td>Bear runway gating prevents bad hires</td></tr>
+        <tr><td class="fw6">Product Kill / Invest</td><td class="mono">3</td><td class="mono cgrn fw6">100%</td><td class="mono cgrn">3</td><td class="mono cred">0</td><td class="mono">$1.2M</td><td class="mono cgrn fw6">+$1.2M</td><td>Low success_prob kills save 5+ months each</td></tr>
+        <tr><td class="fw6">Pricing Decision</td><td class="mono">1</td><td class="mono camb fw6">N/A</td><td class="mono cgry">—</td><td class="mono cgry">—</td><td class="mono">$872K</td><td class="mono cgry">Pending</td><td>Price change in progress, outcome in Q2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Decisions — Detailed Records -->
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Recent Decision Records</div>
+
+    <!-- D-2026-0847 -->
     <div class="card-log">
-      <div style="margin-bottom:6px"><span class="bdg bdg-green">D-2026-0847</span><span style="margin-left:8px;color:var(--ink4)">Mar 15 · CRO</span></div>
-      <pre style="font-size:10px;line-height:1.6;background:var(--bg2);padding:12px;border-radius:6px;overflow-x:auto;margin:0">{
-  "decision_id": "D-2026-0847",
-  "type": "churn_prevention",
-  "account": "Metro Builders Inc", "arr": 142000,
-  "prediction": {"save_prob": 0.68, "ci": [0.58, 0.78]},
-  "action": "executive_sponsor_call",
-  "outcome": {"result": "retained", "revenue_impact": 142000},
-  "error": 0.0
-}</pre>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-green">D-2026-0847</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Mar 15 · CRO · Churn Prevention</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Account</div><div style="font-weight:700;font-size:11px">Metro Builders Inc</div><div style="font-size:9px;color:var(--ink3)">$142K ARR · 3yr tenure</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--amber-text)">68% save probability</div><div style="font-size:9px;color:var(--ink3)">CI: [58%, 78%]</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Executive sponsor call</div><div style="font-size:9px;color:var(--ink3)">VP Sales + CSM</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">RETAINED</div><div style="font-size:9px;color:var(--green-text)">$142K ARR preserved · Renewed for 2yr</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Learning</div><div style="font-size:10px;color:var(--ink3)">Executive sponsor engagement has 85% save rate vs 55% CSM-only. Validated for accounts >$100K ARR.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0847","type":"churn_prevention","account":"Metro Builders Inc","arr":142000,"prediction":{"save_prob":0.68,"ci":[0.58,0.78]},"action":"executive_sponsor_call","outcome":{"result":"retained","revenue_impact":142000},"error":0.0}</pre>
     </div>
+
+    <!-- D-2026-0831 -->
     <div class="card-log">
-      <div style="margin-bottom:6px"><span class="bdg bdg-red">D-2026-0831</span><span style="margin-left:8px;color:var(--ink4)">Mar 1 · CRO</span></div>
-      <pre style="font-size:10px;line-height:1.6;background:var(--bg2);padding:12px;border-radius:6px;overflow-x:auto;margin:0">{
-  "decision_id": "D-2026-0831",
-  "type": "churn_prevention",
-  "account": "Kellerman Group", "arr": 84000,
-  "prediction": {"save_prob": 0.62},
-  "outcome": {"result": "churned", "revenue_impact": -84000},
-  "error": 0.62,
-  "learning": "Health score didn't capture procurement decision. Added contract renewal signals."
-}</pre>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-red">D-2026-0831</span>
+        <span class="bdg bdg-red">✗ MISS</span>
+        <span style="color:var(--ink4);font-size:10px">Mar 1 · CRO · Churn Prevention</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Account</div><div style="font-weight:700;font-size:11px">Kellerman Group</div><div style="font-size:9px;color:var(--ink3)">$84K ARR · 2yr tenure</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--green-text)">62% save probability</div><div style="font-size:9px;color:var(--ink3)">CI: [48%, 74%]</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Standard save playbook</div><div style="font-size:9px;color:var(--ink3)">CSM outreach + discount offer</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--red-soft);border-radius:6px;border:1px solid rgba(220,38,38,.12)"><div style="font-size:8px;color:var(--red-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--red-text)">CHURNED</div><div style="font-size:9px;color:var(--red-text)">$84K ARR lost · Moved to Competitor B</div></div>
+        <div style="padding:8px 10px;background:var(--amber-soft);border-radius:6px;border:1px solid rgba(217,119,6,.12)"><div style="font-size:8px;color:var(--amber-text);text-transform:uppercase;font-weight:600">Root Cause & Learning</div><div style="font-size:10px;color:var(--amber-text)">Health score didn't capture procurement decision. Champion had no authority. Added contract renewal date + procurement approval signals to model. Accuracy improved +2%.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0831","type":"churn_prevention","account":"Kellerman Group","arr":84000,"prediction":{"save_prob":0.62},"outcome":{"result":"churned","revenue_impact":-84000},"error":0.62,"learning":"Health score didn't capture procurement decision. Added contract renewal signals."}</pre>
     </div>
+
+    <!-- D-2026-0812 -->
     <div class="card-log">
-      <div style="margin-bottom:6px"><span class="bdg bdg-blue">D-2026-0812</span><span style="margin-left:8px;color:var(--ink4)">Feb 15 · CPO</span></div>
-      <pre style="font-size:10px;line-height:1.6;background:var(--bg2);padding:12px;border-radius:6px;overflow-x:auto;margin:0">{
-  "decision_id": "D-2026-0812",
-  "type": "product_kill",
-  "feature": "AI Scheduling v2",
-  "prediction": {"success_prob": 0.15},
-  "action": "killed_project",
-  "outcome": {"correct": true, "months_saved": 5.2}
-}</pre>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-blue">D-2026-0812</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Feb 15 · CPO · Product Kill</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Feature</div><div style="font-weight:700;font-size:11px">AI Scheduling v2</div><div style="font-size:9px;color:var(--ink3)">6 months invested</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--red-text)">15% success probability</div><div style="font-size:9px;color:var(--ink3)">Based on market + capability analysis</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Killed project</div><div style="font-size:9px;color:var(--ink3)">Reallocated 3 engineers to core</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">CORRECT KILL</div><div style="font-size:9px;color:var(--green-text)">5.2 months saved · Competitor version also failed</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Learning</div><div style="font-size:10px;color:var(--ink3)">Product kill decisions at <20% success probability are highly reliable. Expanding kill criteria to include projects with <35% prob and >4 month remaining investment.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0812","type":"product_kill","feature":"AI Scheduling v2","prediction":{"success_prob":0.15},"action":"killed_project","outcome":{"correct":true,"months_saved":5.2}}</pre>
+    </div>
+
+    <!-- D-2026-0798 -->
+    <div class="card-log">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-purple">D-2026-0798</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Feb 8 · CRO · Expansion</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Account</div><div style="font-weight:700;font-size:11px">Vertex Solutions</div><div style="font-size:9px;color:var(--ink3)">$68K ARR · 95% seats used</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--green-text)">82% expansion probability</div><div style="font-size:9px;color:var(--ink3)">CI: [72%, 90%]</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Proactive upsell outreach</div><div style="font-size:9px;color:var(--ink3)">CSM + usage report presentation</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">EXPANDED +$34K ARR</div><div style="font-size:9px;color:var(--green-text)">Added 20 seats + Enterprise tier</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Learning</div><div style="font-size:10px;color:var(--ink3)">Seat utilization >90% combined with NPS >8 is a strong expansion signal. Replicated across 12 similar accounts → 92% expansion rate.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0798","type":"expansion","account":"Vertex Solutions","arr":68000,"prediction":{"expand_prob":0.82,"ci":[0.72,0.90]},"action":"proactive_upsell","outcome":{"result":"expanded","revenue_impact":34000},"error":0.0}</pre>
+    </div>
+
+    <!-- D-2026-0782 -->
+    <div class="card-log">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-green">D-2026-0782</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Jan 28 · CFO · Hiring ROI</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Hire</div><div style="font-weight:700;font-size:11px">2× Enterprise AEs</div><div style="font-size:9px;color:var(--ink3)">$310K total cost/yr</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--green-text)">2.4× ROI · 19.8mo bear runway</div><div style="font-size:9px;color:var(--ink3)">Above 12mo floor</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Approved</div><div style="font-size:9px;color:var(--ink3)">Hired Feb 1, ramping now</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome (Early)</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">ON TRACK</div><div style="font-size:9px;color:var(--green-text)">$120K pipeline generated in first 30 days</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Learning</div><div style="font-size:10px;color:var(--ink3)">Bear runway gating (≥12mo) is the strongest predictor. 5/5 hires above threshold performed. 0/2 below threshold approved (correctly rejected).</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0782","type":"hiring","role":"Enterprise AE ×2","prediction":{"roi":2.4,"bear_runway":"19.8mo"},"action":"approved","outcome":{"status":"on_track","pipeline_30d":120000}}</pre>
+    </div>
+
+    <!-- D-2026-0761 -->
+    <div class="card-log">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-amber">D-2026-0761</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Jan 20 · CRO · Churn Prevention</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Account</div><div style="font-weight:700;font-size:11px">Pacific Health Systems</div><div style="font-size:9px;color:var(--ink3)">$210K ARR · 4yr tenure</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--red-text)">38% save probability</div><div style="font-size:9px;color:var(--ink3)">CI: [24%, 52%] — high risk</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">CEO-to-CEO call + custom SLA</div><div style="font-size:9px;color:var(--ink3)">Emergency escalation</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">RETAINED +$42K EXPANSION</div><div style="font-size:9px;color:var(--green-text)">Renewed 3yr + added compliance module</div></div>
+        <div style="padding:8px 10px;background:var(--amber-soft);border-radius:6px;border:1px solid rgba(217,119,6,.12)"><div style="font-size:8px;color:var(--amber-text);text-transform:uppercase;font-weight:600">Learning</div><div style="font-size:10px;color:var(--amber-text)">Model underestimated CEO-level intervention impact. Executive-to-executive saves at 38% predicted → actually 72% historical. Adjusted model: executive escalation adds +30pp to save probability for accounts >$150K ARR.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0761","type":"churn_prevention","account":"Pacific Health Systems","arr":210000,"prediction":{"save_prob":0.38,"ci":[0.24,0.52]},"action":"ceo_to_ceo_call","outcome":{"result":"retained","revenue_impact":252000},"error":0.0,"learning":"CEO-level intervention adds +30pp for >$150K accounts"}</pre>
+    </div>
+
+    <!-- D-2026-0744 -->
+    <div class="card-log">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+        <span class="bdg bdg-blue">D-2026-0744</span>
+        <span class="bdg bdg-green">✓ CORRECT</span>
+        <span style="color:var(--ink4);font-size:10px">Jan 12 · CRO · Pipeline Forecast</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Forecast</div><div style="font-weight:700;font-size:11px">Q1 Pipeline Adjustment</div><div style="font-size:9px;color:var(--ink3)">$3.2M adjusted forecast</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Prediction</div><div style="font-weight:700;font-size:11px;color:var(--green-text)">$3.2M ± $400K</div><div style="font-size:9px;color:var(--ink3)">CI: [$2.8M, $3.6M]</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Action Taken</div><div style="font-weight:700;font-size:11px">Board guidance set at $3.2M</div><div style="font-size:9px;color:var(--ink3)">Conservative vs $3.5M sales target</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div style="padding:8px 10px;background:var(--green-soft);border-radius:6px;border:1px solid rgba(22,163,74,.12)"><div style="font-size:8px;color:var(--green-text);text-transform:uppercase;font-weight:600">Outcome</div><div style="font-weight:700;font-size:12px;color:var(--green-text)">$3.1M ACTUAL (97% accurate)</div><div style="font-size:9px;color:var(--green-text)">Board trust increased · Stock comp aligned</div></div>
+        <div style="padding:8px 10px;background:var(--bg2);border-radius:6px"><div style="font-size:8px;color:var(--ink4);text-transform:uppercase">Learning</div><div style="font-size:10px;color:var(--ink3)">Seasonal Q1 softness was underweighted in prior models. Added enterprise budget cycle features. Board now trusts DSS forecasts over sales self-reports.</div></div>
+      </div>
+      <pre style="font-size:9px;line-height:1.5;background:var(--bg2);padding:10px;border-radius:6px;overflow-x:auto;margin:0;color:var(--ink3)">{"decision_id":"D-2026-0744","type":"pipeline_forecast","period":"Q1 2026","prediction":{"forecast":3200000,"ci":[2800000,3600000]},"action":"board_guidance","outcome":{"actual":3100000,"error_pct":3.2}}</pre>
+    </div>
+
+  </div>
+
+  <!-- Cross-Pattern Analysis -->
+  <div class="cd">
+    <div class="cd-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Cross-Decision Pattern Analysis</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--ink);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">High-Confidence Patterns (verified)</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;margin-bottom:6px;font-size:10px"><strong>Executive intervention +$150K ARR = +30pp save rate.</strong> CEO/VP calls dramatically outperform CSM-only saves for large accounts.</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;margin-bottom:6px;font-size:10px"><strong>Bear runway ≥12mo = 100% hire success.</strong> Every hire above the runway floor has performed to ROI prediction.</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;font-size:10px"><strong>Product kill at &lt;20% prob = 100% correct.</strong> Low-confidence product bets are reliable kills. Expanding threshold to 35%.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--ink);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em">Emerging Patterns (validating)</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;margin-bottom:6px;font-size:10px"><strong>Seat usage >90% + NPS >8 = strong expansion signal.</strong> 12 accounts matched, 11 expanded (92%). Needs 20+ sample to confirm.</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;margin-bottom:6px;font-size:10px"><strong>Procurement approval signals > product usage for churn.</strong> Contract renewal date + budget allocation are leading indicators.</div>
+        <div style="padding:8px 12px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:0 6px 6px 0;font-size:10px"><strong>SMB segment shows higher seasonal volatility.</strong> SMB NRR drops 5-8pp in Q1 vs enterprise. Segment-specific models needed.</div>
+      </div>
     </div>
   </div>
+
 </div>
 
 <div id="s-feedback" style="display:none">
