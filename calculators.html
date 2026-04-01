@@ -85,6 +85,7 @@ td.current{background:var(--blue-soft);font-weight:700}
   <button class="tab" onclick="show('pricing',this)">Pricing Change</button>
   <button class="tab" onclick="show('churn',this)">Churn Sensitivity</button>
   <button class="tab" onclick="show('valuation',this)">Valuation Model</button>
+  <button class="tab" onclick="show('fundraise',this)">Series C Planner</button>
 </div>
 <div class="main">
 
@@ -193,9 +194,106 @@ td.current{background:var(--blue-soft);font-weight:700}
 </div>
 
 </div>
+
+<div id="s-fundraise" style="display:none">
+  <div class="sh"><div class="sh-over">Interactive Calculator · Fundraise</div><h2>Series C <b>readiness engine.</b></h2><div class="sh-sub">Multi-variable model combining your inputs with live system data. Covers dilution, runway, burn trajectory, and path to profitability.</div></div>
+
+  <div class="cd">
+    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Series C Scenario Planner</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px">
+      <div style="padding:12px 16px;background:var(--blue-soft);border:1px solid rgba(59,130,246,.12);border-radius:var(--radius)">
+        <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">System Data</div>
+        <div style="font-size:10px;color:var(--ink3);line-height:1.8">
+          ARR: <strong style="color:var(--ink)">$16.4M</strong><br>
+          Burn: <strong style="color:var(--ink)">$486K/mo</strong><br>
+          Runway: <strong style="color:var(--ink)">17.4mo</strong><br>
+          Headcount: <strong style="color:var(--ink)">156</strong><br>
+          Gross Margin: <strong style="color:var(--ink)">78%</strong><br>
+          NRR: <strong style="color:var(--ink)">103%</strong>
+        </div>
+      </div>
+      <div style="padding:12px 16px;background:var(--surface3);border:1px solid var(--border);border-radius:var(--radius)">
+        <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Derived Metrics</div>
+        <div style="font-size:10px;color:var(--ink3);line-height:1.8">
+          MRR: <strong style="color:var(--ink)">$1.37M</strong><br>
+          Monthly Churn: <strong style="color:var(--ink)">$20.5K</strong><br>
+          Burn Multiple: <strong style="color:var(--amber-text)">2.1×</strong><br>
+          Cash Remaining: <strong style="color:var(--ink)">$8.46M</strong><br>
+          Rev/FTE: <strong style="color:var(--ink)">$105K</strong><br>
+          LTV/CAC: <strong style="color:var(--ink)">4.8×</strong>
+        </div>
+      </div>
+      <div style="padding:12px 16px;background:var(--amber-soft);border:1px solid rgba(217,119,6,.12);border-radius:var(--radius)">
+        <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Board Targets</div>
+        <div style="font-size:10px;color:var(--ink3);line-height:1.8">
+          Runway: <strong style="color:var(--green-text)">>18mo</strong><br>
+          Burn Multiple: <strong style="color:var(--green-text)"><2×</strong><br>
+          Growth: <strong style="color:var(--green-text)">>30%</strong><br>
+          Gross Margin: <strong style="color:var(--green-text)">>75%</strong><br>
+          NRR: <strong style="color:var(--green-text)">>100%</strong><br>
+          Valuation: <strong style="color:var(--green-text)">$120M walk-away</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Your Inputs</div>
+        <div class="calc-input"><label>Target raise amount <span class="val" id="fv-raise">$25M</span></label><input type="range" id="f-raise" min="10000000" max="80000000" step="1000000" value="25000000" oninput="calcFund()"></div>
+        <div class="calc-input"><label>Pre-money valuation <span class="val" id="fv-pre">$80M</span></label><input type="range" id="f-pre" min="50000000" max="150000000" step="5000000" value="80000000" oninput="calcFund()"></div>
+        <div class="calc-input"><label>Forward growth rate <span class="val" id="fv-growth">38%</span></label><input type="range" id="f-growth" min="15" max="60" value="38" oninput="calcFund()"></div>
+        <div class="calc-input"><label>Post-raise hiring (headcount) <span class="val" id="fv-hire">8</span></label><input type="range" id="f-hire" min="0" max="20" value="8" oninput="calcFund()"></div>
+        <div class="calc-input"><label>Avg loaded cost per hire <span class="val" id="fv-cost">$155K</span></label><input type="range" id="f-cost" min="100000" max="250000" step="5000" value="155000" oninput="calcFund()"></div>
+        <div class="calc-input"><label>Target months to reach <span class="val" id="fv-months">24</span></label><input type="range" id="f-months" min="12" max="36" value="24" oninput="calcFund()"></div>
+      </div>
+      <div class="calc-outputs">
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Model Outputs</div>
+        <div class="calc-output"><div class="label">Post-Money Valuation</div><div class="value blue" id="fo-post">$105M</div></div>
+        <div class="calc-output"><div class="label">Founder Dilution</div><div class="value" id="fo-dilute">23.8%</div></div>
+        <div class="calc-output"><div class="label">New Runway (Post-Raise)</div><div class="value green" id="fo-runway">34.2 months</div></div>
+        <div class="calc-output"><div class="label">Post-Hire Monthly Burn</div><div class="value amber" id="fo-burn">$588K</div></div>
+        <div class="calc-output"><div class="label">ARR at Target Date</div><div class="value blue" id="fo-arr">$32.1M</div></div>
+        <div class="calc-output"><div class="label">Breakeven ARR Needed</div><div class="value" id="fo-breakeven">$9.0M MRR</div></div>
+        <div class="calc-output"><div class="label">Months to Breakeven</div><div class="value" id="fo-bemonths">28 months</div></div>
+        <div class="calc-output"><div class="label">Post-Raise Burn Multiple</div><div class="value" id="fo-bmult">1.8×</div></div>
+        <div id="fo-readiness" style="margin-top:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:11px;font-weight:600">Fundraise Readiness Score</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:800" id="fo-score">78/100</span>
+          </div>
+          <div style="height:8px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-bottom:10px"><div id="fo-bar" style="height:100%;border-radius:4px;width:78%;background:linear-gradient(90deg,#86efac,#16a34a)"></div></div>
+          <div id="fo-breakdown" style="font-size:10px;color:var(--ink3);line-height:1.8"></div>
+        </div>
+        <div id="fo-verdict" class="verdict go"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cd">
+    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Dilution × Runway Matrix</div>
+    <table><thead><tr><th></th><th>$15M raise</th><th>$20M raise</th><th>$25M raise</th><th>$35M raise</th><th>$50M raise</th></tr></thead>
+    <tbody id="fund-matrix"></tbody></table>
+    <div style="font-size:10px;color:var(--ink4);margin-top:8px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--blue-soft);border:1px solid var(--blue);margin-right:4px;vertical-align:middle"></span> = your current selection</div>
+  </div>
+
+  <div class="cd">
+    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> Burn Trajectory: With vs Without Raise</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div>
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Without raise (current path)</div>
+        <div id="fo-burn-no"></div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">With raise (your scenario)</div>
+        <div id="fo-burn-yes"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function show(id,el){
-  ['hiring','pricing','churn','valuation'].forEach(s=>{document.getElementById('s-'+s).style.display=s===id?'block':'none'});
+  ['hiring','pricing','churn','valuation','fundraise'].forEach(s=>{document.getElementById('s-'+s).style.display=s===id?'block':'none'});
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   if(el)el.classList.add('on');
 }
@@ -259,6 +357,127 @@ function calcVal(){
   document.getElementById('vo-fval').textContent='$'+fval.toFixed(0)+'M';document.getElementById('vo-walk').textContent='$'+walk.toFixed(0)+'M';
 }
 calcHire();calcPrice();calcChurn();calcVal();
+
+function calcFund(){
+  const raise=+document.getElementById('f-raise').value;
+  const pre=+document.getElementById('f-pre').value;
+  const growth=+document.getElementById('f-growth').value;
+  const hireCount=+document.getElementById('f-hire').value;
+  const costPer=+document.getElementById('f-cost').value;
+  const months=+document.getElementById('f-months').value;
+  const arr=16.4, mrr=1.37, burn=486, cash=8.46, gm=0.78, nrr=103;
+
+  // Core calculations
+  const post=pre+raise;
+  const dilute=(raise/post*100);
+  const newHireBurn=(hireCount*costPer/1000/12);
+  const postBurn=burn+newHireBurn;
+  const newRunway=(cash+raise/1000)/postBurn;
+  const fwdArr=arr*(1+growth/100);
+  const breakevenMRR=postBurn/gm;
+  const breakevenARR=breakevenMRR*12;
+  // Months to breakeven: solve arr*(1+g/12)^n = breakevenARR
+  const monthlyGrowth=Math.pow(1+growth/100,1/12)-1;
+  let bemonths=0;
+  if(monthlyGrowth>0){bemonths=Math.ceil(Math.log(breakevenARR/arr)/Math.log(1+monthlyGrowth))}
+  else{bemonths=999}
+  // Burn multiple post-raise: net burn / net new ARR (annualized)
+  const netNewARR=fwdArr-arr;
+  const bmult=(postBurn*12/netNewARR).toFixed(1);
+  // ARR at target date
+  const arrAtTarget=arr*Math.pow(1+monthlyGrowth,months);
+
+  // Update display values
+  document.getElementById('fv-raise').textContent='$'+(raise/1000000).toFixed(0)+'M';
+  document.getElementById('fv-pre').textContent='$'+(pre/1000000).toFixed(0)+'M';
+  document.getElementById('fv-growth').textContent=growth+'%';
+  document.getElementById('fv-hire').textContent=hireCount;
+  document.getElementById('fv-cost').textContent='$'+(costPer/1000).toFixed(0)+'K';
+  document.getElementById('fv-months').textContent=months;
+  document.getElementById('fo-post').textContent='$'+post.toFixed(0)+'M';
+  document.getElementById('fo-dilute').textContent=dilute.toFixed(1)+'%';
+  document.getElementById('fo-runway').textContent=newRunway.toFixed(1)+' months';
+  document.getElementById('fo-burn').textContent='$'+postBurn.toFixed(0)+'K';
+  document.getElementById('fo-arr').textContent='$'+arrAtTarget.toFixed(1)+'M';
+  document.getElementById('fo-breakeven').textContent='$'+breakevenMRR.toFixed(1)+'M MRR ($'+breakevenARR.toFixed(0)+'M ARR)';
+  document.getElementById('fo-bemonths').textContent=bemonths+' months';
+  document.getElementById('fo-bmult').textContent=bmult+'×';
+
+  // Color coding
+  const rwEl=document.getElementById('fo-runway');
+  rwEl.className='value '+(newRunway>=24?'green':newRunway>=18?'amber':'red');
+  const bmEl=document.getElementById('fo-bmult');
+  bmEl.className='value '+(+bmult<=2?'green':+bmult<=2.5?'amber':'red');
+  const dlEl=document.getElementById('fo-dilute');
+  dlEl.className='value '+(dilute<=20?'green':dilute<=30?'amber':'red');
+
+  // Readiness score (0-100)
+  const scores={
+    runway:Math.min(100,newRunway/30*100),        // 30mo = 100%
+    dilution:Math.max(0,100-dilute*2.5),           // <20% = 100, 40% = 0
+    burnMultiple:Math.max(0,100-(+bmult-1)*50),   // 1x=100, 3x=0
+    growth:Math.min(100,growth/50*100),            // 50%=100%
+    breakeven:bemonths<=months?100:Math.max(0,100-(bemonths-months)*5)
+  };
+  const totalScore=Math.round(Object.values(scores).reduce((a,b)=>a+b,0)/5);
+
+  document.getElementById('fo-score').textContent=totalScore+'/100';
+  const bar=document.getElementById('fo-bar');
+  bar.style.width=totalScore+'%';
+  bar.style.background=totalScore>=75?'linear-gradient(90deg,#86efac,#16a34a)':totalScore>=50?'linear-gradient(90deg,#fcd34d,#d97706)':'linear-gradient(90deg,#fca5a5,#dc2626)';
+
+  document.getElementById('fo-breakdown').innerHTML=
+    'Runway: <strong>'+Math.round(scores.runway)+'</strong>/100 · '+
+    'Dilution: <strong>'+Math.round(scores.dilution)+'</strong>/100 · '+
+    'Burn Multiple: <strong>'+Math.round(scores.burnMultiple)+'</strong>/100 · '+
+    'Growth: <strong>'+Math.round(scores.growth)+'</strong>/100 · '+
+    'Breakeven Path: <strong>'+Math.round(scores.breakeven)+'</strong>/100';
+
+  // Verdict
+  const verdict=document.getElementById('fo-verdict');
+  if(totalScore>=75&&dilute<25&&newRunway>=24){
+    verdict.className='verdict go';
+    verdict.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> STRONG POSITION — '+totalScore+'% ready. Dilution '+dilute.toFixed(1)+'%, runway '+newRunway.toFixed(1)+'mo. Begin investor conversations.';
+  }else if(totalScore>=55){
+    verdict.className='verdict maybe';
+    verdict.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> VIABLE WITH CONDITIONS — '+totalScore+'% ready. '+(dilute>25?'Dilution high at '+dilute.toFixed(1)+'%. ':'')+(newRunway<24?'Runway '+newRunway.toFixed(1)+'mo, negotiate better terms. ':'')+'Adjust parameters.';
+  }else{
+    verdict.className='verdict no';
+    verdict.innerHTML='<svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg> NOT READY — '+totalScore+'% score. '+(dilute>30?'Excessive dilution. ':'')+(newRunway<18?'Runway too short post-raise. ':'')+'Revisit terms or delay 6 months.';
+  }
+
+  // Dilution × Runway matrix
+  const raises=[15,20,25,35,50];
+  const valuations=[50,65,80,100,120];
+  let matrix='';
+  valuations.forEach(v=>{
+    matrix+='<tr><td style="text-align:left;font-family:var(--sans);font-weight:600">$'+v+'M pre</td>';
+    raises.forEach(r=>{
+      const pm=v+r, d=(r/pm*100), rw=(cash+r/1000)/postBurn;
+      const isCurrent=(Math.abs(r-raise/1e6)<3&&Math.abs(v-pre/1e6)<8);
+      const cls=rw>=24?'green':rw>=18?'amber':'red';
+      matrix+='<td style="color:var(--'+cls+'-text)'+(isCurrent?';background:var(--blue-soft)':'')+'">'+d.toFixed(1)+'% · '+rw.toFixed(0)+'mo</td>';
+    });
+    matrix+='</tr>';
+  });
+  document.getElementById('fund-matrix').innerHTML=matrix;
+
+  // Burn trajectory bars (simplified)
+  const noRaiseMonths=Math.floor(cash/burn);
+  let noHtml='', yesHtml='';
+  for(let m=0;m<36;m+=3){
+    const noCash=cash-burn*m;const noW=noCash/cash*100;
+    const yesCash=cash+raise/1000-postBurn*m;const yesW=Math.min(100,yesCash/(cash+raise/1000)*100);
+    const noColor=noCash<=0?'var(--red)':noCash<cash*0.3?'var(--amber)':'var(--blue)';
+    const yesColor=yesCash<=0?'var(--red)':yesCash<cash*0.3?'var(--amber)':'var(--green)';
+    noHtml+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-family:var(--mono);font-size:9px;width:36px;color:var(--ink4)">M'+m+'</span><div style="flex:1;height:12px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="width:'+Math.max(0,noW)+'%;height:100%;background:'+noColor+';border-radius:3px"></div></div><span style="font-family:var(--mono);font-size:9px;width:44px;text-align:right;color:var(--ink4)">'+(noCash>0?'$'+noCash.toFixed(1)+'M':'$0')+'</span></div>';
+    yesHtml+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-family:var(--mono);font-size:9px;width:36px;color:var(--ink4)">M'+m+'</span><div style="flex:1;height:12px;background:var(--bg2);border-radius:3px;overflow:hidden"><div style="width:'+Math.max(0,yesW)+'%;height:100%;background:'+yesColor+';border-radius:3px"></div></div><span style="font-family:var(--mono);font-size:9px;width:44px;text-align:right;color:var(--ink4)">'+(yesCash>0?'$'+yesCash.toFixed(1)+'M':'$0')+'</span></div>';
+  }
+  document.getElementById('fo-burn-no').innerHTML=noHtml;
+  document.getElementById('fo-burn-yes').innerHTML=yesHtml;
+}
+calcFund();
+
 </script>
 
 
