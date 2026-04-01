@@ -66,6 +66,7 @@ a {color:inherit}
   <button class="tab" onclick="show('techdebt',this)">Tech Debt</button>
   <button class="tab" onclick="show('security',this)">Security</button>
   <button class="tab" onclick="show('scale',this)">Scale</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
 </div>
 <div class="layout">
 <div class="main">
@@ -275,6 +276,27 @@ a {color:inherit}
       <div class="cl cl-purple mt8">We can handle <strong>2× with hardening</strong> (connection pooling, auth refactor). Beyond that, we need database sharding and service decomposition. Plan for 10× before Series C fundraise.</div>
     </div></div>
   </div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">
+  <div class="sh"><div class="sh-over">CTO · Engineering Layer · Playbooks</div><h2>Pre-built <em>engineering decisions.</em></h2><div class="sh-sub">Tech debt reduction, incident response, and scaling decision flows.</div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Tech debt reduction playbook <span>| active</span></span></div><div class="cd-b">
+    <div class="pbs">
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Database query optimization</div><div class="pb-meta"><span>Score: 8.4 | Done: 3 sprints ago</span></div><div class="pb-desc">Reduced p95 latency from 820ms to 340ms.</div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Auth rate limiting added</div><div class="pb-meta"><span>Score: 7.8 | Done: 1 sprint ago</span></div><div class="pb-desc">Prevented 3 potential DDoS incidents.</div></div></div>
+      <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">Auth service decompose</div><div class="pb-meta"><span class="cred">Score: 9.1 — BLOCKER</span></div><div class="pb-desc">Monolithic auth maxes at 2K RPS. Must split before scale. 4 sprints estimated.</div></div></div>
+      <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">Background job sharding</div><div class="pb-meta"><span>Score: 7.2</span></div><div class="pb-desc">Queue depth growing 12%/mo. Needs partitioned workers.</div></div></div>
+    </div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Incident response playbook <span>| severity-gated</span></span></div><div class="cd-b">
+    <div class="dflow">
+      <div class="df-node no"><span class="df-tag n">SEV-1</span><strong>Customer-facing outage</strong> | All-hands page. CEO notified. Post-mortem within 48hrs.</div>
+      <div class="df-node warn"><span class="df-tag m">SEV-2</span><strong>Degraded performance</strong> | On-call + squad lead. Fix within 4hrs or escalate.</div>
+      <div class="df-node yes"><span class="df-tag y">SEV-3</span><strong>Internal tool / non-critical</strong> | On-call handles. Fix next business day.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node"><span class="df-tag" style="background:var(--purple);color:#fff">Post</span><strong>Every incident gets a blameless post-mortem</strong> | What → Why → Change → Owner → Deadline.</div>
+    </div>
+  </div></div>
 </div>
 
 </div>

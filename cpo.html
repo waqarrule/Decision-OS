@@ -71,6 +71,7 @@ a {color:inherit}
   <button class="tab" onclick="show('plg',this)">PLG</button>
   <button class="tab" onclick="show('pmf',this)">PMF</button>
   <button class="tab" onclick="show('competitive',this)">Competitive</button>
+  <button class="tab" onclick="show('playbooks',this)">Playbooks</button>
 </div>
 <div class="layout">
 <div class="main">
@@ -280,6 +281,34 @@ a {color:inherit}
       <div style="padding:14px 18px;border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 6px 6px 0;font-size:12px"><strong>Procore price increase to $72/user.</strong> Creates pricing gap we can exploit. Our $38/user is now 47% cheaper, update sales collateral.</div>
     </div></div>
   </div>
+
+<!-- PLAYBOOKS -->
+<div id="s-playbooks" class="scr">
+  <div class="sh"><div class="sh-over">CPO · Product Layer · Playbooks</div><h2>Pre-built <em>product decisions.</em></h2><div class="sh-sub">Feature kill flows, PMF response playbooks, and roadmap prioritization.</div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Feature kill playbook <span>| AI scheduling case study</span></span></div><div class="cd-b">
+    <div class="pbs">
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">AI Schedule Optimizer shipped</div><div class="pb-meta"><span>4,200 eng hours | 2 sprints</span></div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--red)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><div class="pb-info"><div class="pb-title">90-day adoption check: 3.1%</div><div class="pb-meta"><span class="cred">Below 10% threshold</span></div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">5 user interviews completed</div><div class="pb-meta"><span>Verdict: execution gap, not value gap</span></div></div></div>
+      <div class="pb-step done"><div class="pb-num" style="background:var(--red)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><div class="pb-info"><div class="pb-title">Feature killed</div><div class="pb-meta"><span>$630K opportunity cost documented</span></div></div></div>
+      <div class="pb-step cur"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Capacity reallocated to mobile offline</div><div class="pb-meta"><span class="cred">Priority #1 — blocks 3 enterprise deals</span></div><div class="pb-desc">Platform squad now 100% on mobile offline. Target: ship by end of Q2.</div></div></div>
+    </div>
+  </div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">PMF decision playbook <span>| segment-specific response</span></span></div><div class="cd-b">
+    <div class="dflow">
+      <div class="df-node"><span class="df-tag" style="background:var(--rose);color:#fff">IF</span><strong>Sean Ellis score &lt;40% in any segment</strong></div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node warn"><span class="df-tag m">Diagnose</span>Pull verbatim feedback. Categorize: onboarding, value, complexity, pricing, competition.</div>
+      <div class="df-arrow">↓</div>
+      <div class="df-node yes"><span class="df-tag y">Fixable</span>Assign product squad. 60-day fix window. Track Ellis score weekly.</div>
+      <div class="df-node no"><span class="df-tag n">Structural</span>Consider segment exit or separate product.</div>
+    </div>
+    <div class="pbs" style="margin-top:12px">
+      <div class="pb-step cur"><div class="pb-num">1</div><div class="pb-info"><div class="pb-title">SMB PMF gap identified</div><div class="pb-meta"><span class="cred">Ellis: 38% | NRR: 96%</span></div><div class="pb-desc">SMB says "too complex." Root cause: enterprise-first onboarding. Need SMB-specific flow.</div></div></div>
+      <div class="pb-step"><div class="pb-num">2</div><div class="pb-info"><div class="pb-title">SMB onboarding redesign</div><div class="pb-meta"><span>Queued for Q3</span></div><div class="pb-desc">Simplify to 3 core features. Guided setup under 10 minutes.</div></div></div>
+      <div class="pb-step"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">60-day Ellis re-test</div><div class="pb-meta"><span>Target: &gt;50%</span></div></div></div>
+    </div>
+  </div></div>
 </div>
 
 </div>
