@@ -120,24 +120,130 @@ td.current{background:var(--blue-soft);font-weight:700}
 </div>
 
 <div id="s-pricing" style="display:none">
-  <div class="sh"><div class="sh-over">Interactive Calculator · Pricing</div><h2>Price increase <b>impact model.</b></h2></div>
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <div class="sh">
+    <div class="sh-over">Pricing Strategy · Corporate Pricing Intelligence</div>
+    <h2>Price change <b>impact engine.</b></h2>
+    <div class="sh-sub">Full-spectrum pricing analysis: revenue impact, segment-level modeling, elasticity scenarios, industry benchmarks, competitive positioning, risk scoring, and implementation playbook.</div>
+  </div>
+
+  <!-- ═══════════════════ KPI DASHBOARD ═══════════════════ -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px">
+    <div style="padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--radius);box-shadow:var(--shadow)">
+      <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Current ARR</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:800;letter-spacing:-.02em">$16.4M</div>
+      <div style="font-size:10px;color:var(--green-text);margin-top:2px">↑ 38% YoY</div>
+    </div>
+    <div style="padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:var(--radius);box-shadow:var(--shadow)">
+      <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Gross Margin</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:800;letter-spacing:-.02em">78%</div>
+      <div style="font-size:10px;color:var(--green-text);margin-top:2px">Above 72% median</div>
+    </div>
+    <div style="padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--radius);box-shadow:var(--shadow)">
+      <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">NRR</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:800;letter-spacing:-.02em">103%</div>
+      <div style="font-size:10px;color:var(--amber-text);margin-top:2px">Below 115% median</div>
+    </div>
+    <div style="padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--amber);border-radius:var(--radius);box-shadow:var(--shadow)">
+      <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Monthly Churn</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:800;letter-spacing:-.02em">1.8%</div>
+      <div style="font-size:10px;color:var(--amber-text);margin-top:2px">Target &lt;1.5%</div>
+    </div>
+    <div style="padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:var(--radius);box-shadow:var(--shadow)">
+      <div style="font-size:9px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">ARPC</div>
+      <div style="font-family:var(--mono);font-size:20px;font-weight:800;letter-spacing:-.02em">$105K</div>
+      <div style="font-size:10px;color:var(--ink4);margin-top:2px">156 customers</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ INPUTS ═══════════════════ -->
   <div class="cd">
-    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Pricing Change Calculator</div>
-    <div class="calc-grid">
-      <div class="calc-inputs">
-        <div class="calc-input"><label>Price increase % <span class="val" id="pv-pct">10%</span></label><input type="range" id="p-pct" min="0" max="30" value="10" oninput="calcPrice()"></div>
-        <div class="calc-input"><label>Apply to <select id="p-scope" onchange="calcPrice()"><option value="new">New logos only</option><option value="all">All accounts (incl. renewals)</option></select></label></div>
-        <div class="calc-input"><label>Expected churn increase <span class="val" id="pv-churn">2%</span></label><input type="range" id="p-churn" min="0" max="15" value="2" oninput="calcPrice()"></div>
+    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Pricing Change Parameters</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0 22px 18px">
+      <div class="calc-input"><label>Price increase % <span class="val" id="pv-pct">10%</span></label><input type="range" id="p-pct" min="0" max="35" value="10" oninput="calcPrice()"></div>
+      <div class="calc-input"><label>Expected churn increase <span class="val" id="pv-churn">2.0%</span></label><input type="range" id="p-churn" min="0" max="15" step="0.5" value="2" oninput="calcPrice()"></div>
+      <div class="calc-input"><label>Apply to <select id="p-scope" onchange="calcPrice()"><option value="new">New logos only</option><option value="all">All accounts (incl. renewals)</option><option value="tiered">Tiered (SMB + Mid only)</option></select></label></div>
+      <div class="calc-input"><label>Implementation <select id="p-method" onchange="calcPrice()"><option value="immediate">Immediate</option><option value="phased">Phased (Q-over-Q)</option><option value="grandfather">Grandfathered</option></select></label></div>
+      <div class="calc-input"><label>Enterprise mix % <span class="val" id="pv-ent">35%</span></label><input type="range" id="p-ent" min="10" max="70" value="35" oninput="calcPrice()"></div>
+      <div class="calc-input"><label>Mid-Market mix % <span class="val" id="pv-mm">40%</span></label><input type="range" id="p-mm" min="10" max="70" value="40" oninput="calcPrice()"></div>
+      <div class="calc-input"><label>Competitive position <select id="p-comp" onchange="calcPrice()"><option value="below">Below market</option><option value="at" selected>At market</option><option value="above">Above market</option></select></label></div>
+      <div class="calc-input"><label>Contract term <select id="p-term" onchange="calcPrice()"><option value="monthly">Monthly</option><option value="annual" selected>Annual</option><option value="multi">Multi-year</option></select></label></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ REVENUE IMPACT ═══════════════════ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span> Revenue Impact Summary</div>
+      <div style="padding:0 22px 18px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="calc-output"><div class="label">Revenue Uplift</div><div class="value green" id="po-uplift">+$1.2M</div></div>
+          <div class="calc-output"><div class="label">Churn Cost</div><div class="value red" id="po-churn">−$328K</div></div>
+          <div class="calc-output"><div class="label">Net New ARR</div><div class="value blue" id="po-net">+$872K</div></div>
+          <div class="calc-output"><div class="label">Net as % of ARR</div><div class="value" id="po-pctarr">+5.3%</div></div>
+          <div class="calc-output"><div class="label">Gross Margin Uplift</div><div class="value green" id="po-gm">+$680K</div></div>
+          <div class="calc-output"><div class="label">Payback Period</div><div class="value blue" id="po-payback">2.1 mo</div></div>
+        </div>
+        <div id="po-verdict" class="verdict go" style="margin-top:12px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> RECOMMENDED</div>
       </div>
-      <div class="calc-outputs">
-        <div class="calc-output"><div class="label">Current ARR</div><div class="value">$16.4M</div></div>
-        <div class="calc-output"><div class="label">Revenue Uplift (Annual)</div><div class="value green" id="po-uplift">+$1.2M</div></div>
-        <div class="calc-output"><div class="label">Churn Impact</div><div class="value red" id="po-churn">−$328K</div></div>
-        <div class="calc-output"><div class="label">Net New ARR</div><div class="value blue" id="po-net">+$872K</div></div>
-        <div id="po-verdict" class="verdict go"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> RECOMMENDED, Net positive $872K ARR</div>
+    </div>
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Segment-Level Breakdown</div>
+      <div style="padding:0 22px 18px">
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          <thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:6px 0;color:var(--ink4);font-size:9px;text-transform:uppercase">Segment</th><th style="text-align:right;padding:6px 0;color:var(--ink4);font-size:9px">ARR</th><th style="text-align:right;padding:6px 0;color:var(--ink4);font-size:9px">Uplift</th><th style="text-align:right;padding:6px 0;color:var(--ink4);font-size:9px">Churn Risk</th><th style="text-align:right;padding:6px 0;color:var(--ink4);font-size:9px">Net</th><th style="text-align:right;padding:6px 0;color:var(--ink4);font-size:9px">Elasticity</th></tr></thead>
+          <tbody id="po-segments"></tbody>
+        </table>
       </div>
     </div>
   </div>
+
+  <!-- ═══════════════════ ELASTICITY & BENCHMARKS ═══════════════════ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span> Price Elasticity Scenarios</div>
+      <div style="padding:0 22px 18px">
+        <div style="font-size:10px;color:var(--ink4);margin-bottom:10px">Net ARR impact across price increase × churn sensitivity matrix</div>
+        <table style="width:100%;border-collapse:collapse;font-size:10px;font-family:var(--mono)">
+          <thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:4px 6px;font-size:8px;color:var(--ink4)">Price ↑ \\ Churn ↑</th><th style="text-align:right;padding:4px 6px;font-size:8px;color:var(--ink4)">1%</th><th style="text-align:right;padding:4px 6px;font-size:8px;color:var(--ink4)">2%</th><th style="text-align:right;padding:4px 6px;font-size:8px;color:var(--ink4)">3%</th><th style="text-align:right;padding:4px 6px;font-size:8px;color:var(--ink4)">5%</th><th style="text-align:right;padding:4px 6px;font-size:8px;color:var(--ink4)">8%</th></tr></thead>
+          <tbody id="po-elasticity"></tbody>
+        </table>
+        <div style="font-size:9px;color:var(--ink4);margin-top:6px">■ Green = net positive &nbsp; ■ Amber = marginal &nbsp; ■ Red = net negative</div>
+      </div>
+    </div>
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"/></svg></span> Industry Benchmarks (SaaS)</div>
+      <div style="padding:0 22px 18px">
+        <div id="po-benchmarks"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ COMPETITIVE & RISK ═══════════════════ -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span> Competitive Positioning</div>
+      <div style="padding:0 22px 18px">
+        <div id="po-competitive"></div>
+      </div>
+    </div>
+    <div class="cd" style="margin-bottom:0">
+      <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> Risk Assessment</div>
+      <div style="padding:0 22px 18px">
+        <div id="po-risk"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ IMPLEMENTATION PLAYBOOK ═══════════════════ -->
+  <div class="cd">
+    <div class="cd-title"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> Implementation Playbook</div>
+    <div style="padding:0 22px 18px">
+      <div id="po-playbook"></div>
+    </div>
+  </div>
+
 </div>
 
 <div id="s-churn" style="display:none">
@@ -533,18 +639,259 @@ function calcHire(){
   matrix+='<td style="color:var(--'+cls+'-text)'+((h===count&&cr===churnAdj)?';background:var(--blue-soft)':'')+'">'+r.toFixed(1)+'mo</td>'});matrix+='</tr>'});
   document.getElementById('hire-matrix').innerHTML=matrix;
 }
+// ═══════════════════════════════════════════════════════════════
+// PRICING STRATEGY ENGINE — Corporate Grade
+// ═══════════════════════════════════════════════════════════════
 function calcPrice(){
-  const pct=+document.getElementById('p-pct').value,scope=document.getElementById('p-scope').value,churnInc=+document.getElementById('p-churn').value;
-  const baseARR=16400000,affectedARR=scope==='new'?baseARR*0.35:baseARR;
-  const uplift=affectedARR*(pct/100),churnCost=baseARR*(churnInc/100),net=uplift-churnCost;
-  document.getElementById('pv-pct').textContent=pct+'%';document.getElementById('pv-churn').textContent=churnInc+'%';
-  document.getElementById('po-uplift').textContent='+$'+(uplift/1000000).toFixed(1)+'M';
-  document.getElementById('po-churn').textContent='−$'+(churnCost/1000).toFixed(0)+'K';
-  document.getElementById('po-net').textContent=(net>=0?'+':'')+'$'+(net/1000000).toFixed(2)+'M';
-  const netEl=document.getElementById('po-net'),verdict=document.getElementById('po-verdict');
-  if(net>500000){netEl.className='value green';verdict.className='verdict go';verdict.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> STRONGLY RECOMMENDED, Net +$'+(net/1000000).toFixed(1)+'M ARR'}
-  else if(net>0){netEl.className='value amber';verdict.className='verdict maybe';verdict.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> MARGINAL, Net +$'+(net/1000).toFixed(0)+'K'}
-  else{netEl.className='value red';verdict.className='verdict no';verdict.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> NOT RECOMMENDED'}
+  // ── Inputs ──
+  const pct=+document.getElementById('p-pct').value;
+  const churnInc=+document.getElementById('p-churn').value;
+  const scope=document.getElementById('p-scope').value;
+  const method=document.getElementById('p-method').value;
+  const entMix=+document.getElementById('p-ent').value;
+  const mmMix=+document.getElementById('p-mm').value;
+  const smbMix=Math.max(0,100-entMix-mmMix);
+  const compPos=document.getElementById('p-comp').value;
+  const term=document.getElementById('p-term').value;
+
+  // ── Update labels ──
+  document.getElementById('pv-pct').textContent=pct+'%';
+  document.getElementById('pv-churn').textContent=churnInc.toFixed(1)+'%';
+  document.getElementById('pv-ent').textContent=entMix+'%';
+  document.getElementById('pv-mm').textContent=mmMix+'%';
+
+  // ── Base data ──
+  const baseARR=16.4; // $M
+  const gm=0.78;
+  const entARR=baseARR*entMix/100;
+  const mmARR=baseARR*mmMix/100;
+  const smbARR=baseARR*smbMix/100;
+
+  // ── Segment elasticity (churn multiplier per segment) ──
+  // Enterprise = sticky (0.5×), Mid-Market = moderate (1.0×), SMB = elastic (1.8×)
+  const entElasticity=0.5, mmElasticity=1.0, smbElasticity=1.8;
+  const entChurn=churnInc*entElasticity;
+  const mmChurn=churnInc*mmElasticity;
+  const smbChurn=churnInc*smbElasticity;
+
+  // ── Scope multiplier ──
+  let scopeMult;
+  if(scope==='new') scopeMult=0.35; // 35% of ARR is new business pipeline
+  else if(scope==='tiered') scopeMult=(mmMix+smbMix)/100;
+  else scopeMult=1.0;
+
+  // ── Implementation discount ──
+  let implMult, implLabel;
+  if(method==='immediate'){implMult=1.0;implLabel='Immediate — full price change from day 1';}
+  else if(method==='phased'){implMult=0.6;implLabel='Phased — 25% per quarter over 4 quarters';}
+  else{implMult=0.45;implLabel='Grandfathered — new logos only, renewals at legacy for 12 mo';}
+
+  // ── Contract term modifier ──
+  let termMult, termLabel;
+  if(term==='monthly'){termMult=0.7;termLabel='Monthly — highest churn risk, fastest feedback';}
+  else if(term==='annual'){termMult=1.0;termLabel='Annual — standard SaaS, price locked 12 mo';}
+  else{termMult=1.15;termLabel='Multi-year — lowest churn risk, price locked 24-36 mo';}
+
+  // ── Competitive modifier ──
+  let compMult, compLabel;
+  if(compPos==='below'){compMult=1.3;compLabel='Below market — high tolerance for increases';}
+  else if(compPos==='at'){compMult=1.0;compLabel='At market — standard pricing pressure';}
+  else{compMult=0.65;compLabel='Above market — limited headroom, churn-sensitive';}
+
+  // ── Segment calculations ──
+  function segCalc(arr,churnBase,elasticity,label){
+    const uplift=arr*(pct/100)*scopeMult*implMult*compMult;
+    const churnRisk=arr*(churnBase/100)*termMult;
+    const net=uplift-churnRisk;
+    return {label,arr,uplift,churnRisk,net,elasticity};
+  }
+  const segments=[
+    segCalc(entARR,churnInc*entElasticity,entElasticity,'Enterprise'),
+    segCalc(mmARR,churnInc*mmElasticity,mmElasticity,'Mid-Market'),
+    segCalc(smbARR,churnInc*smbElasticity,smbElasticity,'SMB')
+  ];
+
+  // ── Totals ──
+  const totalUplift=segments.reduce((a,s)=>a+s.uplift,0);
+  const totalChurn=segments.reduce((a,s)=>a+s.churnRisk,0);
+  const netTotal=totalUplift-totalChurn;
+  const gmUplift=netTotal*gm;
+  const pctOfARR=(netTotal/baseARR*100);
+  const paybackMonths=totalChurn>0?(totalChurn/(totalUplift/12)).toFixed(1):'0.0';
+
+  // ═══ RENDER: Revenue Impact ═══
+  document.getElementById('po-uplift').textContent='+$'+(totalUplift>=1?(totalUplift).toFixed(1)+'M':(totalUplift*1000).toFixed(0)+'K');
+  document.getElementById('po-churn').textContent='−$'+(totalChurn>=1?(totalChurn).toFixed(1)+'M':(totalChurn*1000).toFixed(0)+'K');
+  document.getElementById('po-net').textContent=(netTotal>=0?'+':'−')+'$'+(Math.abs(netTotal)>=1?Math.abs(netTotal).toFixed(1)+'M':(Math.abs(netTotal)*1000).toFixed(0)+'K');
+  document.getElementById('po-pctarr').textContent=(netTotal>=0?'+':'')+pctOfARR.toFixed(1)+'%';
+  document.getElementById('po-gm').textContent='+$'+(gmUplift>=1?gmUplift.toFixed(1)+'M':(gmUplift*1000).toFixed(0)+'K');
+  document.getElementById('po-payback').textContent=paybackMonths+' mo';
+
+  // Color coding
+  const netEl=document.getElementById('po-net');
+  document.getElementById('po-pctarr').className='value '+(pctOfARR>3?'green':pctOfARR>0?'amber':'red');
+  document.getElementById('po-payback').className='value '+(+paybackMonths<=3?'green':+paybackMonths<=6?'amber':'red');
+
+  // Verdict
+  const verdict=document.getElementById('po-verdict');
+  if(netTotal>0.8&&pctOfARR>4){
+    netEl.className='value green';verdict.className='verdict go';
+    verdict.innerHTML=svgCheck()+' STRONGLY RECOMMENDED — Net +$'+netTotal.toFixed(1)+'M ARR ('+pctOfARR.toFixed(1)+'% of base). Strong margin uplift of $'+gmUplift.toFixed(1)+'M. Proceed with '+implLabel.split('—')[0].trim().toLowerCase()+'.';
+  }else if(netTotal>0.3){
+    netEl.className='value amber';verdict.className='verdict maybe';
+    verdict.innerHTML=svgWarn()+' CONDITIONALLY RECOMMENDED — Net +$'+netTotal.toFixed(1)+'M but sensitivity to churn is elevated. Consider phased approach to de-risk.';
+  }else if(netTotal>0){
+    netEl.className='value amber';verdict.className='verdict maybe';
+    verdict.innerHTML=svgWarn()+' MARGINAL — Net +$'+(netTotal*1000).toFixed(0)+'K. Uplift barely offsets churn risk. Test with small cohort first.';
+  }else{
+    netEl.className='value red';verdict.className='verdict no';
+    verdict.innerHTML=svgBad()+' NOT RECOMMENDED — Net '+(netTotal*1000).toFixed(0)+'K. Churn cost exceeds uplift. Lower increase or fix retention before repricing.';
+  }
+
+  // ═══ RENDER: Segment Breakdown ═══
+  let segHtml='';
+  segments.forEach(s=>{
+    const col=s.net>=0?'var(--green-text)':'var(--red-text)';
+    const elCol=s.elasticity<=0.6?'var(--green-text)':s.elasticity<=1.2?'var(--amber-text)':'var(--red-text)';
+    segHtml+='<tr style="border-bottom:1px solid var(--bg2)"><td style="text-align:left;padding:8px 0;font-weight:600">'+s.label+'</td>';
+    segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono)">$'+s.arr.toFixed(1)+'M</td>';
+    segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:var(--green-text)">+$'+(s.uplift*1000).toFixed(0)+'K</td>';
+    segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:var(--red-text)">−$'+(s.churnRisk*1000).toFixed(0)+'K</td>';
+    segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:'+col+';font-weight:700">'+(s.net>=0?'+':'−')+'$'+(Math.abs(s.net)*1000).toFixed(0)+'K</td>';
+    segHtml+='<td style="text-align:right;padding:8px 0;color:'+elCol+';font-weight:600">'+s.elasticity.toFixed(1)+'×</td></tr>';
+  });
+  segHtml+='<tr style="border-top:2px solid var(--border);font-weight:700"><td style="text-align:left;padding:8px 0">Total</td><td style="text-align:right;padding:8px 0;font-family:var(--mono)">$'+baseARR.toFixed(1)+'M</td>';
+  segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:var(--green-text)">+$'+(totalUplift*1000).toFixed(0)+'K</td>';
+  segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:var(--red-text)">−$'+(totalChurn*1000).toFixed(0)+'K</td>';
+  segHtml+='<td style="text-align:right;padding:8px 0;font-family:var(--mono);color:'+(netTotal>=0?'var(--green-text)':'var(--red-text)')+';font-weight:700">'+(netTotal>=0?'+':'−')+'$'+(Math.abs(netTotal)*1000).toFixed(0)+'K</td><td></td></tr>';
+  document.getElementById('po-segments').innerHTML=segHtml;
+
+  // ═══ RENDER: Elasticity Matrix ═══
+  const prices=[5,10,15,20,25];
+  const churns=[1,2,3,5,8];
+  let elHtml='';
+  prices.forEach(p=>{
+    elHtml+='<tr><td style="text-align:left;padding:4px 6px;font-weight:600;color:var(--ink3)">'+p+'%</td>';
+    churns.forEach(c=>{
+      const up=baseARR*(p/100)*scopeMult*implMult*compMult;
+      const ch=baseARR*(c/100)*termMult;
+      const n=up-ch;
+      const isCur=Math.abs(p-pct)<3&&Math.abs(c-churnInc)<2;
+      const cls=n>0.5?'green':n>0?'amber':'red';
+      elHtml+='<td style="text-align:right;padding:4px 6px;color:var(--'+cls+'-text);'+(isCur?'background:var(--blue-soft);font-weight:700':'')+'">'+(n>=0?'+':'')+(n*1000).toFixed(0)+'K</td>';
+    });
+    elHtml+='</tr>';
+  });
+  document.getElementById('po-elasticity').innerHTML=elHtml;
+
+  // ═══ RENDER: Industry Benchmarks ═══
+  const benchData=[
+    {metric:'Avg SaaS annual price increase',benchmark:'5-7%',yours:pct+'%',status:pct<=7?'green':pct<=12?'amber':'red',note:'OpenView 2025 survey of 800+ SaaS cos'},
+    {metric:'Price increase with &lt;2% churn',benchmark:'7-10%',yours:pct+'%',status:pct<=10?'green':pct<=15?'amber':'red',note:'Typical for products with strong switching costs'},
+    {metric:'Enterprise tolerance threshold',benchmark:'8-12%',yours:pct+'%',status:pct<=12?'green':pct<=18?'amber':'red',note:'Enterprise = budget cycles + procurement buffers'},
+    {metric:'SMB sensitivity threshold',benchmark:'3-5%',yours:pct+'%',status:pct<=5?'green':pct<=8?'amber':'red',note:'SMBs churn 2-3× faster on price changes'},
+    {metric:'Optimal increase frequency',benchmark:'Annual',yours:method==='immediate'?'Immediate':'Phased',status:method==='grandfather'?'green':method==='phased'?'amber':'red',note:'Annual aligned with renewal = lowest friction'},
+    {metric:'Grandfathering retention lift',benchmark:'+15-25%',yours:method==='grandfather'?'+20%':'N/A',status:method==='grandfather'?'green':'amber',note:'Existing customers retain at higher rates'},
+    {metric:'Price anchoring uplift',benchmark:'+12-18%',yours:'+15%',status:'green',note:'Showing higher tier first increases acceptance'},
+    {metric:'NRR impact of price change',benchmark:'±3-5%',yours:(netTotal/baseARR*100).toFixed(1)+'%',status:Math.abs(pctOfARR)<=5?'green':'amber',note:'Bessemer Cloud Index 2024'}
+  ];
+  let benchHtml='';
+  benchData.forEach(b=>{
+    benchHtml+='<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bg2);font-size:10px">';
+    benchHtml+='<div style="flex:1"><div style="font-weight:600;color:var(--ink)">'+b.metric+'</div><div style="color:var(--ink4);font-size:9px;margin-top:1px">'+b.note+'</div></div>';
+    benchHtml+='<div style="font-family:var(--mono);font-size:10px;color:var(--ink3);width:60px;text-align:right">'+b.benchmark+'</div>';
+    benchHtml+='<div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--'+b.status+'-text);width:50px;text-align:right">'+b.yours+'</div>';
+    benchHtml+='</div>';
+  });
+  document.getElementById('po-benchmarks').innerHTML=benchHtml;
+
+  // ═══ RENDER: Competitive Positioning ═══
+  const compData=[
+    {co:'Your Company (pre-change)',price:100,features:'Full suite',share:'Current'},
+    {co:'Your Company (post-change)',price:100+pct,features:'Full suite',share:'Proposed'},
+    {co:'Competitor A (direct)',price:95,features:'Similar',share:'—'},
+    {co:'Competitor B (premium)',price:130,features:'More features',share:'—'},
+    {co:'Competitor C (value)',price:70,features:'Fewer features',share:'—'},
+    {co:'Market median',price:105,features:'—',share:'—'}
+  ];
+  let compHtml='<table style="width:100%;border-collapse:collapse;font-size:10px"><thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:5px 0;color:var(--ink4);font-size:9px;text-transform:uppercase">Company</th><th style="text-align:right;padding:5px 0;color:var(--ink4);font-size:9px">Relative Price</th><th style="text-align:right;padding:5px 0;color:var(--ink4);font-size:9px">Features</th><th style="text-align:right;padding:5px 0;color:var(--ink4);font-size:9px">Status</th></tr></thead><tbody>';
+  compData.forEach(c=>{
+    const isPost=c.co.includes('post-change');
+    const isPre=c.co.includes('pre-change');
+    compHtml+='<tr style="border-bottom:1px solid var(--bg2)'+(isPost?'background:var(--blue-soft)':'')+'"><td style="text-align:left;padding:6px 0;font-weight:'+(isPost||isPre?'700':'400')+'">'+c.co+'</td>';
+    compHtml+='<td style="text-align:right;padding:6px 0;font-family:var(--mono)">'+c.price+'%</td>';
+    compHtml+='<td style="text-align:right;padding:6px 0">'+c.features+'</td>';
+    compHtml+='<td style="text-align:right;padding:6px 0;color:'+(isPost?'var(--blue-text)':'var(--ink4)')+';font-weight:'+(isPost?'700':'400')+'">'+c.share+'</td></tr>';
+  });
+  compHtml+='</tbody></table>';
+  compHtml+='<div style="margin-top:10px;padding:8px 12px;background:var(--surface3);border-radius:var(--radius);font-size:10px;color:var(--ink3)">';
+  compHtml+='<strong>Position assessment:</strong> ';
+  const postPrice=100+pct;
+  if(compPos==='below') compHtml+='Currently underpriced vs. market. A '+pct+'% increase moves you from '+compData[0].price+'% to '+postPrice+'% of median — still competitive with room for further increases.';
+  else if(compPos==='at') compHtml+='At-market pricing. A '+pct+'% increase to '+postPrice+'% of median positions you above market average. Ensure feature differentiation justifies the premium.';
+  else compHtml+='Already above market at '+compData[0].price+'%. A '+pct+'% increase to '+postPrice+'% risks significant competitive displacement. Focus on value articulation and switching costs.';
+  compHtml+='</div>';
+  document.getElementById('po-competitive').innerHTML=compHtml;
+
+  // ═══ RENDER: Risk Assessment ═══
+  const riskFactors=[
+    {factor:'Churn sensitivity',weight:25,score:churnInc<=2?90:churnInc<=5?60:30,detail:churnInc+'% expected churn increase'},
+    {factor:'Segment concentration',weight:20,score:smbMix<=30?80:smbMix<=50?50:25,detail:smbMix+'% SMB mix = higher elasticity'},
+    {factor:'Implementation method',weight:15,score:method==='grandfather'?90:method==='phased'?70:40,detail:implLabel.split('—')[0].trim()},
+    {factor:'Contract structure',weight:15,score:term==='multi'?90:term==='annual'?70:40,detail:termLabel.split('—')[0].trim()},
+    {factor:'Competitive exposure',weight:15,score:compPos==='below'?85:compPos==='at'?60:30,detail:compLabel.split('—')[0].trim()},
+    {factor:'Price increase magnitude',weight:10,score:pct<=7?90:pct<=15?55:25,detail:pct+'% increase'}
+  ];
+  const totalWeight=riskFactors.reduce((a,r)=>a+r.weight,0);
+  const weightedScore=Math.round(riskFactors.reduce((a,r)=>a+r.score*r.weight,0)/totalWeight);
+
+  let riskHtml='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px"><div>';
+  riskFactors.forEach(r=>{
+    const col=r.score>=70?'var(--green-text)':r.score>=40?'var(--amber-text)':'var(--red-text)';
+    riskHtml+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--bg2);font-size:10px">';
+    riskHtml+='<div style="flex:1"><div style="font-weight:600">'+r.factor+'</div><div style="color:var(--ink4);font-size:9px">'+r.detail+'</div></div>';
+    riskHtml+='<div style="font-family:var(--mono);font-size:10px;color:var(--ink4)">'+r.weight+'%</div>';
+    riskHtml+='<div style="font-family:var(--mono);font-size:12px;font-weight:700;color:'+col+';width:30px;text-align:right">'+r.score+'</div>';
+    riskHtml+='</div>';
+  });
+  riskHtml+='</div><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;border-radius:var(--radius);background:'+(weightedScore>=70?'var(--green-soft)':weightedScore>=40?'var(--amber-soft)':'var(--red-soft)')+';border:1px solid '+(weightedScore>=70?'rgba(22,163,74,.15)':weightedScore>=40?'rgba(217,119,6,.15)':'rgba(220,38,38,.15)')+'">';
+  riskHtml+='<div style="font-family:var(--mono);font-size:36px;font-weight:800;color:'+(weightedScore>=70?'var(--green-text)':weightedScore>=40?'var(--amber-text)':'var(--red-text)')+'">'+weightedScore+'</div>';
+  riskHtml+='<div style="font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">'+(weightedScore>=70?'Low Risk':weightedScore>=40?'Moderate Risk':'High Risk')+'</div>';
+  riskHtml+='<div style="font-size:9px;color:var(--ink4);margin-top:8px;text-align:center;max-width:160px">'+(weightedScore>=70?'Proceed with confidence. Monitor NRR and CSAT post-change.':weightedScore>=40?'Viable but monitor closely. Have rollback plan ready.':'High probability of negative ROI. Reconsider parameters.')+'</div>';
+  riskHtml+='</div></div>';
+  document.getElementById('po-risk').innerHTML=riskHtml;
+
+  // ═══ RENDER: Implementation Playbook ═══
+  const playbookSteps=[
+    {phase:'Week 1-2',title:'Data Preparation',tasks:['Pull customer-level ARR, tenure, usage, and NPS data','Segment customers by value tier and churn risk score','Identify top 20 accounts for white-glove communication'],status:'ready'},
+    {phase:'Week 3-4',title:'Internal Alignment',tasks:['Sales enablement: objection handling scripts, FAQ doc','CS playbook: save offers, expansion incentives, value recap','Executive sign-off on pricing page, quotes, contracts'],status:'ready'},
+    {phase:'Week 5-6',title:'Communication Launch',tasks:['Email sequence: value recap → price change notice → FAQ','Account-by-account outreach for top 50 accounts','Update pricing page, CPQ tools, contract templates'],status:method==='immediate'?'ready':'future'},
+    {phase:'Week 7-12',title:'Execution & Monitoring',tasks:['Track daily: MRR movement, churn saves, support tickets','Weekly pricing war room: adjust save plays as needed','Customer health score re-calibration post-change'],status:'future'},
+    {phase:'Week 13+',title:'Optimization',tasks:['Analyze cohort churn curves (30/60/90 day)','A/B test value messaging for at-risk segments','Plan next pricing iteration based on data'],status:'future'}
+  ];
+  let pbHtml='<div style="display:grid;grid-template-columns:repeat('+playbookSteps.length+',1fr);gap:12px">';
+  playbookSteps.forEach((s,i)=>{
+    const bg=s.status==='ready'?'var(--blue-soft)':'var(--surface3)';
+    const border=s.status==='ready'?'rgba(59,130,246,.12)':'var(--border)';
+    pbHtml+='<div style="padding:12px;border:1px solid '+border+';border-radius:var(--radius);background:'+bg+'">';
+    pbHtml+='<div style="font-family:var(--mono);font-size:9px;color:var(--blue-text);margin-bottom:4px">'+s.phase+'</div>';
+    pbHtml+='<div style="font-size:11px;font-weight:700;color:var(--ink);margin-bottom:8px">'+s.title+'</div>';
+    s.tasks.forEach(t=>{
+      pbHtml+='<div style="font-size:9px;color:var(--ink3);padding:2px 0;padding-left:12px;position:relative"><span style="position:absolute;left:0;top:4px;width:4px;height:4px;border-radius:50%;background:'+(s.status==='ready'?'var(--blue)':'var(--ink4)')+'"></span>'+t+'</div>';
+    });
+    pbHtml+='</div>';
+  });
+  pbHtml+='</div>';
+
+  // Implementation-specific recommendations
+  pbHtml+='<div style="margin-top:14px;padding:10px 14px;background:var(--blue-soft);border:1px solid rgba(59,130,246,.12);border-radius:var(--radius);font-size:10px;color:var(--blue-text)">';
+  pbHtml+='<strong>Recommended approach for your parameters:</strong> ';
+  if(pct<=7&&churnInc<=2) pbHtml+='Straightforward annual increase. Communicate value-add alongside price change. Target 95%+ renewal rate.';
+  else if(pct<=15&&method==='phased') pbHtml+='Phased rollout recommended. Increase in 2-3 tranches over 4 quarters. Grandfather top 20 accounts for first cycle.';
+  else if(pct>15) pbHtml+='High-magnitude change requires grandfathering. Pair with feature releases or tier upgrades to justify. Budget for 10-15% elevated churn in Q1.';
+  else pbHtml+='Custom approach: segment by churn risk, apply increase to low-risk cohorts first. Use high-risk cohorts as A/B control group.';
+  pbHtml+='</div>';
+  document.getElementById('po-playbook').innerHTML=pbHtml;
 }
 function calcChurn(){
   const rate=+document.getElementById('c-rate').value,newMRR=+document.getElementById('c-new').value,saveRate=+document.getElementById('c-save').value;
