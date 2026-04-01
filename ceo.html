@@ -10,21 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dss-shared.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<script id="chart-fallback">document.addEventListener("DOMContentLoaded",function(){window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})})</script>
 <style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
-:root {--accent:#3b82f6;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
-  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
-  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
-  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
-  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
-  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-glow:rgba(59,130,246,.08);--blue-text:#1d4ed8;
-  --green:#16a34a;--green-soft:#dcfce7;--green-glow:rgba(22,163,74,.08);--green-text:#15803d;
-  --red:#dc2626;--red-soft:#fee2e2;--red-glow:rgba(220,38,38,.06);--red-text:#b91c1c;
-  --amber:#d97706;--amber-soft:#fef3c7;--amber-glow:rgba(217,119,6,.08);--amber-text:#b45309;
-  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-glow:rgba(124,58,237,.08);--purple-text:#6d28d9;
-  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
-  --radius:12px;--radius-lg:16px;--shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
-  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+:root{--accent:#3b82f6}
 body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a {color:inherit}
 /* HEADER */
@@ -89,7 +77,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
 .mono {font-family:var(--mono)}
 @media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}
   .krow.kr4{grid-template-columns:repeat(2,1fr)}.g2,.g32{grid-template-columns:1fr}}</style>
-<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+<style>html,body{overflow-x:hidden}</style>
 </head>
 <body>
 
@@ -187,10 +175,10 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="cd">
       <div class="cd-h"><span class="cd-t">Revenue mix <span>| by segment</span></span>
         <div style="margin-left:auto;display:flex;gap:6px">
-          <button class="mix-seg-btn on" onclick="filterMix('all',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--blue);color:#fff">All</button>
-          <button class="mix-seg-btn" onclick="filterMix('enterprise',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">Enterprise</button>
-          <button class="mix-seg-btn" onclick="filterMix('midmarket',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">Mid-Market</button>
-          <button class="mix-seg-btn" onclick="filterMix('smb',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">SMB</button>
+          <button class="mix-seg-btn on" onclick="filterMix('all',this)">All</button>
+          <button class="mix-seg-btn" onclick="filterMix('enterprise',this)">Enterprise</button>
+          <button class="mix-seg-btn" onclick="filterMix('midmarket',this)">Mid-Market</button>
+          <button class="mix-seg-btn" onclick="filterMix('smb',this)">SMB</button>
         </div>
       </div>
       <div class="cd-b">
@@ -210,19 +198,19 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="cd">
       <div class="cd-h"><span class="cd-t">Cross-Portal Intelligence</span></div>
       <div class="cd-b">
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(22,163,74,.3)';this.style.boxShadow='0 4px 16px rgba(22,163,74,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+        <div class="xp-intel">
           <span class="bdg bdg-green" style="font-size:8px">CRO</span>
           <span style="font-size:12px;color:var(--ink2)"><strong>$1.6M hope gap</strong>, pipeline quality-adjusted from $4.8M to $3.2M</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(217,119,6,.3)';this.style.boxShadow='0 4px 16px rgba(217,119,6,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+        <div class="xp-intel">
           <span class="bdg bdg-amber" style="font-size:8px">CFO</span>
           <span style="font-size:12px;color:var(--ink2)"><strong>Hiring trigger blocked</strong>, Bear scenario shows 11.8mo runway if plan hires go through</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(220,38,38,.3)';this.style.boxShadow='0 4px 16px rgba(220,38,38,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+        <div class="xp-intel">
           <span class="bdg bdg-red" style="font-size:8px">CS</span>
           <span style="font-size:12px;color:var(--ink2)"><strong>Save playbook active</strong>, Kellerman Group ($84K) health score dropped to 31</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(124,58,237,.3)';this.style.boxShadow='0 4px 16px rgba(124,58,237,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
+        <div class="xp-intel">
           <span class="bdg bdg-purple" style="font-size:8px">CTO</span>
           <span style="font-size:12px;color:var(--ink2)"><strong>Mobile offline</strong>, blocking 3 enterprise deals, $480K in pipeline</span>
         </div>
@@ -439,13 +427,13 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="cd">
       <div class="cd-h"><span class="cd-t">Market dynamics to watch</span></div>
       <div class="cd-b">
-        <div style="padding:14px 18px;background:var(--red-soft);border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
+        <div class="cl cl-red mb8">
           <strong>Procore acquired Esticom</strong>, building a full suite. Our scheduling AI advantage narrows if they invest in ML.
         </div>
-        <div style="padding:14px 18px;background:var(--green-soft);border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
+        <div class="cl cl-green mb8">
           <strong>Autodesk spun off PlanGrid</strong>, team is smaller. We're winning more head-to-head. Window: 6–12 months.
         </div>
-        <div style="padding:14px 18px;background:var(--amber-soft);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;font-size:12px">
+        <div class="cl cl-amber">
           <strong>BuildOS raised $25M Series A</strong>, PLG play for SMB. They might eat the SMB market before we fix our PMF there.
         </div>
       </div>
@@ -754,10 +742,8 @@ function renderMixTable(data){
 }
 
 function filterMix(seg, btn){
-  document.querySelectorAll('.mix-seg-btn').forEach(b=>{
-    b.style.background='var(--surface)'; b.style.color='var(--ink3)'; b.classList.remove('on');
-  });
-  btn.style.background='var(--blue)'; btn.style.color='#fff'; btn.classList.add('on');
+  document.querySelectorAll('.mix-seg-btn').forEach(b=>{b.classList.remove('on')});
+  btn.classList.add('on');
   loadRevenueMix(seg);
 }
 

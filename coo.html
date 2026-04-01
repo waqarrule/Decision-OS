@@ -10,23 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dss-shared.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script id="chart-fallback">window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})</script>
+<script id="chart-fallback">document.addEventListener("DOMContentLoaded",function(){window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})})</script>
 <style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
-:root {--accent:#ea580c;--bg:#f8f7f4;--bg2:#f0eeea;--bg3:#e8e6e1;--bg4:#dddad4;
-  --surface:#ffffff;--surface2:#fdfcfb;--surface3:#f9f8f5;
-  --glass:rgba(255,255,255,.82);--glass2:rgba(255,255,255,.95);
-  --border:#e4e2dc;--border2:#d6d4ce;--border3:#c8c5be;
-  --ink:#1a1916;--ink2:#3d3b36;--ink3:#7a7770;--ink4:#a8a59e;--ink5:#ccc9c2;
-  --blue:#3b82f6;--blue-soft:#dbeafe;--blue-text:#1d4ed8;
-  --green:#16a34a;--green-soft:#dcfce7;--green-text:#15803d;
-  --red:#dc2626;--red-soft:#fee2e2;--red-text:#b91c1c;
-  --amber:#d97706;--amber-soft:#fef3c7;--amber-text:#b45309;
-  --purple:#7c3aed;--purple-soft:#ede9fe;--purple-text:#6d28d9;
-  --orange:#ea580c;--orange-soft:#fff7ed;--orange-text:#c2410c;
-  --mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;
-  --radius:12px;--radius-lg:16px;
-  --shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);
-  --shadow-hover:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);}
+:root{--accent:#ea580c}
 body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
 ::selection {background:var(--orange);color:#fff}
 a {color:inherit}
@@ -45,7 +31,7 @@ a {color:inherit}
 .prog-orange {background:linear-gradient(90deg,#fdba74,#ea580c)}
 .cor {color:var(--orange-text)}
 @media(max-width:900px) {.layout{flex-direction:column}.rp{width:100%;border-left:none;border-top:1px solid var(--border);max-height:300px}.krow.kr4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}</style>
-<style>html,body{overflow-x:hidden}@media(min-width:769px){body{overflow-y:hidden}}</style>
+<style>html,body{overflow-x:hidden}</style>
 </head>
 <body>
 <div class="hdr">
@@ -88,9 +74,9 @@ a {color:inherit}
   </div>
   <div class="cd"><div class="cd-h"><span class="cd-t">Active operational alerts</span></div><div class="cd-b">
     <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(220,38,38,.15);border-radius:var(--radius);background:var(--red-soft)"><span class="bdg bdg-red" style="font-size:8px">CRITICAL</span><span style="font-size:12px"><strong>Engineering at 91% utilization</strong> | Sprint velocity dropped 12%. Bug backlog growing. Need 2 engineers or scope reduction.</span></div>
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(217,119,6,.15);border-radius:var(--radius);background:var(--amber-soft)"><span class="bdg bdg-amber" style="font-size:8px">WARNING</span><span style="font-size:12px"><strong>Sales onboarding queue</strong> | 6 new customers in implementation backlog. Avg wait: 12 days (target: 5).</span></div>
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(234,88,12,.15);border-radius:var(--radius);background:var(--orange-soft)"><span class="bdg bdg-orange" style="font-size:8px">WATCH</span><span style="font-size:12px"><strong>G&A at 68% utilization</strong> | Finance and HR have spare capacity. Consider cross-training for ops support.</span></div>
+      <div class="inline-alert crit"><span class="bdg bdg-red" style="font-size:8px">CRITICAL</span><span style="font-size:12px"><strong>Engineering at 91% utilization</strong> | Sprint velocity dropped 12%. Bug backlog growing. Need 2 engineers or scope reduction.</span></div>
+      <div class="inline-alert warn"><span class="bdg bdg-amber" style="font-size:8px">WARNING</span><span style="font-size:12px"><strong>Sales onboarding queue</strong> | 6 new customers in implementation backlog. Avg wait: 12 days (target: 5).</span></div>
+      <div class="inline-alert watch"><span class="bdg bdg-orange" style="font-size:8px">WATCH</span><span style="font-size:12px"><strong>G&A at 68% utilization</strong> | Finance and HR have spare capacity. Consider cross-training for ops support.</span></div>
     </div>
   </div></div>
 </div>
