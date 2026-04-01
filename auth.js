@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   Decision OS — Authentication System
+   Decision OS | Authentication System
    Client-side auth for prototype/demo
    ═══════════════════════════════════════════ */
 

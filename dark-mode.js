@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   ArcusSoft Decision OS — Dark Mode
+   ArcusSoft Decision OS | Dark Mode
    Self-contained: styles + toggle + persistence
    ═══════════════════════════════════════ */
 (function(){

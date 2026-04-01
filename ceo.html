@@ -5,7 +5,7 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEO Portal — ArcusSoft</title>
+<title>CEO Portal | ArcusSoft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dss-shared.css">
@@ -139,7 +139,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="s-num">01</div>
     <div class="s-label">Narrative</div>
     <div class="s-title">You're 0.6 months behind your own runway target.</div>
-    <div class="s-body">ARR is growing at <strong>38% YoY</strong> — that's strong for construction SaaS. But burn is <strong>$486K/mo</strong> and you have <strong>17.4 months</strong> of runway. Your target was 18 months. The gap isn't fatal, but it means the Q2 hiring plan needs the CFO's scenario grid before it gets approved. Meanwhile, <strong>16 enterprise accounts</strong> are carrying $1.3M in at-risk ARR. The CRO's save playbook is live — check the cross-portal intelligence below.</div>
+    <div class="s-body">ARR is growing at <strong>38% YoY</strong> | that's strong for construction SaaS. But burn is <strong>$486K/mo</strong> and you have <strong>17.4 months</strong> of runway. Your target was 18 months. The gap isn't fatal, but it means the Q2 hiring plan needs the CFO's scenario grid before it gets approved. Meanwhile, <strong>16 enterprise accounts</strong> are carrying $1.3M in at-risk ARR. The CRO's save playbook is live, check the cross-portal intelligence below.</div>
     <button class="s-cta" onclick="show('forecast',document.querySelector('.tab:nth-child(3)'))">Review scenario analysis</button>
   </div>
 
@@ -168,7 +168,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
 
   <div class="g2">
     <div class="cd">
-      <div class="cd-h"><span class="cd-t">Revenue trend <span>— by segment</span></span>
+      <div class="cd-h"><span class="cd-t">Revenue trend <span>| by segment</span></span>
         <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
           <select id="rev-range" onchange="loadRevenueTrend()" style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;font-family:var(--sans);font-size:10px;background:var(--surface);color:var(--ink2);cursor:pointer">
             <option value="12" selected>12 months</option>
@@ -185,7 +185,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
       <div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-rev"></canvas></div></div>
     </div>
     <div class="cd">
-      <div class="cd-h"><span class="cd-t">Revenue mix <span>— by segment</span></span>
+      <div class="cd-h"><span class="cd-t">Revenue mix <span>| by segment</span></span>
         <div style="margin-left:auto;display:flex;gap:6px">
           <button class="mix-seg-btn on" onclick="filterMix('all',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--blue);color:#fff">All</button>
           <button class="mix-seg-btn" onclick="filterMix('enterprise',this)" style="padding:3px 10px;border-radius:5px;font-family:var(--sans);font-size:9px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--ink3)">Enterprise</button>
@@ -212,19 +212,19 @@ table {width:100%;border-collapse:collapse;font-size:12px}
       <div class="cd-b">
         <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(22,163,74,.3)';this.style.boxShadow='0 4px 16px rgba(22,163,74,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
           <span class="bdg bdg-green" style="font-size:8px">CRO</span>
-          <span style="font-size:12px;color:var(--ink2)"><strong>$1.6M hope gap</strong> — pipeline quality-adjusted from $4.8M to $3.2M</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>$1.6M hope gap</strong> | pipeline quality-adjusted from $4.8M to $3.2M</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(217,119,6,.3)';this.style.boxShadow='0 4px 16px rgba(217,119,6,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
           <span class="bdg bdg-amber" style="font-size:8px">CFO</span>
-          <span style="font-size:12px;color:var(--ink2)"><strong>Hiring trigger blocked</strong> — Bear scenario shows 11.8mo runway if plan hires go through</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Hiring trigger blocked</strong> | Bear scenario shows 11.8mo runway if plan hires go through</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(220,38,38,.3)';this.style.boxShadow='0 4px 16px rgba(220,38,38,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
           <span class="bdg bdg-red" style="font-size:8px">CS</span>
-          <span style="font-size:12px;color:var(--ink2)"><strong>Save playbook active</strong> — Kellerman Group ($84K) health score dropped to 31</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Save playbook active</strong> | Kellerman Group ($84K) health score dropped to 31</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;transition:all .2s;box-shadow:var(--shadow)" onmouseover="this.style.borderColor='rgba(124,58,237,.3)';this.style.boxShadow='0 4px 16px rgba(124,58,237,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='var(--shadow)'">
           <span class="bdg bdg-purple" style="font-size:8px">CTO</span>
-          <span style="font-size:12px;color:var(--ink2)"><strong>Mobile offline</strong> — blocking 3 enterprise deals, $480K in pipeline</span>
+          <span style="font-size:12px;color:var(--ink2)"><strong>Mobile offline</strong> | blocking 3 enterprise deals, $480K in pipeline</span>
         </div>
       </div>
     </div>
@@ -265,7 +265,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
 
   <div class="g2">
     <div class="cd">
-      <div class="cd-h"><span class="cd-t">Cohort retention <span>— revenue by signup quarter</span></span></div>
+      <div class="cd-h"><span class="cd-t">Cohort retention <span>| revenue by signup quarter</span></span></div>
       <div class="cd-b">
         <table>
           <thead><tr><th>Cohort</th><th>Q0</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th></tr></thead>
@@ -276,7 +276,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
             <tr><td class="fw6">Q2 '25</td><td>100%</td><td>92%</td><td>97%</td><td></td><td></td><td></td><td></td></tr>
           </tbody>
         </table>
-        <div class="cl cl-green mt8">Net dollar retention improves over time — cohorts expand after Q2. Strong PMF in enterprise. Q3 '24 cohort now at 118%.</div>
+        <div class="cl cl-green mt8">Net dollar retention improves over time, cohorts expand after Q2. Strong PMF in enterprise. Q3 '24 cohort now at 118%.</div>
       </div>
     </div>
     <div class="cd">
@@ -319,7 +319,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="s-num">02</div>
     <div class="s-label">The hiring dilemma</div>
     <div class="s-title">The CRO wants 3 AEs. The CFO says no.</div>
-    <div class="s-body">In the <strong>Base scenario</strong>, adding 1 AE + 1 CSM drops runway from 17.4 to <strong>16.8 months</strong> — manageable. But in the <strong>Bear scenario</strong> (Q2 churn spike + delayed enterprise deals), the same hires push runway to <strong>11.8 months</strong> — below the 12-month survivability floor. The Aggressive plan (3 hires) is off the table in Bear: <strong>8.9 months</strong>. Not survivable.</div>
+    <div class="s-body">In the <strong>Base scenario</strong>, adding 1 AE + 1 CSM drops runway from 17.4 to <strong>16.8 months</strong> | manageable. But in the <strong>Bear scenario</strong> (Q2 churn spike + delayed enterprise deals), the same hires push runway to <strong>11.8 months</strong> | below the 12-month survivability floor. The Aggressive plan (3 hires) is off the table in Bear: <strong>8.9 months</strong>. Not survivable.</div>
     <button class="s-cta" onclick="document.getElementById('bear-btn').click()">Run bear case</button>
   </div>
 
@@ -329,7 +329,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
       <button class="scen-btn s-base" onclick="setScenario('base',this)">Base</button>
       <button class="scen-btn" onclick="setScenario('bull',this)">Bull</button>
     </div>
-    <span style="font-size:11px;color:var(--ink4)">Click a scenario — everything updates</span>
+    <span style="font-size:11px;color:var(--ink4)">Click a scenario, everything updates</span>
   </div>
 
   <div class="sg">
@@ -351,7 +351,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
   </div>
 
   <div class="cd">
-    <div class="cd-h"><span class="cd-t">Scenario matrix <span>— runway by revenue × hiring plan</span></span></div>
+    <div class="cd-h"><span class="cd-t">Scenario matrix <span>| runway by revenue × hiring plan</span></span></div>
     <div class="cd-b">
       <table>
         <thead><tr><th></th><th style="color:var(--red-text)">Bear · $14.8M</th><th style="color:var(--blue-text)">Base · $17.2M</th><th style="color:var(--green-text)">Bull · $18.1M</th></tr></thead>
@@ -376,7 +376,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
 
   <div class="g2">
     <div class="cd">
-      <div class="cd-h"><span class="cd-t">Cost of error <span>— mis-timing this hire</span></span></div>
+      <div class="cd-h"><span class="cd-t">Cost of error <span>| mis-timing this hire</span></span></div>
       <div class="cd-b">
         <table>
           <thead><tr><th>Mistiming</th><th>Cost</th></tr></thead>
@@ -440,13 +440,13 @@ table {width:100%;border-collapse:collapse;font-size:12px}
       <div class="cd-h"><span class="cd-t">Market dynamics to watch</span></div>
       <div class="cd-b">
         <div style="padding:14px 18px;background:var(--red-soft);border-left:3px solid var(--red);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
-          <strong>Procore acquired Esticom</strong> — building a full suite. Our scheduling AI advantage narrows if they invest in ML.
+          <strong>Procore acquired Esticom</strong> | building a full suite. Our scheduling AI advantage narrows if they invest in ML.
         </div>
         <div style="padding:14px 18px;background:var(--green-soft);border-left:3px solid var(--green);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px">
-          <strong>Autodesk spun off PlanGrid</strong> — team is smaller. We're winning more head-to-head. Window: 6–12 months.
+          <strong>Autodesk spun off PlanGrid</strong> | team is smaller. We're winning more head-to-head. Window: 6–12 months.
         </div>
         <div style="padding:14px 18px;background:var(--amber-soft);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;font-size:12px">
-          <strong>BuildOS raised $25M Series A</strong> — PLG play for SMB. They might eat the SMB market before we fix our PMF there.
+          <strong>BuildOS raised $25M Series A</strong> | PLG play for SMB. They might eat the SMB market before we fix our PMF there.
         </div>
       </div>
     </div>
@@ -490,7 +490,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
 
   <div class="g2">
     <div class="cd">
-      <div class="cd-h"><span class="cd-t">Fundraising trigger</span><span class="bdg bdg-amber">Active — Monitor</span></div>
+      <div class="cd-h"><span class="cd-t">Fundraising trigger</span><span class="bdg bdg-amber">Active | Monitor</span></div>
       <div class="cd-b">
         <div class="pbs">
           <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">ARR hits $15M</div><div class="pb-meta"><span>Triggered 3 months ago</span></div></div></div>
@@ -607,7 +607,7 @@ const REV_MIX_FALLBACK = {
   totals:{customers:312,arr:16400000,arrFormatted:"$16.4M",nrr:103}
 };
 
-/* ═══ Revenue Trend — API-driven with fallback ═══ */
+/* ═══ Revenue Trend, API-driven with fallback ═══ */
 async function loadRevenueTrend(){
   const range = document.getElementById('rev-range')?.value || 12;
   const cbs = document.querySelectorAll('.rev-seg-cb:checked');
@@ -701,7 +701,7 @@ function renderRevenueChart(data){
   });
 }
 
-/* ═══ Revenue Mix — API-driven with fallback ═══ */
+/* ═══ Revenue Mix, API-driven with fallback ═══ */
 let _mixData = null;
 async function loadRevenueMix(segment){
   let data = null;

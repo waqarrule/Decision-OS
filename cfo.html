@@ -5,7 +5,7 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CFO Portal — ArcusSoft</title>
+<title>CFO Portal | ArcusSoft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dss-shared.css">
@@ -79,7 +79,7 @@ a {color:inherit}
 <!-- CASH POSITION -->
 <div id="s-cash" class="scr on">
   <div class="sh"><div class="sh-over">CFO · Finance Layer · Cash Position</div><h2>The money. <em>The math.</em></h2><div class="sh-sub">Runway scenarios, burn trajectory, and the hiring decisions that change everything.</div></div>
-  <div class="story"><div class="s-num">0.6mo</div><div class="s-label">Runway Gap</div><div class="s-title">0.6 months behind your own target.</div><div class="s-body">You have <strong>$8.46M</strong> in the bank and burn <strong>$486K/month</strong>. That's <strong>17.4 months of runway</strong> — 0.6 months short of your 18-month target. Not dangerous, but it means every hiring decision needs scenario analysis first. The CRO wants 3 AEs. In the Bear case, that drops you to <strong>8.9 months</strong>. Not survivable.</div><button class="s-cta" onclick="show('sensitivity',document.querySelector('.tab:nth-child(5)'))">Explore runway scenarios</button></div>
+  <div class="story"><div class="s-num">0.6mo</div><div class="s-label">Runway Gap</div><div class="s-title">0.6 months behind your own target.</div><div class="s-body">You have <strong>$8.46M</strong> in the bank and burn <strong>$486K/month</strong>. That's <strong>17.4 months of runway</strong> | 0.6 months short of your 18-month target. Not dangerous, but it means every hiring decision needs scenario analysis first. The CRO wants 3 AEs. In the Bear case, that drops you to <strong>8.9 months</strong>. Not survivable.</div><button class="s-cta" onclick="show('sensitivity',document.querySelector('.tab:nth-child(5)'))">Explore runway scenarios</button></div>
   <div class="krow kr4">
     <div class="kc accent-amber"><div class="kl">Cash Remaining</div><div class="kv" data-kpi="cashOnHand" data-kpi-src="financials.financials" data-fmt="$">$9.2M</div><div class="ks">Series B proceeds</div></div>
     <div class="kc accent-red"><div class="kl">Monthly Burn</div><div class="kv" data-kpi="monthlyBurn" data-kpi-src="financials.financials" data-fmt="$">$529K</div><div class="ks"><span class="dn">↑ 4%</span> vs last quarter</div></div>
@@ -88,21 +88,21 @@ a {color:inherit}
   </div>
   <div class="sh-actions">
     <div class="scen-bar"><button class="scen-btn" id="bear-btn" onclick="setScenario('bear',this)">Bear</button><button class="scen-btn s-base" onclick="setScenario('base',this)">Base</button><button class="scen-btn" onclick="setScenario('bull',this)">Bull</button></div>
-    <span style="font-size:11px;color:var(--ink4)">Click a scenario — runway numbers update</span>
+    <span style="font-size:11px;color:var(--ink4)">Click a scenario, runway numbers update</span>
   </div>
   <div class="sg">
     <div class="sg-cell" id="sg-bear" onclick="setScenario('bear',document.getElementById('bear-btn'))"><div class="sg-l">Bear Case</div><div class="sg-v" style="color:var(--red-text)" id="sv-bear">11.8 mo</div><div class="sg-s">Revenue miss + churn spike</div></div>
     <div class="sg-cell sel sel-base" id="sg-base"><div class="sg-l">Base Case</div><div class="sg-v" style="color:var(--amber-text)" id="sv-base">17.4 mo</div><div class="sg-s">Current trajectory</div></div>
     <div class="sg-cell" id="sg-bull" onclick="setScenario('bull',document.querySelector('.scen-btn:last-child'))"><div class="sg-l">Bull Case</div><div class="sg-v" style="color:var(--green-text)" id="sv-bull">24.6 mo</div><div class="sg-s">Enterprise deals close early</div></div>
   </div>
-  <div class="cd"><div class="cd-h"><span class="cd-t">Scenario matrix <span>— runway by revenue × hiring plan</span></span></div><div class="cd-b">
+  <div class="cd"><div class="cd-h"><span class="cd-t">Scenario matrix <span>| runway by revenue × hiring plan</span></span></div><div class="cd-b">
     <table><thead><tr><th></th><th style="color:var(--red-text)">Bear · $14.8M</th><th style="color:var(--amber-text)">Base · $17.2M</th><th style="color:var(--green-text)">Bull · $18.1M</th></tr></thead>
     <tbody><tr><td class="fw6">Conservative<br><span style="font-size:10px;color:var(--ink4)">No new hires</span></td><td class="camb">14.2 mo</td><td class="cgrn fw6">18.8 mo</td><td class="cgrn fw6">21.1 mo</td></tr>
     <tr id="row-plan"><td class="fw6">Plan<br><span style="font-size:10px;color:var(--ink4)">1 AE + 1 CSM</span></td><td class="cred fw6">11.8 mo <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></td><td class="camb fw6">17.4 mo ◄</td><td class="cgrn">19.6 mo</td></tr>
     <tr class="alert"><td class="fw6">Aggressive<br><span style="font-size:10px;color:var(--ink4)">+3 hires</span></td><td class="cred fw6" style="font-size:16px">8.9 mo <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg></td><td class="camb">13.2 mo</td><td class="cgrn">15.4 mo</td></tr></tbody></table>
     <div style="font-size:10px;color:var(--ink4);margin-top:8px">◄ = current state · <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> = below 12mo minimum · <svg width="10" height="10" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#dc2626"/></svg> = not survivable</div>
   </div></div>
-  <div class="cd"><div class="cd-h"><span class="cd-t">Cash waterfall <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-cash"></canvas></div></div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Cash waterfall <span>| 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-cash"></canvas></div></div></div>
 </div>
 
 <!-- UNIT ECONOMICS -->
@@ -129,7 +129,7 @@ a {color:inherit}
       <div style="display:flex;justify-content:space-between;font-size:13px;margin:12px 0;padding:10px 14px;background:var(--amber-soft);border-radius:6px"><span class="fw6">= Net Burn</span><span class="camb fw6">−$5.8M/yr (−$486K/mo)</span></div>
     </div></div>
   </div>
-  <div class="cd"><div class="cd-h"><span class="cd-t">CAC payback trend <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-payback"></canvas></div></div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">CAC payback trend <span>| 12 months</span></span></div><div class="cd-b"><div class="chart-wrap"><canvas id="ch-payback"></canvas></div></div></div>
 </div>
 
 <!-- HIRING IMPACT -->
@@ -155,7 +155,7 @@ a {color:inherit}
       <tr><td class="fw6">$17M</td><td>2nd AE + 1 Eng</td><td><span class="bdg bdg-amber">$600K away</span></td></tr>
       <tr><td class="fw6">$19M</td><td>3rd AE + Sales Manager</td><td><span class="bdg bdg-blue">Target Q3</span></td></tr>
       <tr><td class="fw6">$22M</td><td>VP Sales</td><td><span class="bdg bdg-blue">Target Q1 '27</span></td></tr></tbody></table>
-      <div class="cl cl-amber mt8">ARR justifies 1 AE + 1 CSM right now. The 2nd AE is $600K away — wait for $17M ARR trigger or accept the risk of early hire.</div>
+      <div class="cl cl-amber mt8">ARR justifies 1 AE + 1 CSM right now. The 2nd AE is $600K away, wait for $17M ARR trigger or accept the risk of early hire.</div>
     </div></div>
   </div>
   <div class="cd"><div class="cd-h"><span class="cd-t">Decision flow: Can we afford this hire?</span></div><div class="cd-b">
@@ -164,7 +164,7 @@ a {color:inherit}
       <div class="df-node yes"><span class="df-tag y">Green</span> Approve hire</div><div class="df-arrow">↓</div>
       <div class="df-node"><strong>IF</strong> ARR milestone met BUT Bear runway &lt; 12mo</div><div class="df-arrow">↓</div>
       <div class="df-node warn"><span class="df-tag m">Defer</span> Defer 8 weeks. Re-evaluate at Q2 close.</div><div class="df-arrow">↓</div>
-      <div class="df-node no"><span class="df-tag n">Block</span> If ARR milestone NOT met — no exceptions</div>
+      <div class="df-node no"><span class="df-tag n">Block</span> If ARR milestone NOT met, no exceptions</div>
     </div>
   </div></div>
 </div>
@@ -176,7 +176,7 @@ a {color:inherit}
     <div class="kc accent-red"><div class="kl">Monthly Outflow</div><div class="kv">$1.86M</div><div class="ks">All operating expenses</div></div>
     <div class="kc accent-amber"><div class="kl">Net Monthly Cash</div><div class="kv">−$486K</div><div class="ks"><span class="dn">Burning</span></div></div>
   </div>
-  <div class="cd"><div class="cd-h"><span class="cd-t">Monthly cash flow <span>— 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-waterfall"></canvas></div></div></div>
+  <div class="cd"><div class="cd-h"><span class="cd-t">Monthly cash flow <span>| 12 months</span></span></div><div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-waterfall"></canvas></div></div></div>
   <div class="g2">
     <div class="cd"><div class="cd-h"><span class="cd-t">Working capital</span></div><div class="cd-b">
       <table><thead><tr><th>Metric</th><th>Value</th><th>Status</th></tr></thead>
@@ -190,7 +190,7 @@ a {color:inherit}
       <tbody><tr><td class="fw6">April</td><td>$1.40M</td><td>$1.88M</td><td class="cred">−$480K</td><td class="camb">$7.98M</td></tr>
       <tr><td class="fw6">May</td><td>$1.43M</td><td>$1.89M</td><td class="cred">−$460K</td><td class="camb">$7.52M</td></tr>
       <tr><td class="fw6">June</td><td>$1.46M</td><td>$1.90M</td><td class="cred">−$440K</td><td class="camb">$7.08M</td></tr></tbody></table>
-      <div class="cl cl-green mt8">Burn is improving — revenue growth outpacing expense growth. If trend continues, breakeven trajectory by Q4 2026.</div>
+      <div class="cl cl-green mt8">Burn is improving, revenue growth outpacing expense growth. If trend continues, breakeven trajectory by Q4 2026.</div>
     </div></div>
   </div>
 </div>
@@ -213,10 +213,10 @@ a {color:inherit}
         <div class="df-node yes"><span class="df-tag y">Runway</span> 17.4mo → <strong>17.8mo</strong> (+0.4 months)</div><div class="df-arrow">↓</div>
         <div class="df-node warn"><span class="df-tag m">Cost</span> Lost pipeline: ~$120K (2 months production)</div>
       </div>
-      <div class="cl cl-amber mt8">Net impact: +$38K cash, −$120K pipeline. Defer is the right call — AE ramp is 90 days anyway.</div>
+      <div class="cl cl-amber mt8">Net impact: +$38K cash, −$120K pipeline. Defer is the right call, AE ramp is 90 days anyway.</div>
     </div></div>
   </div>
-  <div class="cd"><div class="cd-h"><span class="cd-t">Sensitivity table <span>— variable changes → runway impact</span></span></div><div class="cd-b">
+  <div class="cd"><div class="cd-h"><span class="cd-t">Sensitivity table <span>| variable changes → runway impact</span></span></div><div class="cd-b">
     <table><thead><tr><th>Variable Change</th><th>Runway Impact</th><th>Risk</th></tr></thead>
     <tbody><tr class="alert"><td class="fw6">Churn +0.5%</td><td class="cred fw6">−2.3 months</td><td><span class="bdg bdg-red">High</span></td></tr>
     <tr class="alert"><td class="fw6">Churn +1.0%</td><td class="cred fw6">−4.8 months</td><td><span class="bdg bdg-red">Critical</span></td></tr>
@@ -224,7 +224,7 @@ a {color:inherit}
     <tr><td class="fw6">Delay hiring 8 weeks</td><td class="cgrn">+0.4 months</td><td><span class="bdg bdg-green">Low</span></td></tr>
     <tr><td class="fw6">Add 3 hires (Aggressive)</td><td class="cred fw6">−4.2 months</td><td><span class="bdg bdg-red">High</span></td></tr>
     <tr><td class="fw6">Cut paid ads (−$40K/mo)</td><td class="cgrn fw6">+2.8 months</td><td><span class="bdg bdg-amber">Medium</span></td></tr></tbody></table>
-    <div class="cl cl-blue mt8">Two biggest levers: <strong>churn</strong> (−2.3mo per 0.5%) and <strong>paid ads</strong> (+2.8mo if cut). Focus on churn first — compounding effects.</div>
+    <div class="cl cl-blue mt8">Two biggest levers: <strong>churn</strong> (−2.3mo per 0.5%) and <strong>paid ads</strong> (+2.8mo if cut). Focus on churn first, compounding effects.</div>
   </div></div>
   <div class="cd"><div class="cd-h"><span class="cd-t">Break-even analysis</span></div><div class="cd-b">
     <div style="display:flex;gap:24px;flex-wrap:wrap;margin:12px 0">
@@ -248,7 +248,7 @@ a {color:inherit}
         <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Begin conversations</div><div class="pb-meta"><span>Target: Q3 2026</span></div></div></div>
       </div>
     </div></div>
-    <div class="cd"><div class="cd-h"><span class="cd-t">Cost-cutting levers <span>— ranked by savings</span></span></div><div class="cd-b">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Cost-cutting levers <span>| ranked by savings</span></span></div><div class="cd-b">
       <table><thead><tr><th>Lever</th><th>Savings/mo</th><th>Impact</th><th>Pain</th></tr></thead>
       <tbody><tr><td class="fw6">Cut paid ads</td><td class="cgrn fw6">$40K</td><td>Pipeline −$380K/qtr</td><td><span class="bdg bdg-amber">Medium</span></td></tr>
       <tr><td class="fw6">Freeze non-critical hiring</td><td class="cgrn fw6">$35K</td><td>Growth −15%</td><td><span class="bdg bdg-red">High</span></td></tr>

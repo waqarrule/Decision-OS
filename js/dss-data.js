@@ -1,1 +1,1 @@
-// DSS Data module — placeholder
+// DSS Data module | placeholder

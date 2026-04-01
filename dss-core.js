@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   DSS Core JS — Decision OS v5
+   DSS Core JS | Decision OS v5
    Shared functions extracted from 19 HTML files
    ═══════════════════════════════════════════════════ */
 
@@ -90,7 +90,7 @@ function ensureChartJS(callback) {
   // Show global notice
   const notice = document.createElement('div');
   notice.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:9999;padding:12px 18px;background:#fef3c7;border:1px solid #d97706;border-radius:8px;font-size:11px;color:#b45309;font-family:Inter,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.1)';
-  notice.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Charts unavailable — Chart.js CDN failed to load. <a href="#" onclick="location.reload()" style="color:#92400e;font-weight:600;text-decoration:underline">Retry</a>';
+  notice.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Charts unavailable, Chart.js CDN failed to load. <a href="#" onclick="location.reload()" style="color:#92400e;font-weight:600;text-decoration:underline">Retry</a>';
   document.body.appendChild(notice);
   setTimeout(() => notice.remove(), 8000);
 }
@@ -119,9 +119,9 @@ function initCharts() {
 const wtSteps = [
   { title: "Welcome to Decision OS", body: "This is the intelligence layer for ArcusSoft's leadership team. 8 portals, 64 decision systems, one source of truth. Let me show you how it works." },
   { title: "The Hub", body: "From the <b>Hub</b>, you access any executive portal. Each card shows the exec's name, role, decision count, and what's due today. Click any card to enter that portal." },
-  { title: "Storytelling Cards", body: "Every screen starts with a <b>storytelling card</b> — a dark panel that tells you what happened, why it matters, and what to do. Not raw data. A narrative." },
-  { title: "Scenario Engines", body: "Toggle between <b>Bear / Base / Bull</b> scenarios. Every number on the screen updates. The hiring grid, the forecast chart, the runway — everything shifts." },
-  { title: "Cost of Inaction", body: "Every decision screen shows the <b>dollar cost of doing nothing</b>. Not vague opportunity cost — actual money you're losing every month you delay." },
+  { title: "Storytelling Cards", body: "Every screen starts with a <b>storytelling card</b>, a dark panel that tells you what happened, why it matters, and what to do. Not raw data. A narrative." },
+  { title: "Scenario Engines", body: "Toggle between <b>Bear / Base / Bull</b> scenarios. Every number on the screen updates. The hiring grid, the forecast chart, the runway, everything shifts." },
+  { title: "Cost of Inaction", body: "Every decision screen shows the <b>dollar cost of doing nothing</b>. Not vague opportunity cost, actual money you're losing every month you delay." },
   { title: "Cross-Portal Intelligence", body: "Every portal shows <b>how its data connects to others</b>. The CEO sees CFO's hiring gate. The CRO sees CTO's mobile blocker. One click, full context." },
   { title: "Decision Playbooks", body: "Pre-built <b>decision flows</b> with YES/NO/ESCALATE branches. Step-by-step guidance from trigger to outcome. The system tracks what happened." },
   { title: "You're Ready", body: "Start with the <b>Hub</b> or jump to any portal. The <b>Calculators</b> let you model custom scenarios. <b>Outcomes</b> tracks whether decisions actually worked. Let's go." }

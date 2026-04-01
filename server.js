@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ═══════════════════════════════════════════
-   ArcusSoft Decision OS — Express Server
+   ArcusSoft Decision OS | Express Server
    Serves static files + API + WebSocket push
    ═══════════════════════════════════════════ */
 
@@ -272,7 +272,7 @@ if (fs.existsSync(dataDir)) {
   watcher.on('change', (filePath) => {
     const name = path.basename(filePath, '.json');
     cache.del(name);
-    console.log(`[DATA] ${name}.json updated — cache cleared, broadcasting`);
+    console.log(`[DATA] ${name}.json updated, cache cleared, broadcasting`);
     io.emit('data-update', { source: name, timestamp: new Date().toISOString() });
   });
 }
