@@ -61,7 +61,48 @@ a {color:inherit}
 <!-- ENGINEERING -->
 <div id="s-engineering" class="scr on">
   <div class="sh"><div class="sh-over">CTO · Engineering Layer · Velocity</div><h2>Ship speed is <em>the strategy.</em></h2><div class="sh-sub">Sprint velocity, deploy frequency, and the engineering metrics that predict whether you'll hit product-market timeline or lose to faster competitors.</div></div>
-  <div class="story"><div class="s-num">−23%</div><div class="s-label">The Velocity Problem</div><div class="s-title">Sprint velocity dropped 23% in 8 weeks.</div><div class="s-body">Engineering velocity has declined from <strong>142 story points/sprint</strong> to <strong>109 points/sprint</strong> over the last 8 weeks. The cause isn't headcount, it's context switching. Teams are splitting time between <strong>3.2 active projects</strong> on average, up from 1.8 last quarter. Every context switch costs ~20 minutes of recovery. With 47 engineers averaging 4 switches/day, that's <strong>63 lost engineering hours per week</strong>. This screen shows what's happening and what to do about it.</div><button class="s-cta" onclick="show('techdebt',document.querySelector('.tab:nth-child(3)'))">Examine velocity breakdown</button></div>
+    <div class="insight-table">
+    <div class="insight-head">
+      <div class="ih-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Engineering Events <span class="ih-badge"><svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#16a34a"><animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/></circle></svg> LIVE</span></div>
+      <div class="ih-time">Engineering Layer · Updated 2 min ago</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 31</div>
+      <div class="ir-event"><strong>Velocity down 23%:</strong> 142→109 pts/sprint. Root cause: 3.2 projects/eng (target <2). Context switching costs <strong>63 hrs/week</strong>.</div>
+      <div class="ir-impact dn">−23%</div>
+      <div class="ir-action block">Critical</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 30</div>
+      <div class="ir-event"><strong>Change Failure Rate: 12.4%</strong> (target <5%). 1 in 8 deploys causes incident. Test coverage at 34%, no integration tests.</div>
+      <div class="ir-impact dn">12.4% CFR</div>
+      <div class="ir-action act">Fix</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 29</div>
+      <div class="ir-event"><strong>Payments SLA breached 3×</strong> this month. Idempotency race condition under high concurrency. Fix in review, ETA 3 days.</div>
+      <div class="ir-impact dn">3× breach</div>
+      <div class="ir-action block">Urgent</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 28</div>
+      <div class="ir-event"><strong>6 critical vulnerabilities</strong> open. 3 from auth dependency CVE. Patch available but needs downtime window. SOC 2 audit in June.</div>
+      <div class="ir-impact dn">6 critical</div>
+      <div class="ir-action act">Patch</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 27</div>
+      <div class="ir-event"><strong>Tech debt: 31% of sprint capacity.</strong> Above 30% emergency cap. Auth service decompose (score 9.1) is the #1 blocker for scale.</div>
+      <div class="ir-impact warn">31% debt</div>
+      <div class="ir-action act">Prioritize</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 26</div>
+      <div class="ir-event"><strong>Cost per transaction rising:</strong> $0.0029→$0.0034 (+18%). Target <$0.003. DB query optimization could save $6-8K/mo.</div>
+      <div class="ir-impact dn">+18% cost</div>
+      <div class="ir-action act">Optimize</div>
+    </div>
+  </div>
   <div class="krow kr4">
     <div class="kc accent-purple"><div class="kl">Sprint Velocity</div><div class="kv">109<span style="font-size:16px;color:var(--ink4)"> pts</span></div><div class="ks"><span class="dn">↓ 23%</span> from 142 pts/sprint</div></div>
     <div class="kc accent-green"><div class="kl">Deploy Frequency</div><div class="kv">4.2<span style="font-size:16px;color:var(--ink4)">/day</span></div><div class="ks"><span class="up">↑ from 3.1</span> last quarter</div></div>

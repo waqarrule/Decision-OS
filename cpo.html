@@ -64,7 +64,48 @@ a {color:inherit}
 
 <!-- ADOPTION -->
 <div id="s-adoption" class="scr on">  <div class="sh"><div class="sh-over">CPO · Product Layer · Adoption</div><h2>What users <em>actually use.</em></h2><div class="sh-sub">Feature adoption, TTFV, and the gap between shipped features and adopted features. Including a painful AI scheduling lesson.</div></div>
-  <div class="story"><div class="s-num">3%</div><div class="s-label">The AI Scheduling Story</div><div class="s-title">We built AI scheduling. 97% of users ignored it.</div><div class="s-body">Six months ago, we shipped <strong>AI Schedule Optimizer</strong>, the #1 feature request from our enterprise roadmap. It consumed <strong>4,200 engineering hours</strong> and 2 dedicated sprints. Adoption after 6 months: <strong>3.1%</strong>. Users found it inaccurate, slow, and disconnected from their actual workflow. The lesson: voice-of-customer doesn't always mean product-market. The feature was a <strong>$630K opportunity cost</strong>, time that could have gone to mobile offline (our #1 churn reason). We've killed the project and reallocated capacity.</div><button class="s-cta" onclick="show('roadmap',document.querySelector('.tab:nth-child(2)'))">Review updated roadmap</button></div>
+    <div class="insight-table">
+    <div class="insight-head">
+      <div class="ih-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Product Events <span class="ih-badge"><svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#16a34a"><animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/></circle></svg> LIVE</span></div>
+      <div class="ih-time">Product Layer · Updated 7 min ago</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 31</div>
+      <div class="ir-event"><strong>AI scheduling killed:</strong> 3.1% adoption after <strong>4,200 eng hours</strong>. $630K opportunity cost. Capacity reallocated to mobile offline.</div>
+      <div class="ir-impact dn">−$630K</div>
+      <div class="ir-action ok">Realloc'd</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 30</div>
+      <div class="ir-event"><strong>Mobile offline: P0.</strong> Blocking 3 enterprise deals ($480K). 32% of churn reasons cite it. Platform squad 100% focused. Ship Q2.</div>
+      <div class="ir-impact dn">$480K blocked</div>
+      <div class="ir-action block">P0</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 29</div>
+      <div class="ir-event"><strong>PMF divergence:</strong> Enterprise Ellis score <strong>74%</strong> ("can't live without it"). SMB at <strong>38%</strong> ("too complex"). Below 40% threshold.</div>
+      <div class="ir-impact warn">74% vs 38%</div>
+      <div class="ir-action act">Fix SMB</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 28</div>
+      <div class="ir-event"><strong>Core feature adoption: 72%.</strong> 5 of 7 core features above 60%. Resource Allocation (47%) and Time Tracking (42%) growing fastest.</div>
+      <div class="ir-impact up">72% adoption</div>
+      <div class="ir-action ok">Healthy</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 27</div>
+      <div class="ir-event"><strong>TTFV improved: 6.1→4.2 days</strong> post-onboarding revamp. Enterprise at 3.1 days, SMB still at 6.8. Needs SMB-specific flow.</div>
+      <div class="ir-impact up">4.2d TTFV</div>
+      <div class="ir-action act">SMB flow</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 26</div>
+      <div class="ir-event"><strong>Competitive gaps:</strong> Mobile offline (Procore has it), SSO/SCIM (enterprise deals blocked), API depth (Procore leads). Mobile ships Q2.</div>
+      <div class="ir-impact warn">3 gaps</div>
+      <div class="ir-action act">Ship Q2</div>
+    </div>
+  </div>
   <div class="krow kr4">
     <div class="kc accent-rose"><div class="kl">DAU / MAU</div><div class="kv">38%</div><div class="ks"><span class="up">↑ from 34%</span> last quarter</div></div>
     <div class="kc accent-green"><div class="kl">Core Feature Adoption</div><div class="kv">72%</div><div class="ks">5 of 7 core features >60%</div></div>
@@ -177,7 +218,42 @@ a {color:inherit}
 <!-- PMF -->
 <div id="s-pmf" class="scr">
   <div class="sh"><div class="sh-over">CPO · Product Layer · PMF</div><h2>Product-market fit is <em>segment-specific.</em></h2><div class="sh-sub">Sean Ellis scores, verbatim feedback, and the uncomfortable truth: we have strong PMF in enterprise and weak PMF in SMB.</div></div>
-  <div class="story"><div class="s-num">PMF</div><div class="s-label">Segment Reality</div><div class="s-title">Enterprise says "can't live without it." SMB says "it's fine."</div><div class="s-body">Our aggregate Sean Ellis score is <strong>58% "very disappointed"</strong>, above the 40% threshold. But that average hides a massive split: Enterprise scores <strong>74%</strong>, while SMB scores <strong>38%</strong>. Enterprise users describe us as <strong>"mission-critical infrastructure"</strong>. SMB users say <strong>"it's more than I need but less than I want."</strong> The PMF gap explains our NRR divergence: Enterprise at 112%, SMB at 96%. We're not one product, we're two products pretending to be one.</div></div>
+    <div class="insight-table">
+    <div class="insight-head">
+      <div class="ih-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> PMF by Segment <span class="ih-badge" style="background:var(--red-soft);color:var(--red-text)"><svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#dc2626"><animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/></circle></svg> ALERT</span></div>
+      <div class="ih-time">Product Layer · Sean Ellis Survey · Mar 31</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Enterprise</div>
+      <div class="ir-event"><strong>Sean Ellis: 74%</strong> "very disappointed." NRR 112%. DAU/MAU 44%. Churn 0.6%. <strong>Mission-critical.</strong> PMF is strong.</div>
+      <div class="ir-impact up">74% Ellis</div>
+      <div class="ir-action ok">Strong</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mid-Market</div>
+      <div class="ir-event"><strong>Sean Ellis: 62%.</strong> NRR 106%. DAU/MAU 38%. Churn 1.2%. "Does the job." Solid but not ecstatic.</div>
+      <div class="ir-impact">62% Ellis</div>
+      <div class="ir-action ok">Solid</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">SMB</div>
+      <div class="ir-event"><strong>Sean Ellis: 38%</strong> — below 40% threshold. NRR 96%. Churn 2.8%. "Too complex, not enough value." PMF failing.</div>
+      <div class="ir-impact dn">38% Ellis</div>
+      <div class="ir-action block">Failing</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Verbatim</div>
+      <div class="ir-event"><strong>Enterprise:</strong> "Cannot run projects without it." <strong>SMB:</strong> "More than I need, less than I want. Monday.com is simpler."</div>
+      <div class="ir-impact warn">Gap</div>
+      <div class="ir-action act">Fix</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Plan</div>
+      <div class="ir-event"><strong>SMB onboarding redesign queued Q3.</strong> Simplify to 3 core features. Guided setup <10 min. Target Ellis >50%. Pricing review: $19/user lite tier?</div>
+      <div class="ir-impact warn">Q3 target</div>
+      <div class="ir-action act">Planned</div>
+    </div>
+  </div>
   <div class="cd"><div class="cd-h"><span class="cd-t">Sean Ellis survey <span>| "How would you feel if you could no longer use ArcusSoft?"</span></span></div><div class="cd-b">
     <div style="margin:16px 0">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">

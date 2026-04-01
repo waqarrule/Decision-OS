@@ -66,7 +66,48 @@ a {color:inherit}
 <!-- CASH POSITION -->
 <div id="s-cash" class="scr on">
   <div class="sh"><div class="sh-over">CFO · Finance Layer · Cash Position</div><h2>The money. <em>The math.</em></h2><div class="sh-sub">Runway scenarios, burn trajectory, and the hiring decisions that change everything.</div></div>
-  <div class="story"><div class="s-num">0.6mo</div><div class="s-label">Runway Gap</div><div class="s-title">0.6 months behind your own target.</div><div class="s-body">You have <strong>$8.46M</strong> in the bank and burn <strong>$486K/month</strong>. That's <strong>17.4 months of runway</strong>, 0.6 months short of your 18-month target. Not dangerous, but it means every hiring decision needs scenario analysis first. The CRO wants 3 AEs. In the Bear case, that drops you to <strong>8.9 months</strong>. Not survivable.</div><button class="s-cta" onclick="show('sensitivity',document.querySelector('.tab:nth-child(5)'))">Explore runway scenarios</button></div>
+    <div class="insight-table">
+    <div class="insight-head">
+      <div class="ih-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Financial Events <span class="ih-badge"><svg width="7" height="7" viewBox="0 0 8 8"><circle cx="4" cy="4" r="3" fill="#16a34a"><animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/></circle></svg> LIVE</span></div>
+      <div class="ih-time">Finance Layer · Updated 8 min ago</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 31</div>
+      <div class="ir-event"><strong>Runway gap:</strong> 17.4 months vs 18-month target. <strong>$8.46M cash</strong>, $486K/mo burn. 0.6 months short. Every hire needs scenario check.</div>
+      <div class="ir-impact dn">−0.6mo</div>
+      <div class="ir-action act">Monitor</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 30</div>
+      <div class="ir-event"><strong>Burn multiple at 2.1×</strong> — above 2× target. Net burn / net new ARR ratio. Must drop before Series C conversations begin.</div>
+      <div class="ir-impact dn">2.1×</div>
+      <div class="ir-action act">Reduce</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 29</div>
+      <div class="ir-event"><strong>Hiring blocked:</strong> CRO wants 3 AEs. Bear scenario shows <strong>11.8mo runway</strong> with plan hires. Below 12mo floor. Deferred 8 weeks.</div>
+      <div class="ir-impact dn">11.8mo bear</div>
+      <div class="ir-action block">Blocked</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 28</div>
+      <div class="ir-event"><strong>SMB unit economics leak:</strong> NRR at 96%. Each SMB dollar slowly bleeds. Acquisition cost > lifetime value for <25K accounts.</div>
+      <div class="ir-impact dn">NRR 96%</div>
+      <div class="ir-action act">Review</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 27</div>
+      <div class="ir-event"><strong>Series C readiness: 3/5 green</strong>. ARR growth (38%), gross margin (78%), NRR (103%) pass. Runway and burn multiple fail.</div>
+      <div class="ir-impact warn">3/5 green</div>
+      <div class="ir-action act">Fix 2</div>
+    </div>
+    <div class="insight-row">
+      <div class="ir-time">Mar 26</div>
+      <div class="ir-event"><strong>Cost of mis-hiring:</strong> Each wrong hire costs <strong>$180K–$400K</strong>. Annual exposure from 3–4 mis-timed decisions: $540K–$1.6M.</div>
+      <div class="ir-impact dn">$540K–$1.6M</div>
+      <div class="ir-action act">Systematize</div>
+    </div>
+  </div>
   <div class="krow kr4">
     <div class="kc accent-amber"><div class="kl">Cash Remaining</div><div class="kv" data-kpi="cashOnHand" data-kpi-src="financials.financials" data-fmt="$">$9.2M</div><div class="ks">Series B proceeds</div></div>
     <div class="kc accent-red"><div class="kl">Monthly Burn</div><div class="kv" data-kpi="monthlyBurn" data-kpi-src="financials.financials" data-fmt="$">$529K</div><div class="ks"><span class="dn">↑ 4%</span> vs last quarter</div></div>
