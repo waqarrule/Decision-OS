@@ -33,13 +33,13 @@ a{color:inherit;text-decoration:none}
 
 /* ── TOP NAV (Landing pages) ── */
 .topnav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;background:var(--glass2);backdrop-filter:blur(20px) saturate(1.3);border-bottom:1px solid var(--border)}
-.topnav .brand{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--ink4);text-transform:uppercase}
+.topnav .brand{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--ink3);text-transform:uppercase}
 .topnav .brand b{color:var(--ink);font-weight:700;font-size:11px}
 .topnav .links{display:flex;gap:4px;align-items:center}
-.topnav .links a{font-size:10px;font-weight:600;padding:5px 12px;border-radius:6px;color:var(--ink4);transition:all .15s}
+.topnav .links a{font-size:10px;font-weight:600;padding:5px 12px;border-radius:6px;color:var(--ink3);transition:all .15s}
 .topnav .links a:hover{color:var(--ink2);background:var(--bg2)}
 .topnav .links a.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.2)}
-.topnav .status{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--ink4)}
+.topnav .status{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--ink3)}
 .topnav .status .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s ease-in-out infinite}
 .topnav .auth-area{display:flex;align-items:center;gap:8px}
 
