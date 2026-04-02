@@ -45,7 +45,7 @@ a{color:inherit;text-decoration:none}
 
 /* ── EXECUTIVE HEADER (Portal pages) ── */
 .hdr{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);box-shadow:0 1px 0 var(--accent);display:flex;align-items:center;padding:0 32px;gap:18px}
-.hdr .brand{font-size:10px;font-weight:600;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.hdr .brand{font-size:10px;font-weight:600;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
 .hdr .brand b{color:var(--ink);font-weight:700;font-size:11px}
 .hdr .sep{width:1px;height:22px;background:var(--border2)}
 .hdr .co{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.01em;white-space:nowrap}
@@ -61,7 +61,7 @@ a{color:inherit;text-decoration:none}
 .hdr-r a.on{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.25)}
 .hdr-r .live{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:700;color:var(--green);margin-left:12px;margin-right:6px;text-transform:uppercase;letter-spacing:.06em}
 .hdr-r .live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s ease-in-out infinite}
-.hdr-r .logout-btn{font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;color:var(--ink4);cursor:pointer;border:1px solid var(--border);background:transparent;transition:all .15s;font-family:var(--sans)}
+.hdr-r .logout-btn{font-size:10px;font-weight:600;padding:5px 11px;border-radius:6px;color:var(--ink3);cursor:pointer;border:1px solid var(--border);background:transparent;transition:all .15s;font-family:var(--sans)}
 .hdr-r .logout-btn:hover{color:var(--red-text);border-color:var(--red);background:var(--red-soft)}
 
 /* ── TABS ── */
@@ -320,15 +320,15 @@ tr.good td{background:var(--green-soft)!important}
 .auth-avatar{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
 .auth-info{text-align:left;line-height:1.3}
 .auth-name{font-size:11px;font-weight:600;color:var(--ink)}
-.auth-role{font-size:9px;color:var(--ink4)}
-.auth-chevron{font-size:10px;color:var(--ink4);margin-left:2px;transition:transform .2s}
+.auth-role{font-size:9px;color:var(--ink3)}
+.auth-chevron{font-size:10px;color:var(--ink3);margin-left:2px;transition:transform .2s}
 .auth-badge:hover .auth-chevron{transform:rotate(180deg)}
 .auth-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:260px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:8px;display:none;z-index:300}
 .auth-dropdown.show{display:block;animation:scrIn .2s ease}
 .auth-dd-header{display:flex;align-items:center;gap:10px;padding:12px}
 .auth-avatar-lg{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .auth-dd-name{font-size:13px;font-weight:600}
-.auth-dd-email{font-size:10px;color:var(--ink4)}
+.auth-dd-email{font-size:10px;color:var(--ink3)}
 .auth-dd-divider{height:1px;background:var(--border);margin:4px 8px}
 .auth-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:11px;color:var(--ink2);border-radius:6px;transition:all .15s}
 .auth-dd-item:hover{background:var(--bg2)}
