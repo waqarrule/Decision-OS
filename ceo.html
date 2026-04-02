@@ -718,24 +718,34 @@ async function loadRevenueTrend(){
   generateInsights(raw, range);
 }
 
+/* ── Common Chart Defaults ── */
+const CHART_FONT = {family:'Inter',size:12};
+const CHART_FONT_SM = {family:'Inter',size:11};
+const MONO_FONT = {family:'JetBrains Mono',size:11};
+const GRID_COLOR = 'rgba(0,0,0,.08)';
+const AXIS_COLOR = '#6b6860';
+
+function chartTooltipTitle(ctx){ return ctx[0]?.label || ''; }
+function fmt$(v){ return '$'+v+'K'; }
+
 /* ── View: Revenue Composition (stacked area + line overlay) ── */
 function renderComposition(d, compare){
   const r = document.getElementById('ch-rev');
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [
-    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.25)', borderColor:'#10b981', borderWidth:1.5, fill:true, tension:.35, pointRadius:0, order:2},
-    {label:'Expansion', data:d.total.expansion, backgroundColor:'rgba(99,102,241,.25)', borderColor:'#6366f1', borderWidth:1.5, fill:true, tension:.35, pointRadius:0, order:2},
-    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.25)', borderColor:'#ef4444', borderWidth:1.5, fill:true, tension:.35, pointRadius:0, order:2}
+    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.30)', borderColor:'#10b981', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#10b981', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2},
+    {label:'Expansion', data:d.total.expansion, backgroundColor:'rgba(99,102,241,.30)', borderColor:'#6366f1', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#6366f1', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2},
+    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.30)', borderColor:'#ef4444', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#ef4444', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2}
   ];
 
   // Add total MRR line on top
-  datasets.push({label:'Total MRR', data:d.total.mrr, borderColor:'#1a1916', backgroundColor:'transparent', borderWidth:2.5, tension:.35, pointRadius:3, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false, order:1});
+  datasets.push({label:'Total MRR', data:d.total.mrr, borderColor:'#1a1916', backgroundColor:'transparent', borderWidth:3, tension:.35, pointRadius:4, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false, order:1});
 
   if(compare==='target'){
-    datasets.push({label:'Target', data:d.total.target, borderColor:'#ccc9c2', borderDash:[6,4], borderWidth:1.5, pointRadius:0, fill:false, order:0});
+    datasets.push({label:'Target', data:d.total.target, borderColor:'#a8a59e', borderDash:[8,5], borderWidth:2, pointRadius:0, fill:false, order:0});
   } else if(compare==='yoy'){
-    datasets.push({label:'Last Year', data:d.monthsYoY.map((_,i)=>raw_yoy_total(d,i)), borderColor:'#f59e0b', borderDash:[6,4], borderWidth:1.5, pointRadius:0, fill:false, order:0});
+    datasets.push({label:'Last Year', data:d.monthsYoY.map((_,i)=>raw_yoy_total(d,i)), borderColor:'#f59e0b', borderDash:[8,5], borderWidth:2, pointRadius:0, fill:false, order:0});
   }
 
   r._chart = new Chart(r, {
@@ -743,22 +753,25 @@ function renderComposition(d, compare){
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
-      scales:{
-        y:{stacked:true, ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}, beginAtZero:false},
-        x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}
-      },
-      interaction:{mode:'index',intersect:false},
-      tooltip:{
-        callbacks:{
-          afterBody:function(ctx){
-            const idx = ctx[0].dataIndex;
-            const net = d.total.netNew[idx];
-            const mom = d.total.momGrowth[idx];
-            return '\nNet New: $'+net+'K | MoM: '+mom+'%';
+      plugins:{
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        tooltip:{
+          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          callbacks:{
+            title:chartTooltipTitle,
+            label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); },
+            afterBody:function(ctx){
+              const idx = ctx[0].dataIndex;
+              return ['','Net New: '+fmt$(d.total.netNew[idx]),'MoM Growth: '+d.total.momGrowth[idx]+'%'];
+            }
           }
         }
-      }
+      },
+      scales:{
+        y:{stacked:true, ticks:{callback:fmt$,font:MONO_FONT,color:AXIS_COLOR},grid:{color:GRID_COLOR}, beginAtZero:false},
+        x:{grid:{display:false},ticks:{font:CHART_FONT_SM,color:AXIS_COLOR}}
+      },
+      interaction:{mode:'index',intersect:false}
     }
   });
 }
@@ -772,20 +785,32 @@ function renderGrowth(d, compare){
 
   const datasets = [];
   for(const [k,seg] of Object.entries(d.segments)){
-    datasets.push({label:seg.label+' MoM', data:seg.momGrowth, borderColor:seg.color, backgroundColor:seg.color+'15', borderWidth:2, tension:.35, pointRadius:3, pointBackgroundColor:seg.color, fill:true});
+    datasets.push({label:seg.label+' MoM', data:seg.momGrowth, borderColor:seg.color, backgroundColor:seg.color+'18', borderWidth:2.5, tension:.35, pointRadius:4, pointBackgroundColor:seg.color, pointBorderColor:'#fff', pointBorderWidth:1.5, fill:true});
   }
   // Total growth
-  datasets.push({label:'Overall MoM', data:d.total.momGrowth, borderColor:'#1a1916', borderWidth:2.5, tension:.35, pointRadius:0, borderDash:[4,3], fill:false});
+  datasets.push({label:'Overall MoM', data:d.total.momGrowth, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:0, borderDash:[5,4], fill:false});
+
+  // Calculate Y range for zero-line annotation
+  const allVals = d.total.momGrowth.concat(...Object.values(d.segments).map(s=>s.momGrowth));
 
   r._chart = new Chart(r, {
     type:'line',
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
+      plugins:{
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        tooltip:{
+          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          callbacks:{
+            title:chartTooltipTitle,
+            label:function(c){ return ' '+c.dataset.label+': '+c.raw+'%'; }
+          }
+        }
+      },
       scales:{
-        y:{ticks:{callback:v=>v+'%',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}, beginAtZero:false},
-        x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}
+        y:{ticks:{callback:v=>v+'%',font:MONO_FONT,color:AXIS_COLOR},grid:{color:GRID_COLOR}, beginAtZero:false},
+        x:{grid:{display:false},ticks:{font:CHART_FONT_SM,color:AXIS_COLOR}}
       },
       interaction:{mode:'index',intersect:false}
     }
@@ -798,9 +823,9 @@ function renderArpuView(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [];
-  datasets.push({label:'Overall ARPU', data:d.arpu.overall, borderColor:'#1a1916', borderWidth:2.5, tension:.35, pointRadius:0, fill:false});
+  datasets.push({label:'Overall ARPU', data:d.arpu.overall, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:0, fill:false});
   for(const [k,seg] of Object.entries(d.segments)){
-    if(d.arpu[k]) datasets.push({label:seg.label+' ARPU', data:d.arpu[k], borderColor:seg.color, borderWidth:2, tension:.35, pointRadius:3, pointBackgroundColor:seg.color, fill:false});
+    if(d.arpu[k]) datasets.push({label:seg.label+' ARPU', data:d.arpu[k], borderColor:seg.color, borderWidth:2.5, tension:.35, pointRadius:4, pointBackgroundColor:seg.color, pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false});
   }
 
   // Use two Y-axes since ranges differ wildly
@@ -809,10 +834,19 @@ function renderArpuView(d){
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
+      plugins:{
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        tooltip:{
+          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          callbacks:{
+            title:chartTooltipTitle,
+            label:function(c){ return ' '+c.dataset.label+': $'+c.raw+'K'; }
+          }
+        }
+      },
       scales:{
-        y:{position:'left', title:{display:true,text:'Overall / Mid-Market',font:{family:'Inter',size:9},color:'#a8a59e'}, ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'},beginAtZero:true},
-        y1:{position:'right', title:{display:true,text:'Enterprise',font:{family:'Inter',size:9},color:'#a8a59e'}, ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{drawOnChartArea:false},beginAtZero:true}
+        y:{position:'left', title:{display:true,text:'Overall / Mid-Market / SMB',font:CHART_FONT_SM,color:AXIS_COLOR}, ticks:{callback:fmt$,font:MONO_FONT,color:AXIS_COLOR},grid:{color:GRID_COLOR},beginAtZero:true},
+        y1:{position:'right', title:{display:true,text:'Enterprise',font:CHART_FONT_SM,color:AXIS_COLOR}, ticks:{callback:fmt$,font:MONO_FONT,color:AXIS_COLOR},grid:{drawOnChartArea:false},beginAtZero:true}
       },
       interaction:{mode:'index',intersect:false}
     }
@@ -825,11 +859,11 @@ function renderYoY(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [];
-  datasets.push({label:'This Year MRR', data:d.total.mrr, borderColor:'#1a1916', borderWidth:2.5, tension:.35, pointRadius:3, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false});
+  datasets.push({label:'This Year MRR', data:d.total.mrr, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:4, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false});
 
   // Per-segment YoY
   for(const [k,seg] of Object.entries(d.segments)){
-    datasets.push({label:seg.label+' (Last Year)', data:seg.yoyMrr, borderColor:seg.color, borderDash:[6,4], borderWidth:1.5, tension:.35, pointRadius:0, fill:false});
+    datasets.push({label:seg.label+' (Last Year)', data:seg.yoyMrr, borderColor:seg.color, borderDash:[8,5], borderWidth:2, tension:.35, pointRadius:0, fill:false});
   }
 
   // Calculate YoY growth %
@@ -840,20 +874,25 @@ function renderYoY(d){
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
-      scales:{
-        y:{ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'},beginAtZero:false},
-        x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}
-      },
-      interaction:{mode:'index',intersect:false},
-      tooltip:{
-        callbacks:{
-          afterBody:function(ctx){
-            const idx = ctx[0].dataIndex;
-            return yoyPct[idx] ? 'YoY Growth: +'+yoyPct[idx]+'%' : '';
+      plugins:{
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        tooltip:{
+          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          callbacks:{
+            title:chartTooltipTitle,
+            label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); },
+            afterBody:function(ctx){
+              const idx = ctx[0].dataIndex;
+              return yoyPct[idx] ? ['','YoY Growth: +'+yoyPct[idx]+'%'] : [];
+            }
           }
         }
-      }
+      },
+      scales:{
+        y:{ticks:{callback:fmt$,font:MONO_FONT,color:AXIS_COLOR},grid:{color:GRID_COLOR},beginAtZero:false},
+        x:{grid:{display:false},ticks:{font:CHART_FONT_SM,color:AXIS_COLOR}}
+      },
+      interaction:{mode:'index',intersect:false}
     }
   });
 }
@@ -864,9 +903,9 @@ function renderChurnVsNew(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [
-    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.6)', borderColor:'#10b981', borderWidth:1, type:'bar', order:1},
-    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.6)', borderColor:'#ef4444', borderWidth:1, type:'bar', order:1},
-    {label:'Net New MRR', data:d.total.netNew, borderColor:'#6366f1', borderWidth:2.5, tension:.35, pointRadius:3, pointBackgroundColor:'#6366f1', pointBorderColor:'#fff', pointBorderWidth:2, type:'line', fill:false, order:0}
+    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.65)', borderColor:'#10b981', borderWidth:1.5, borderRadius:4, type:'bar', order:1},
+    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.65)', borderColor:'#ef4444', borderWidth:1.5, borderRadius:4, type:'bar', order:1},
+    {label:'Net New MRR', data:d.total.netNew, borderColor:'#6366f1', borderWidth:3, tension:.35, pointRadius:5, pointBackgroundColor:'#6366f1', pointBorderColor:'#fff', pointBorderWidth:2, type:'line', fill:false, order:0}
   ];
 
   r._chart = new Chart(r, {
@@ -874,15 +913,36 @@ function renderChurnVsNew(d){
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:'Inter',size:10},boxWidth:10,padding:12,color:'#7a7770'}}},
+      plugins:{
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        tooltip:{
+          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          callbacks:{
+            title:chartTooltipTitle,
+            label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); }
+          }
+        }
+      },
       scales:{
-        y:{ticks:{callback:v=>'$'+v+'K',font:{family:'JetBrains Mono',size:10},color:'#a8a59e'},grid:{color:'rgba(0,0,0,.04)'}},
-        x:{grid:{display:false},ticks:{font:{family:'Inter',size:10},color:'#a8a59e'}}
+        y:{ticks:{callback:fmt$,font:MONO_FONT,color:AXIS_COLOR},grid:{color:GRID_COLOR}},
+        x:{grid:{display:false},ticks:{font:CHART_FONT_SM,color:AXIS_COLOR}}
       },
       interaction:{mode:'index',intersect:false}
     }
   });
 }
+
+/* ── SVG Icon Set for Insights ── */
+const ICN = {
+  alert: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  caution: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  trendUp: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+  trendDown: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>',
+  target: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+  shield: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  chart: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+};
 
 /* ── Auto-Insights Engine ── */
 function generateInsights(raw, range){
@@ -900,34 +960,34 @@ function generateInsights(raw, range){
   const avgRecent = recent.reduce((a,b)=>a+b,0)/recent.length;
   const avgEarlier = earlier.length?earlier.reduce((a,b)=>a+b,0)/earlier.length:avgRecent;
   if(avgRecent < avgEarlier * 0.6){
-    insights.push({type:'critical',icon:'🔴',text:`<b>Growth decelerating:</b> MoM growth dropped from ${avgEarlier.toFixed(1)}% → ${avgRecent.toFixed(1)}% over the last 3 months. Runway impact: at this rate, ARR may plateau below $18M by Q3.`});
+    insights.push({type:'critical',icon:ICN.alert,text:`<b>Growth decelerating:</b> MoM growth dropped from ${avgEarlier.toFixed(1)}% → ${avgRecent.toFixed(1)}% over the last 3 months. Runway impact: at this rate, ARR may plateau below $18M by Q3.`});
   }
 
   // 2. SMB drag
   const smbLast = raw.segments.smb.mrr[len-1];
   const smbPrev = raw.segments.smb.mrr[len-2];
   if(smbLast <= smbPrev){
-    insights.push({type:'warning',icon:'⚠️',text:`<b>SMB revenue declining</b> — flat/contracting for ${countFlat(raw.segments.smb.mrr)} months. SMB NRR at 96% means you're paying to acquire customers you can't retain. Consider: price increase to filter, or redirect acquisition budget to Mid-Market where NRR is 106%.`});
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>SMB revenue declining</b> — flat/contracting for ${countFlat(raw.segments.smb.mrr)} months. SMB NRR at 96% means you're paying to acquire customers you can't retain. Consider: price increase to filter, or redirect acquisition budget to Mid-Market where NRR is 106%.`});
   }
 
   // 3. Expansion engine
   const expGrowth = ((raw.total.expansion[len-1] - raw.total.expansion[start]) / raw.total.expansion[start] * 100).toFixed(0);
   if(expGrowth > 40){
-    insights.push({type:'positive',icon:'🟢',text:`<b>Expansion revenue up ${expGrowth}%</b> over the period — this is your strongest lever. Enterprise expansion alone grew $${raw.total.expansion[len-1]-raw.total.expansion[start]}K/mo. Double down on upsell playbooks.`});
+    insights.push({type:'positive',icon:ICN.trendUp,text:`<b>Expansion revenue up ${expGrowth}%</b> over the period — this is your strongest lever. Enterprise expansion alone grew $${raw.total.expansion[len-1]-raw.total.expansion[start]}K/mo. Double down on upsell playbooks.`});
   }
 
   // 4. Customer acquisition slowdown
   const custRecent = raw.customers.new.slice(-3).reduce((a,b)=>a+b,0);
   const custEarlier = raw.customers.new.slice(start, start+3).reduce((a,b)=>a+b,0);
   if(custRecent < custEarlier * 0.5){
-    insights.push({type:'warning',icon:'📉',text:`<b>New customer adds halved:</b> ${custEarlier} → ${custRecent} last quarter. However, ARPU rose ${(raw.arpu.overall[len-1]-raw.arpu.overall[start]).toFixed(2)}× — you're trading volume for value. Validate: is this intentional upmarket shift or demand softness?`});
+    insights.push({type:'warning',icon:ICN.trendDown,text:`<b>New customer adds halved:</b> ${custEarlier} → ${custRecent} last quarter. However, ARPU rose ${(raw.arpu.overall[len-1]-raw.arpu.overall[start]).toFixed(2)}× — you're trading volume for value. Validate: is this intentional upmarket shift or demand softness?`});
   }
 
   // 5. Churn trend
   const churnTrend = raw.total.churned.slice(-3).reduce((a,b)=>a+b,0);
   const churnBase = raw.total.churned.slice(start, start+3).reduce((a,b)=>a+b,0);
   if(Math.abs(churnTrend) > Math.abs(churnBase) * 1.2){
-    insights.push({type:'critical',icon:'🔴',text:`<b>Churn accelerating:</b> Monthly churn grew from $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K. Most of it is SMB ($${Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0))}K). The 205 SMB accounts generate only $140K MRR — that's $683/account. Cost to serve likely exceeds revenue per account.`});
+    insights.push({type:'critical',icon:ICN.alert,text:`<b>Churn accelerating:</b> Monthly churn grew from $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K. Most of it is SMB ($${Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0))}K). The 205 SMB accounts generate only $140K MRR — that's $683/account. Cost to serve likely exceeds revenue per account.`});
   }
 
   // 6. Target performance
@@ -935,23 +995,26 @@ function generateInsights(raw, range){
   const lastTarget = raw.total.target[len-1];
   const vsTarget = ((lastMrr - lastTarget)/lastTarget*100).toFixed(1);
   if(vsTarget > 0){
-    insights.push({type:'positive',icon:'🎯',text:`<b>Beating target by ${vsTarget}%</b> ($${lastMrr-lastTarget}K). Buffer is shrinking though — last month was only $${lastMrr-lastTarget}K ahead. At current trajectory, Q2 target of $1,420K will require acceleration.`});
+    insights.push({type:'positive',icon:ICN.target,text:`<b>Beating target by ${vsTarget}%</b> ($${lastMrr-lastTarget}K). Buffer is shrinking though — last month was only $${lastMrr-lastTarget}K ahead. At current trajectory, Q2 target of $1,420K will require acceleration.`});
   }
 
   // 7. Enterprise concentration risk
   const entPct = (raw.segments.enterprise.mrr[len-1] / totalMrr[len-1] * 100).toFixed(0);
   if(entPct > 55){
-    insights.push({type:'info',icon:'💡',text:`<b>Enterprise at ${entPct}% of revenue.</b> High concentration risk — one Enterprise churn event could swing MRR by $30-50K. Diversification opportunity: Mid-Market is growing 2.6% MoM with 106% NRR. Scale that segment to reduce dependency.`});
+    insights.push({type:'info',icon:ICN.shield,text:`<b>Enterprise at ${entPct}% of revenue.</b> High concentration risk — one Enterprise churn event could swing MRR by $30-50K. Diversification opportunity: Mid-Market is growing 2.6% MoM with 106% NRR. Scale that segment to reduce dependency.`});
   }
 
   // Render
   if(insights.length === 0){
-    insights.push({type:'info',icon:'📊',text:'Revenue metrics are within normal ranges. No significant trends detected for the selected period.'});
+    insights.push({type:'info',icon:ICN.chart,text:'Revenue metrics are within normal ranges. No significant trends detected for the selected period.'});
   }
 
-  box.innerHTML = '<div style="margin-top:8px;padding:10px 0;border-top:1px solid var(--border)">' +
-    '<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:8px">📌 Auto-Insights</div>' +
-    insights.map(i => `<div style="margin-bottom:6px;padding:6px 10px;border-radius:6px;font-size:11.5px;line-height:1.5;background:${i.type==='critical'?'rgba(239,68,68,.06)':i.type==='warning'?'rgba(245,158,11,.06)':i.type==='positive'?'rgba(16,185,129,.06)':'rgba(99,102,241,.04)'};border-left:3px solid ${i.type==='critical'?'#ef4444':i.type==='warning'?'#f59e0b':i.type==='positive'?'#10b981':'#6366f1'}">${i.icon} ${i.text}</div>`).join('') +
+  const borderColors = {critical:'#ef4444',warning:'#f59e0b',positive:'#10b981',info:'#6366f1'};
+  const bgColors = {critical:'rgba(239,68,68,.05)',warning:'rgba(245,158,11,.05)',positive:'rgba(16,185,129,.05)',info:'rgba(99,102,241,.04)'};
+
+  box.innerHTML = '<div style="margin-top:10px;padding:10px 0;border-top:1px solid var(--border)">' +
+    '<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);margin-bottom:8px;display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> AUTO-INSIGHTS</div>' +
+    insights.map(i => `<div style="margin-bottom:6px;padding:7px 10px;border-radius:6px;font-size:11.5px;line-height:1.55;background:${bgColors[i.type]||bgColors.info};border-left:3px solid ${borderColors[i.type]||'#6366f1'};display:flex;align-items:flex-start;gap:7px"><span style="flex-shrink:0;margin-top:1px">${i.icon}</span><span>${i.text}</span></div>`).join('') +
     '</div>';
 }
 
