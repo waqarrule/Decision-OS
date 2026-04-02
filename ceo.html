@@ -1172,7 +1172,7 @@ function filterMix(seg, btn){
 document.addEventListener('click', function(e){
   const popup = document.getElementById('rev-insights-popup');
   const btn = document.getElementById('rev-insights-btn');
-  if(popup && popup.style.display !== 'none' && !popup.contains(e.target) && !btn.contains(e.target)){
+  if(popup && popup.style.display !== 'none' && document.contains(e.target) && !popup.contains(e.target) && !btn.contains(e.target)){
     popup.style.display = 'none';
     if(btn){ btn.style.borderColor=''; btn.style.color=''; btn.style.background=''; }
   }
