@@ -10,7 +10,19 @@ IF NOT EXIST node_modules (
   echo.
 )
 
-echo  Starting server...
+echo  Starting server on port 3000...
 echo.
-node server.js
-pause
+
+REM Start server in a separate window
+start "Decision OS Server" node server.js
+
+REM Wait for server to be ready
+timeout /t 2 /nobreak >nul
+
+REM Open browser
+echo  Opening http://localhost:3000 ...
+start http://localhost:3000
+
+echo.
+echo  Server is running. Close the server window to stop.
+echo.
