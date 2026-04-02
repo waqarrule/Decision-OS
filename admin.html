@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" href="favicon.png?v=2">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin | ArcusSoft Decision OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -610,7 +610,7 @@ function exportActivityXLS() {
   });
   rows += '<tr><td colspan="6" style="padding:8px;font-size:9px;color:#9ca3af;text-align:center;border-top:1px solid #e5e7eb">ArcusSoft Decision OS · Confidential · Page 1 of 1</td></tr>';
   const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Activity Log</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png"><style>table{border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:11px}td,th{border:1px solid #e5e7eb}</style></head><body><table>${rows}</table>
+<link rel="icon" type="image/png" href="favicon.png?v=2"><style>table{border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:11px}td,th{border:1px solid #e5e7eb}</style></head><body><table>${rows}</table>
 
 
 </body></html>`;
@@ -638,7 +638,7 @@ function exportActivityPDF() {
     rows += `<tr style="background:${bg}"><td>${time}</td><td style="font-weight:600">${name}</td><td>${l.action.replace(/_/g,' ')}</td><td>${l.detail}</td><td style="font-size:9px">${l.ua}</td></tr>`;
   });
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-<link rel="icon" type="image/png" href="favicon.png"><title>ArcusSoft Activity Report</title><style>
+<link rel="icon" type="image/png" href="favicon.png?v=2"><title>ArcusSoft Activity Report</title><style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:Calibri,Arial,Helvetica,sans-serif;color:#1a1916;padding:40px 48px;font-size:10px}
     .header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #3b82f6;padding-bottom:12px;margin-bottom:20px}
