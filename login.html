@@ -86,7 +86,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 .login-tagline{font-size:14px;color:var(--ink3);line-height:1.7;max-width:320px;margin:16px auto 0}
 
 /* ── RIGHT: Form ── */
-.login-right{width:440px;display:flex;flex-direction:column;justify-content:center;padding:48px 48px;background:var(--surface);border-left:1px solid var(--border)}
+.login-right{width:440px;display:flex;flex-direction:column;justify-content:center;padding:48px 40px;background:var(--surface);border-left:1px solid var(--border);overflow:hidden}
 .login-form-header{margin-bottom:28px}
 .login-form-header h2{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
 .login-form-header p{font-size:13px;color:var(--ink3)}
@@ -117,15 +117,15 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 .form-divider::before,.form-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* ── Demo Accounts ── */
-.demo-accounts{margin-top:4px}
+.demo-accounts{margin-top:4px;overflow:hidden}
 .demo-accounts-title{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
-.demo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .demo-card{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:var(--bg)}
 .demo-card:hover{border-color:var(--blue);background:var(--blue-soft)}
-.demo-card .da{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0}
-.demo-card .di{flex:1;min-width:0}
-.demo-card .dn{font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.demo-card .dr{font-size:8px;color:var(--ink3);font-family:var(--mono)}
+.demo-card .da{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;flex-shrink:0}
+.demo-card .di{flex:1;min-width:0;overflow:hidden}
+.demo-card .dn{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.demo-card .dr{font-size:9px;color:var(--ink3);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .demo-card-close{margin-left:auto;opacity:0;transition:opacity .15s;padding:3px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--ink4);background:none;border:none;cursor:pointer}
 .demo-card:hover .demo-card-close{opacity:1}
 .demo-card-close:hover{color:var(--red);background:var(--red-soft)}
