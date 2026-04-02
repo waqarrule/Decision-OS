@@ -214,12 +214,13 @@ table {width:100%;border-collapse:collapse;font-size:12px}
         </div>
       </div>
       <div class="cd-b"><div class="chart-wrap tall"><canvas id="ch-rev"></canvas></div></div>
-      <div id="rev-insights-popup" style="display:none;position:absolute;top:42px;right:12px;width:380px;max-height:460px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.08);z-index:100;padding:14px 16px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)">
-          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--ink3);display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> AUTO-INSIGHTS</div>
+      <div id="rev-insights-popup" style="display:none;position:absolute;top:44px;right:10px;width:400px;max-height:420px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:100;padding:12px 14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)">
+          <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--ink3);display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> AUTO-INSIGHTS</div>
           <button onclick="toggleRevInsights()" style="background:none;border:none;cursor:pointer;color:var(--ink3);padding:2px;line-height:1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
         <div id="rev-insights-content"></div>
+        <div id="rev-insights-more" style="display:none;text-align:center;padding-top:6px;font-size:10px;color:var(--ink3)"></div>
       </div>
     </div>
     <div class="cd">
@@ -992,72 +993,66 @@ function generateInsights(raw, range){
   const len = totalMrr.length;
   const start = Math.max(0, len - n);
 
-  // 1. Growth deceleration — fire if recent growth is meaningfully below earlier period
+  // 1. Growth deceleration
   const recent = raw.total.momGrowth.slice(-3);
   const earlier = raw.total.momGrowth.slice(start, start+3);
   const avgRecent = recent.reduce((a,b)=>a+b,0)/recent.length;
   const avgEarlier = earlier.length?earlier.reduce((a,b)=>a+b,0)/earlier.length:avgRecent;
   if(avgEarlier > 0 && avgRecent < avgEarlier * 0.8){
-    insights.push({type:'warning',icon:ICN.caution,text:`<b>Growth slowing:</b> MoM growth averaged ${avgEarlier.toFixed(1)}% early in the period, now ${avgRecent.toFixed(1)}%. Not a crisis yet, but monitor closely — if it drops below 2% for 2+ months, review sales capacity and pipeline coverage.`});
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>Growth slowing:</b> MoM ${avgEarlier.toFixed(1)}% → ${avgRecent.toFixed(1)}%. Not a crisis yet — monitor pipeline coverage and sales capacity.`});
   }
 
-  // 2. SMB health check — declining trend or very low ARPU
+  // 2. SMB health
   const smbLast = raw.segments.smb.mrr[len-1];
   const smbPeak = Math.max(...raw.segments.smb.mrr);
   const smbFlatMonths = countFlat(raw.segments.smb.mrr);
   const smbChurnRate = Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0));
   const smbNewRate = raw.segments.smb.new.slice(-3).reduce((a,b)=>a+b,0);
   if(smbLast < smbPeak * 0.95 || smbFlatMonths >= 2){
-    insights.push({type:'warning',icon:ICN.caution,text:`<b>SMB segment under pressure.</b> MRR peaked at $${smbPeak}K, now $${smbLast}K. Last quarter: added ${smbNewRate} new but lost $${smbChurnRate}K to churn. SMB NRR at 97% — you're acquiring customers you can't retain. Consider: raise minimum price to filter low-quality leads, or redirect budget to Mid-Market where unit economics work.`});
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>SMB under pressure:</b> peaked $${smbPeak}K → now $${smbLast}K. Last Q: +${smbNewRate} new, -$${smbChurnRate}K churned. NRR 97% — acquiring customers you can't retain.`});
   }
 
-  // 3. Expansion revenue — always surface if meaningful
+  // 3. Expansion
   const expGrowth = ((raw.total.expansion[len-1] - raw.total.expansion[start]) / raw.total.expansion[start] * 100).toFixed(0);
   if(expGrowth > 15){
-    const entExp = raw.segments.enterprise.expansion.slice(-3).reduce((a,b)=>a+b,0);
-    insights.push({type:'positive',icon:ICN.trendUp,text:`<b>Expansion up ${expGrowth}%</b> over the period ($${raw.total.expansion[start]}K → $${raw.total.expansion[len-1]}K/mo). Enterprise upsells driving $${entExp}K/quarter. This is your most efficient growth lever — $0 CAC. Double down on expansion playbooks and CS-led upsell motions.`});
+    insights.push({type:'positive',icon:ICN.trendUp,text:`<b>Expansion up ${expGrowth}%</b> ($${raw.total.expansion[start]}K → $${raw.total.expansion[len-1]}K/mo). Your most efficient lever — $0 CAC. Double down on CS-led upsells.`});
   }
 
-  // 4. Customer acquisition slowdown
+  // 4. Customer acquisition
   const custRecent = raw.customers.new.slice(-3).reduce((a,b)=>a+b,0);
   const custEarlier = raw.customers.new.slice(start, start+3).reduce((a,b)=>a+b,0);
   if(custEarlier > 0 && custRecent < custEarlier * 0.7){
-    const arpuShift = (raw.arpu.overall[len-1]-raw.arpu.overall[start]).toFixed(2);
-    insights.push({type:'info',icon:ICN.trendDown,text:`<b>New customer adds slowed:</b> ${custEarlier} → ${custRecent}/quarter. But ARPU rose $${arpuShift}K — you may be trading volume for value. Key question: is this intentional upmarket shift, or demand softness? Check pipeline conversion rates to distinguish.`});
+    insights.push({type:'info',icon:ICN.trendDown,text:`<b>New adds slowed:</b> ${custEarlier} → ${custRecent}/quarter. ARPU rose though — check if this is intentional upmarket shift or demand softness.`});
   }
 
-  // 5. Churn trend
+  // 5. Churn
   const churnTrend = raw.total.churned.slice(-3).reduce((a,b)=>a+b,0);
   const churnBase = raw.total.churned.slice(start, start+3).reduce((a,b)=>a+b,0);
   if(Math.abs(churnTrend) > Math.abs(churnBase) * 1.15){
     const smbChurnLast3 = Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0));
-    const smbCust = raw.segments.smb.customers[len-1];
-    const smbMrr = raw.segments.smb.mrr[len-1];
-    const smbArpu = smbCust > 0 ? (smbMrr / smbCust).toFixed(0) : 0;
-    insights.push({type:'critical',icon:ICN.alert,text:`<b>Churn accelerating:</b> Monthly churn grew from $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K/quarter. Most of it is SMB ($${smbChurnLast3}K). ${smbCust} SMB accounts at $${smbArpu}/account — cost to serve likely exceeds revenue. Consider sunsetting the SMB self-serve tier or raising floor price.`});
+    insights.push({type:'critical',icon:ICN.alert,text:`<b>Churn accelerating:</b> $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K/quarter. Mostly SMB ($${smbChurnLast3}K). Consider raising floor price or sunsetting self-serve SMB tier.`});
   }
 
-  // 6. Target performance
+  // 6. Target
   const lastMrr = totalMrr[len-1];
   const lastTarget = raw.total.target[len-1];
   const vsTarget = ((lastMrr - lastTarget)/lastTarget*100).toFixed(1);
   if(parseFloat(vsTarget) > 0){
-    insights.push({type:'positive',icon:ICN.target,text:`<b>Beating target by ${vsTarget}%</b> ($${lastMrr-lastTarget}K ahead). But buffer is thin — last 3 months averaged only $${(raw.total.mrr.slice(-3).map((v,i)=>v-raw.total.target.slice(-3)[i]).reduce((a,b)=>a+b,0)/3).toFixed(0)}K above plan. Q2 targets will need acceleration in new business or expansion.`});
+    insights.push({type:'positive',icon:ICN.target,text:`<b>Beating target ${vsTarget}%</b> ($${lastMrr-lastTarget}K ahead). Buffer is thin — Q2 needs acceleration.`});
   } else {
-    insights.push({type:'warning',icon:ICN.caution,text:`<b>Below target by ${Math.abs(vsTarget)}%</b> ($${Math.abs(lastMrr-lastTarget)}K short). Gap has widened over last 3 months. Root cause likely mix of summer slowdown + SMB churn. Q4 pipeline needs 2x coverage to catch up.`});
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>Below target ${Math.abs(vsTarget)}%</b> ($${Math.abs(lastMrr-lastTarget)}K short). Gap widening — pipeline needs 2x coverage to catch up.`});
   }
 
-  // 7. Enterprise concentration risk
+  // 7. Enterprise concentration
   const entPct = (raw.segments.enterprise.mrr[len-1] / totalMrr[len-1] * 100).toFixed(0);
   if(entPct > 55){
-    const entChurnMrr = Math.abs(raw.segments.enterprise.churned.slice(-3).reduce((a,b)=>a+b,0));
-    insights.push({type:'info',icon:ICN.shield,text:`<b>Enterprise at ${entPct}% of revenue.</b> Last quarter's Enterprise churn was $${entChurnMrr}K — one large account churning could swing MRR meaningfully. Mid-Market is your diversification lever: 72 accounts, growing 2-3% MoM, 106% NRR. Scale that segment to reduce single-segment dependency.`});
+    insights.push({type:'info',icon:ICN.shield,text:`<b>Enterprise at ${entPct}%</b> — concentration risk. Mid-Market (72 accounts, 106% NRR) is your diversification lever.`});
   }
 
-  // 8. MoM decline months — surface negative growth months
+  // 8. Negative growth months
   const negMonths = raw.total.momGrowth.map((g,i)=>g<0?raw.months[i]:null).filter(Boolean);
   if(negMonths.length > 0){
-    insights.push({type:'info',icon:ICN.chart,text:`<b>${negMonths.length} month(s) of negative growth</b> (${negMonths.join(', ')}). Seasonal dips are normal for B2B SaaS — budget freezes (Dec) and summer slowdowns (Jul) hit pipeline. Mitigate: front-load Q1/Q3 closings, build 90-day pipeline buffer.`});
+    insights.push({type:'info',icon:ICN.chart,text:`<b>${negMonths.length} negative month(s):</b> ${negMonths.join(', ')}. Seasonal dips — mitigate by front-loading Q1/Q3 closings.`});
   }
 
   // Render
@@ -1068,9 +1063,23 @@ function generateInsights(raw, range){
   const borderColors = {critical:'#ef4444',warning:'#f59e0b',positive:'#10b981',info:'#6366f1'};
   const bgColors = {critical:'rgba(239,68,68,.05)',warning:'rgba(245,158,11,.05)',positive:'rgba(16,185,129,.05)',info:'rgba(99,102,241,.04)'};
 
-  box.innerHTML = insights.map(i => `<div style="margin-bottom:6px;padding:7px 10px;border-radius:6px;font-size:11.5px;line-height:1.55;background:${bgColors[i.type]||bgColors.info};border-left:3px solid ${borderColors[i.type]||'#6366f1'};display:flex;align-items:flex-start;gap:7px"><span style="flex-shrink:0;margin-top:1px">${i.icon}</span><span>${i.text}</span></div>`).join('');
+  // Sort: critical first, then warning, then positive, then info
+  const priority = {critical:0,warning:1,positive:2,info:3};
+  insights.sort((a,b)=>(priority[a.type]||3)-(priority[b.type]||3));
 
-  // Pulse the insights button to indicate new insights
+  const maxShow = 5;
+  const shown = insights.slice(0, maxShow);
+  const hidden = insights.length - maxShow;
+
+  box.innerHTML = shown.map(i => `<div style="margin-bottom:5px;padding:6px 9px;border-radius:6px;font-size:11px;line-height:1.5;background:${bgColors[i.type]||bgColors.info};border-left:3px solid ${borderColors[i.type]||'#6366f1'};display:flex;align-items:flex-start;gap:6px"><span style="flex-shrink:0;margin-top:1px">${i.icon}</span><span>${i.text}</span></div>`).join('');
+
+  const moreEl = document.getElementById('rev-insights-more');
+  if(moreEl){
+    if(hidden > 0){ moreEl.style.display='block'; moreEl.textContent='+'+hidden+' more insight'+(hidden>1?'s':''); }
+    else { moreEl.style.display='none'; }
+  }
+
+  // Pulse the insights button
   const btn = document.getElementById('rev-insights-btn');
   if(btn){
     btn.style.borderColor = 'var(--blue)';
