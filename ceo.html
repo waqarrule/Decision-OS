@@ -722,8 +722,25 @@ async function loadRevenueTrend(){
 const CHART_FONT = {family:'Inter',size:12};
 const CHART_FONT_SM = {family:'Inter',size:11};
 const MONO_FONT = {family:'JetBrains Mono',size:11};
-const GRID_COLOR = 'rgba(0,0,0,.08)';
-const AXIS_COLOR = '#6b6860';
+const GRID_COLOR = 'rgba(0,0,0,.06)';
+const AXIS_COLOR = '#8c8980';
+
+/* ── Professional Color Palette ── */
+const COL = {
+  primary:   '#3b82f6',   // Accent blue — primary line
+  secondary: '#64748b',   // Slate — secondary
+  tertiary:  '#94a3b8',   // Light slate — tertiary
+  positive:  '#16a34a',   // Green — growth / new
+  negative:  '#dc2626',   // Red — churn / risk
+  neutral:   '#1a1916',   // Near-black — totals
+  muted:     '#c4c1ba',   // Warm gray — targets
+  fill: {
+    primary:  'rgba(59,130,246,.10)',
+    secondary:'rgba(100,116,139,.08)',
+    positive: 'rgba(22,163,74,.10)',
+    negative: 'rgba(220,38,38,.10)',
+  }
+};
 
 function chartTooltipTitle(ctx){ return ctx[0]?.label || ''; }
 function fmt$(v){ return '$'+v+'K'; }
@@ -734,18 +751,17 @@ function renderComposition(d, compare){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [
-    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.30)', borderColor:'#10b981', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#10b981', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2},
-    {label:'Expansion', data:d.total.expansion, backgroundColor:'rgba(99,102,241,.30)', borderColor:'#6366f1', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#6366f1', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2},
-    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.30)', borderColor:'#ef4444', borderWidth:2, fill:true, tension:.35, pointRadius:3, pointBackgroundColor:'#ef4444', pointBorderColor:'#fff', pointBorderWidth:1.5, order:2}
+    {label:'New Business', data:d.total.newBusiness, backgroundColor:COL.fill.positive, borderColor:COL.positive, borderWidth:2, fill:true, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.positive, order:2},
+    {label:'Expansion', data:d.total.expansion, backgroundColor:COL.fill.primary, borderColor:COL.primary, borderWidth:2, fill:true, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.primary, order:2},
+    {label:'Churn', data:d.total.churned, backgroundColor:COL.fill.negative, borderColor:COL.negative, borderWidth:2, fill:true, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.negative, order:2}
   ];
 
-  // Add total MRR line on top
-  datasets.push({label:'Total MRR', data:d.total.mrr, borderColor:'#1a1916', backgroundColor:'transparent', borderWidth:3, tension:.35, pointRadius:4, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false, order:1});
+  datasets.push({label:'Total MRR', data:d.total.mrr, borderColor:COL.neutral, backgroundColor:'transparent', borderWidth:2.5, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.neutral, pointHoverBorderColor:'#fff', pointHoverBorderWidth:2, fill:false, order:1});
 
   if(compare==='target'){
-    datasets.push({label:'Target', data:d.total.target, borderColor:'#a8a59e', borderDash:[8,5], borderWidth:2, pointRadius:0, fill:false, order:0});
+    datasets.push({label:'Target', data:d.total.target, borderColor:COL.muted, borderDash:[8,5], borderWidth:1.5, pointRadius:0, fill:false, order:0, tension:.4});
   } else if(compare==='yoy'){
-    datasets.push({label:'Last Year', data:d.monthsYoY.map((_,i)=>raw_yoy_total(d,i)), borderColor:'#f59e0b', borderDash:[8,5], borderWidth:2, pointRadius:0, fill:false, order:0});
+    datasets.push({label:'Last Year', data:d.monthsYoY.map((_,i)=>raw_yoy_total(d,i)), borderColor:COL.tertiary, borderDash:[8,5], borderWidth:1.5, pointRadius:0, fill:false, order:0, tension:.4});
   }
 
   r._chart = new Chart(r, {
@@ -754,9 +770,9 @@ function renderComposition(d, compare){
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:12,padding:16,color:AXIS_COLOR,usePointStyle:true,pointStyle:'circle'}},
         tooltip:{
-          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          backgroundColor:'#1a1916',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
           callbacks:{
             title:chartTooltipTitle,
             label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); },
@@ -783,15 +799,14 @@ function renderGrowth(d, compare){
   const r = document.getElementById('ch-rev');
   if(!r) return; if(r._chart) r._chart.destroy();
 
+  const segColors = [COL.primary, COL.secondary, COL.tertiary];
   const datasets = [];
+  let ci = 0;
   for(const [k,seg] of Object.entries(d.segments)){
-    datasets.push({label:seg.label+' MoM', data:seg.momGrowth, borderColor:seg.color, backgroundColor:seg.color+'18', borderWidth:2.5, tension:.35, pointRadius:4, pointBackgroundColor:seg.color, pointBorderColor:'#fff', pointBorderWidth:1.5, fill:true});
+    const c = segColors[ci++];
+    datasets.push({label:seg.label+' MoM', data:seg.momGrowth, borderColor:c, backgroundColor:c.replace(')',',.08)').replace('rgb(','rgba(').replace('#',''), borderWidth:2, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:c, fill:true});
   }
-  // Total growth
-  datasets.push({label:'Overall MoM', data:d.total.momGrowth, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:0, borderDash:[5,4], fill:false});
-
-  // Calculate Y range for zero-line annotation
-  const allVals = d.total.momGrowth.concat(...Object.values(d.segments).map(s=>s.momGrowth));
+  datasets.push({label:'Overall MoM', data:d.total.momGrowth, borderColor:COL.neutral, borderWidth:2.5, tension:.4, pointRadius:0, borderDash:[6,4], fill:false});
 
   r._chart = new Chart(r, {
     type:'line',
@@ -799,9 +814,9 @@ function renderGrowth(d, compare){
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:12,padding:16,color:AXIS_COLOR,usePointStyle:true,pointStyle:'circle'}},
         tooltip:{
-          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          backgroundColor:'#1a1916',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
           callbacks:{
             title:chartTooltipTitle,
             label:function(c){ return ' '+c.dataset.label+': '+c.raw+'%'; }
@@ -823,21 +838,24 @@ function renderArpuView(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [];
-  datasets.push({label:'Overall ARPU', data:d.arpu.overall, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:0, fill:false});
+  datasets.push({label:'Overall ARPU', data:d.arpu.overall, borderColor:COL.neutral, borderWidth:2.5, tension:.4, pointRadius:0, fill:false});
+
+  const segColors = [COL.primary, COL.secondary, COL.tertiary];
+  let ci = 0;
   for(const [k,seg] of Object.entries(d.segments)){
-    if(d.arpu[k]) datasets.push({label:seg.label+' ARPU', data:d.arpu[k], borderColor:seg.color, borderWidth:2.5, tension:.35, pointRadius:4, pointBackgroundColor:seg.color, pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false});
+    if(d.arpu[k]) datasets.push({label:seg.label+' ARPU', data:d.arpu[k], borderColor:segColors[ci], borderWidth:2, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:segColors[ci], fill:false});
+    ci++;
   }
 
-  // Use two Y-axes since ranges differ wildly
   r._chart = new Chart(r, {
     type:'line',
     data:{labels:d.months, datasets},
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:12,padding:16,color:AXIS_COLOR,usePointStyle:true,pointStyle:'circle'}},
         tooltip:{
-          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          backgroundColor:'#1a1916',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
           callbacks:{
             title:chartTooltipTitle,
             label:function(c){ return ' '+c.dataset.label+': $'+c.raw+'K'; }
@@ -859,14 +877,15 @@ function renderYoY(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [];
-  datasets.push({label:'This Year MRR', data:d.total.mrr, borderColor:'#1a1916', borderWidth:3, tension:.35, pointRadius:4, pointBackgroundColor:'#1a1916', pointBorderColor:'#fff', pointBorderWidth:2, fill:false});
+  datasets.push({label:'This Year MRR', data:d.total.mrr, borderColor:COL.primary, borderWidth:2.5, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.primary, fill:false});
 
-  // Per-segment YoY
+  const segColors = [COL.primary, COL.secondary, COL.tertiary];
+  let ci = 0;
   for(const [k,seg] of Object.entries(d.segments)){
-    datasets.push({label:seg.label+' (Last Year)', data:seg.yoyMrr, borderColor:seg.color, borderDash:[8,5], borderWidth:2, tension:.35, pointRadius:0, fill:false});
+    datasets.push({label:seg.label+' (Last Year)', data:seg.yoyMrr, borderColor:segColors[ci], borderDash:[8,5], borderWidth:1.5, tension:.4, pointRadius:0, fill:false, borderCapStyle:'round'});
+    ci++;
   }
 
-  // Calculate YoY growth %
   const yoyPct = d.total.mrr.map((v,i)=>{ const ly = d.monthsYoY[i] ? 600+i*45 : null; return ly?(((v-ly)/ly)*100).toFixed(1):null; });
 
   r._chart = new Chart(r, {
@@ -875,9 +894,9 @@ function renderYoY(d){
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:12,padding:16,color:AXIS_COLOR,usePointStyle:true,pointStyle:'circle'}},
         tooltip:{
-          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          backgroundColor:'#1a1916',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
           callbacks:{
             title:chartTooltipTitle,
             label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); },
@@ -903,9 +922,9 @@ function renderChurnVsNew(d){
   if(!r) return; if(r._chart) r._chart.destroy();
 
   const datasets = [
-    {label:'New Business', data:d.total.newBusiness, backgroundColor:'rgba(16,185,129,.65)', borderColor:'#10b981', borderWidth:1.5, borderRadius:4, type:'bar', order:1},
-    {label:'Churn', data:d.total.churned, backgroundColor:'rgba(239,68,68,.65)', borderColor:'#ef4444', borderWidth:1.5, borderRadius:4, type:'bar', order:1},
-    {label:'Net New MRR', data:d.total.netNew, borderColor:'#6366f1', borderWidth:3, tension:.35, pointRadius:5, pointBackgroundColor:'#6366f1', pointBorderColor:'#fff', pointBorderWidth:2, type:'line', fill:false, order:0}
+    {label:'New Business', data:d.total.newBusiness, backgroundColor:COL.positive+'55', borderColor:COL.positive, borderWidth:1.5, borderRadius:4, type:'bar', order:1},
+    {label:'Churn', data:d.total.churned, backgroundColor:COL.negative+'55', borderColor:COL.negative, borderWidth:1.5, borderRadius:4, type:'bar', order:1},
+    {label:'Net New MRR', data:d.total.netNew, borderColor:COL.primary, borderWidth:2.5, tension:.4, pointRadius:0, pointHoverRadius:5, pointHoverBackgroundColor:COL.primary, type:'line', fill:false, order:0}
   ];
 
   r._chart = new Chart(r, {
@@ -914,9 +933,9 @@ function renderChurnVsNew(d){
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:14,padding:16,color:AXIS_COLOR}},
+        legend:{position:'bottom',labels:{font:CHART_FONT_SM,boxWidth:12,padding:16,color:AXIS_COLOR,usePointStyle:true,pointStyle:'circle'}},
         tooltip:{
-          backgroundColor:'rgba(26,25,22,.92)',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
+          backgroundColor:'#1a1916',titleFont:CHART_FONT,bodyFont:CHART_FONT_SM,padding:12,cornerRadius:8,
           callbacks:{
             title:chartTooltipTitle,
             label:function(c){ return ' '+c.dataset.label+': '+fmt$(c.raw); }
