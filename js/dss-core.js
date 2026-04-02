@@ -205,6 +205,11 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// ── Per-portal accent on body ──
+document.documentElement.setAttribute('data-portal',
+  location.pathname.split('/').pop().replace(/\.html$/, '') || 'home'
+);
+
 // ── Auto-reload on git pull ──
 (function() {
   let lastHash = null;
