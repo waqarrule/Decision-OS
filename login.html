@@ -126,6 +126,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
 .demo-card .di{flex:1;min-width:0}
 .demo-card .dn{font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .demo-card .dr{font-size:8px;color:var(--ink3);font-family:var(--mono)}
+.demo-card-close{margin-left:auto;opacity:0;transition:opacity .15s;padding:3px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--ink4);background:none;border:none;cursor:pointer}
+.demo-card:hover .demo-card-close{opacity:1}
+.demo-card-close:hover{color:var(--red);background:var(--red-soft)}
 
 /* ── Modals ── */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(26,25,22,.4);backdrop-filter:blur(8px);align-items:center;justify-content:center}
@@ -181,7 +184,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-font-
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       <h1>ArcusSoft<span>Decision OS</span></h1>
-      <p class="login-tagline">Executive decision support for SaaS leadership teams.</p>
+      <p style="font-size:14px;color:var(--ink3);line-height:1.6;margin:12px auto 0">Executive decision support for SaaS leadership teams.</p>
     </div>
   </div>
 
@@ -308,6 +311,17 @@ function quickLogin(email) {
   document.getElementById('login-form').dispatchEvent(new Event('submit'));
 }
 
+function dismissQuickCard(email, el) {
+  let hidden = JSON.parse(localStorage.getItem('dsl_hidden_quick') || '[]');
+  if (!hidden.includes(email)) hidden.push(email);
+  localStorage.setItem('dsl_hidden_quick', JSON.stringify(hidden));
+  el.closest('.demo-card').remove();
+  const grid = document.getElementById('demo-grid');
+  if (!grid.querySelector('.demo-card')) {
+    document.getElementById('demo-accounts-section').style.display = 'none';
+  }
+}
+
 function trackDailyLogin() {
   const today = new Date().toISOString().slice(0, 10);
   const data = JSON.parse(localStorage.getItem('dsl_daily_logins') || '{"date":"","count":0}');
@@ -317,6 +331,7 @@ function trackDailyLogin() {
 }
 
 function renderQuickAccess() {
+  const hidden = JSON.parse(localStorage.getItem('dsl_hidden_quick') || '[]');
   const users = DSLAuth.getUsers();
   const quickUsers = [
     'sarah@arcussoft.com','alex@arcussoft.com','david@arcussoft.com',
@@ -325,14 +340,19 @@ function renderQuickAccess() {
   const grid = document.getElementById('demo-grid');
   let html = '';
   quickUsers.forEach(email => {
+    if (hidden.includes(email)) return;
     const u = users.find(u => u.email === email);
     if (!u) return;
     html += '<div class="demo-card" onclick="quickLogin(\''+u.email+'\')">'+
       '<div class="da" style="background:'+u.color+'">'+u.avatar+'</div>'+
       '<div class="di"><div class="dn">'+u.name+'</div><div class="dr">'+u.role+'</div></div>'+
+      '<button class="demo-card-close" onclick="event.stopPropagation();dismissQuickCard(\''+u.email+'\',this)" title="Remove">'+
+        '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'+
+      '</button>'+
     '</div>';
   });
   grid.innerHTML = html;
+  if (!html) document.getElementById('demo-accounts-section').style.display = 'none';
 }
 renderQuickAccess();
 
