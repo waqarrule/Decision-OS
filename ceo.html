@@ -992,59 +992,72 @@ function generateInsights(raw, range){
   const len = totalMrr.length;
   const start = Math.max(0, len - n);
 
-  // 1. Growth deceleration alert
+  // 1. Growth deceleration — fire if recent growth is meaningfully below earlier period
   const recent = raw.total.momGrowth.slice(-3);
   const earlier = raw.total.momGrowth.slice(start, start+3);
   const avgRecent = recent.reduce((a,b)=>a+b,0)/recent.length;
   const avgEarlier = earlier.length?earlier.reduce((a,b)=>a+b,0)/earlier.length:avgRecent;
-  if(avgRecent < avgEarlier * 0.6){
-    insights.push({type:'critical',icon:ICN.alert,text:`<b>Growth decelerating:</b> MoM growth dropped from ${avgEarlier.toFixed(1)}% → ${avgRecent.toFixed(1)}% over the last 3 months. Runway impact: at this rate, ARR may plateau below $18M by Q3.`});
+  if(avgEarlier > 0 && avgRecent < avgEarlier * 0.8){
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>Growth slowing:</b> MoM growth averaged ${avgEarlier.toFixed(1)}% early in the period, now ${avgRecent.toFixed(1)}%. Not a crisis yet, but monitor closely — if it drops below 2% for 2+ months, review sales capacity and pipeline coverage.`});
   }
 
-  // 2. SMB drag
+  // 2. SMB health check — declining trend or very low ARPU
   const smbLast = raw.segments.smb.mrr[len-1];
-  const smbPrev = raw.segments.smb.mrr[len-2];
-  if(smbLast <= smbPrev){
-    insights.push({type:'warning',icon:ICN.caution,text:`<b>SMB revenue declining</b> — flat/contracting for ${countFlat(raw.segments.smb.mrr)} months. SMB NRR at 96% means you're paying to acquire customers you can't retain. Consider: price increase to filter, or redirect acquisition budget to Mid-Market where NRR is 106%.`});
+  const smbPeak = Math.max(...raw.segments.smb.mrr);
+  const smbFlatMonths = countFlat(raw.segments.smb.mrr);
+  const smbChurnRate = Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0));
+  const smbNewRate = raw.segments.smb.new.slice(-3).reduce((a,b)=>a+b,0);
+  if(smbLast < smbPeak * 0.95 || smbFlatMonths >= 2){
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>SMB segment under pressure.</b> MRR peaked at $${smbPeak}K, now $${smbLast}K. Last quarter: added ${smbNewRate} new but lost $${smbChurnRate}K to churn. SMB NRR at 97% — you're acquiring customers you can't retain. Consider: raise minimum price to filter low-quality leads, or redirect budget to Mid-Market where unit economics work.`});
   }
 
-  // 3. Expansion engine
+  // 3. Expansion revenue — always surface if meaningful
   const expGrowth = ((raw.total.expansion[len-1] - raw.total.expansion[start]) / raw.total.expansion[start] * 100).toFixed(0);
-  if(expGrowth > 40){
-    insights.push({type:'positive',icon:ICN.trendUp,text:`<b>Expansion revenue up ${expGrowth}%</b> over the period — this is your strongest lever. Enterprise expansion alone grew $${raw.total.expansion[len-1]-raw.total.expansion[start]}K/mo. Double down on upsell playbooks.`});
+  if(expGrowth > 15){
+    const entExp = raw.segments.enterprise.expansion.slice(-3).reduce((a,b)=>a+b,0);
+    insights.push({type:'positive',icon:ICN.trendUp,text:`<b>Expansion up ${expGrowth}%</b> over the period ($${raw.total.expansion[start]}K → $${raw.total.expansion[len-1]}K/mo). Enterprise upsells driving $${entExp}K/quarter. This is your most efficient growth lever — $0 CAC. Double down on expansion playbooks and CS-led upsell motions.`});
   }
 
   // 4. Customer acquisition slowdown
   const custRecent = raw.customers.new.slice(-3).reduce((a,b)=>a+b,0);
   const custEarlier = raw.customers.new.slice(start, start+3).reduce((a,b)=>a+b,0);
-  if(custRecent < custEarlier * 0.5){
-    insights.push({type:'warning',icon:ICN.trendDown,text:`<b>New customer adds halved:</b> ${custEarlier} → ${custRecent} last quarter. However, ARPU rose ${(raw.arpu.overall[len-1]-raw.arpu.overall[start]).toFixed(2)}× — you're trading volume for value. Validate: is this intentional upmarket shift or demand softness?`});
+  if(custEarlier > 0 && custRecent < custEarlier * 0.7){
+    const arpuShift = (raw.arpu.overall[len-1]-raw.arpu.overall[start]).toFixed(2);
+    insights.push({type:'info',icon:ICN.trendDown,text:`<b>New customer adds slowed:</b> ${custEarlier} → ${custRecent}/quarter. But ARPU rose $${arpuShift}K — you may be trading volume for value. Key question: is this intentional upmarket shift, or demand softness? Check pipeline conversion rates to distinguish.`});
   }
 
   // 5. Churn trend
   const churnTrend = raw.total.churned.slice(-3).reduce((a,b)=>a+b,0);
   const churnBase = raw.total.churned.slice(start, start+3).reduce((a,b)=>a+b,0);
-  if(Math.abs(churnTrend) > Math.abs(churnBase) * 1.2){
+  if(Math.abs(churnTrend) > Math.abs(churnBase) * 1.15){
     const smbChurnLast3 = Math.abs(raw.segments.smb.churned.slice(-3).reduce((a,b)=>a+b,0));
     const smbCust = raw.segments.smb.customers[len-1];
     const smbMrr = raw.segments.smb.mrr[len-1];
     const smbArpu = smbCust > 0 ? (smbMrr / smbCust).toFixed(0) : 0;
-    insights.push({type:'critical',icon:ICN.alert,text:`<b>Churn accelerating:</b> Monthly churn grew from $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K. Most of it is SMB ($${smbChurnLast3}K). ${smbCust} SMB accounts generate only $${smbMrr}K MRR — that's $${smbArpu}/account. Cost to serve likely exceeds revenue per account.`});
+    insights.push({type:'critical',icon:ICN.alert,text:`<b>Churn accelerating:</b> Monthly churn grew from $${Math.abs(churnBase)}K → $${Math.abs(churnTrend)}K/quarter. Most of it is SMB ($${smbChurnLast3}K). ${smbCust} SMB accounts at $${smbArpu}/account — cost to serve likely exceeds revenue. Consider sunsetting the SMB self-serve tier or raising floor price.`});
   }
 
   // 6. Target performance
   const lastMrr = totalMrr[len-1];
   const lastTarget = raw.total.target[len-1];
   const vsTarget = ((lastMrr - lastTarget)/lastTarget*100).toFixed(1);
-  if(vsTarget > 0){
-    insights.push({type:'positive',icon:ICN.target,text:`<b>Beating target by ${vsTarget}%</b> ($${lastMrr-lastTarget}K). Buffer is shrinking though — last month was only $${lastMrr-lastTarget}K ahead. At current trajectory, Q2 target will require acceleration.`});
+  if(parseFloat(vsTarget) > 0){
+    insights.push({type:'positive',icon:ICN.target,text:`<b>Beating target by ${vsTarget}%</b> ($${lastMrr-lastTarget}K ahead). But buffer is thin — last 3 months averaged only $${(raw.total.mrr.slice(-3).map((v,i)=>v-raw.total.target.slice(-3)[i]).reduce((a,b)=>a+b,0)/3).toFixed(0)}K above plan. Q2 targets will need acceleration in new business or expansion.`});
+  } else {
+    insights.push({type:'warning',icon:ICN.caution,text:`<b>Below target by ${Math.abs(vsTarget)}%</b> ($${Math.abs(lastMrr-lastTarget)}K short). Gap has widened over last 3 months. Root cause likely mix of summer slowdown + SMB churn. Q4 pipeline needs 2x coverage to catch up.`});
   }
 
   // 7. Enterprise concentration risk
   const entPct = (raw.segments.enterprise.mrr[len-1] / totalMrr[len-1] * 100).toFixed(0);
   if(entPct > 55){
-    const mmNrr = 106; // could be dynamic if data included NRR
-    insights.push({type:'info',icon:ICN.shield,text:`<b>Enterprise at ${entPct}% of revenue.</b> High concentration risk — one Enterprise churn event could swing MRR by $30-50K. Diversification opportunity: Mid-Market is growing steadily with strong NRR. Scale that segment to reduce dependency.`});
+    const entChurnMrr = Math.abs(raw.segments.enterprise.churned.slice(-3).reduce((a,b)=>a+b,0));
+    insights.push({type:'info',icon:ICN.shield,text:`<b>Enterprise at ${entPct}% of revenue.</b> Last quarter's Enterprise churn was $${entChurnMrr}K — one large account churning could swing MRR meaningfully. Mid-Market is your diversification lever: 72 accounts, growing 2-3% MoM, 106% NRR. Scale that segment to reduce single-segment dependency.`});
+  }
+
+  // 8. MoM decline months — surface negative growth months
+  const negMonths = raw.total.momGrowth.map((g,i)=>g<0?raw.months[i]:null).filter(Boolean);
+  if(negMonths.length > 0){
+    insights.push({type:'info',icon:ICN.chart,text:`<b>${negMonths.length} month(s) of negative growth</b> (${negMonths.join(', ')}). Seasonal dips are normal for B2B SaaS — budget freezes (Dec) and summer slowdowns (Jul) hit pipeline. Mitigate: front-load Q1/Q3 closings, build 90-day pipeline buffer.`});
   }
 
   // Render
