@@ -296,6 +296,7 @@ app.use((req, res, next) => {
 });
 
 // ── Serve static files (after API routes) ──
+app.use(express.static(__dirname));
 
 // ── Start ──
 server.listen(PORT, () => {
