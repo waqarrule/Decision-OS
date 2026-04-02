@@ -41,6 +41,13 @@ function show(id, el) {
   if (typeof initCharts === 'function') {
     requestAnimationFrame(() => initCharts());
   }
+  // CEO portal: re-render Revenue Intelligence chart on tab switch
+  if (typeof loadRevenueTrend === 'function') {
+    loadRevenueTrend();
+  }
+  if (typeof loadRevenueMix === 'function') {
+    loadRevenueMix();
+  }
 }
 
 // ── Scenario Toggle ──
