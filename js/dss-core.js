@@ -251,30 +251,30 @@ var PLAYBOOK_FALLBACK = {
       steps: [
         { id:"s1", title:"ARR hits $15M", autoStatus:"done", state:{status:"done"}, completedText:"Triggered 3 months ago" },
         { id:"s2", title:"Board approves Series C prep", autoStatus:"done", state:{status:"done"}, completedText:"Approved Feb 2026" },
-        { id:"s3", title:"Fix burn multiple below 2×", autoStatus:"active", state:{status:"active"}, liveValueComputed:2.1, liveValue:{format:"number",suffix:"×"}, targetDisplay:"<1.8×", owner:"CFO", costOfDelay:42000,
-          description:"Reduce SMB acquisition spend. Focus on enterprise where LTV:CAC is 6.2× vs SMB\u2019s 2.8×",
+        { id:"s3", title:"Fix burn multiple below 2\u00d7", autoStatus:"active", state:{status:"active"}, liveValueComputed:2.1, liveValue:{format:"number",suffix:"\u00d7",threshold:2.0}, targetDisplay:"<1.8\u00d7", owner:"CFO", costOfDelay:42000,
+          description:"Reduce SMB acquisition spend. Focus on enterprise where LTV:CAC is 6.2\u00d7 vs SMB\u2019s 2.8\u00d7",
           recommendations:[
-            {label:"Cut SMB acquisition budget 30%",impact:"Burn multiple drops to 1.7×",detail:"SMB CAC payback is 22mo vs Enterprise\u2019s 8mo. Redirect $126K/yr to enterprise channel."},
-            {label:"Shift 2 SDRs from SMB to Enterprise",impact:"Burn multiple drops to 1.8×",detail:"Enterprise pipeline coverage improves from 2.8× to 3.4×."},
-            {label:"Raise SMB pricing 20%",impact:"Burn multiple drops to 1.9×, some churn risk",detail:"SMB NRR is 96%. Price-sensitive segment, expect 8-12% churn spike."}
+            {label:"Cut SMB acquisition budget 30%",impact:"Burn multiple drops to 1.7\u00d7",detail:"SMB CAC payback is 22mo vs Enterprise\u2019s 8mo. Redirect $126K/yr to enterprise channel.",runwayImpact:"+2.1mo runway",arrImpact:"+$126K/yr effective"},
+            {label:"Shift 2 SDRs from SMB to Enterprise",impact:"Burn multiple drops to 1.8\u00d7",detail:"Enterprise pipeline coverage improves from 2.8\u00d7 to 3.4\u00d7.",runwayImpact:"+1.4mo runway",arrImpact:"+$180K/yr pipeline capacity"},
+            {label:"Raise SMB pricing 20%",impact:"Burn multiple drops to 1.9\u00d7, some churn risk",detail:"SMB NRR is 96%. Price-sensitive segment, expect 8-12% churn spike.",runwayImpact:"+0.9mo runway",arrImpact:"+$68K/yr, minus churn"}
           ]},
-        { id:"s4", title:"Build investor deck", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO" },
-        { id:"s5", title:"Begin conversations", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", targetDate:"Q3 2026" }
+        { id:"s4", title:"Build investor deck", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:14 },
+        { id:"s5", title:"Begin conversations", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", targetDate:"Q3 2026", estimatedDays:60 }
       ]
     },
     {
       id: "hiring-trigger", portal: "ceo", title: "Hiring Trigger", subtitle: "Sales team expansion gate",
       statusLabel: "Blocked", statusColor: "red",
-      costOfInaction: { monthlyCost: 144000, description: "3 unfilled reps × $48K/mo revenue capacity = $144K/mo lost" },
+      costOfInaction: { monthlyCost: 144000, description: "3 unfilled reps \u00d7 $48K/mo revenue capacity = $144K/mo lost" },
       steps: [
-        { id:"s1", title:"Pipeline coverage > 3×", autoStatus:"done", state:{status:"done"}, completedText:"Hit 3.2× last month", owner:"CRO" },
+        { id:"s1", title:"Pipeline coverage > 3\u00d7", autoStatus:"done", state:{status:"done"}, completedText:"Hit 3.2\u00d7 last month", owner:"CRO" },
         { id:"s2", title:"Rep productivity > 85% quota", autoStatus:"done", state:{status:"done"}, completedText:"Current: 91%", owner:"CRO" },
-        { id:"s3", title:"CFO scenario check", autoStatus:"active", state:{status:"blocked"}, liveValueComputed:11.8, liveValue:{format:"number",suffix:"mo"}, targetDisplay:"≥12mo", owner:"CFO", costOfDelay:144000,
+        { id:"s3", title:"CFO scenario check", autoStatus:"active", state:{status:"blocked"}, liveValueComputed:11.8, liveValue:{format:"number",suffix:"mo",threshold:12.0}, targetDisplay:"\u226512mo", owner:"CFO", costOfDelay:144000,
           blockReason:"Bear scenario shows 11.8mo runway with Plan hiring. Below 12mo minimum.",
           resolutionOptions:[
-            {id:"opt1",label:"Defer hiring 8 weeks",impact:"Runway becomes 12.4mo ✓",tradeoff:"Pipeline coverage may drop to 2.6× without new reps"},
-            {id:"opt2",label:"Hire 2 instead of 3",impact:"Runway becomes 12.1mo ✓",tradeoff:"Slower revenue ramp, ~$180K/yr less new ARR capacity"},
-            {id:"opt3",label:"Cut marketing spend 15%",impact:"Runway becomes 12.6mo ✓",tradeoff:"Top-of-funnel lead volume drops ~20% in 2 months"}
+            {id:"opt1",label:"Defer hiring 8 weeks",impact:"Runway becomes 12.4mo \u2713",tradeoff:"Pipeline coverage may drop to 2.6\u00d7 without new reps",arrCost:"-$96K delayed revenue",timeCost:"8 weeks"},
+            {id:"opt2",label:"Hire 2 instead of 3",impact:"Runway becomes 12.1mo \u2713",tradeoff:"Slower revenue ramp, ~$180K/yr less new ARR capacity",arrCost:"-$180K/yr capacity",timeCost:"0 weeks"},
+            {id:"opt3",label:"Cut marketing spend 15%",impact:"Runway becomes 12.6mo \u2713",tradeoff:"Top-of-funnel lead volume drops ~20% in 2 months",arrCost:"-20% lead flow",timeCost:"0 weeks"}
           ],
           crossPortalLink:{portal:"cfo",section:"scenarios",label:"View CFO scenario calculator"}
         },
@@ -286,6 +286,7 @@ var PLAYBOOK_FALLBACK = {
   lastUpdated: new Date().toISOString()
 };
 
+// ── Playbook Renderer v2 ──
 async function renderPlaybooks(portal) {
   const containers = document.querySelectorAll('.pb-container[data-playbook]');
   if (!containers.length) return;
@@ -307,157 +308,263 @@ async function renderPlaybooks(portal) {
     const pb = playbooks.find(p => p.id === pbId);
     if (!pb) return;
 
+    // Compute summary stats
+    const totalSteps = pb.steps.length;
+    const doneSteps = pb.steps.filter(s => s.autoStatus === 'done' || s.state?.status === 'done').length;
+    const blockedSteps = pb.steps.filter(s => s.state?.status === 'blocked').length;
+    const progressPct = Math.round((doneSteps / totalSteps) * 100);
+    const nextStep = pb.steps.find(s => s.autoStatus !== 'done' && s.state?.status !== 'done');
+    const monthlyBurn = pb.costOfInaction?.monthlyCost || 0;
+
     let html = '';
 
-    // Header card
-    html += '<div class="cd">';
-    html += `<div class="cd-h"><span class="cd-t">${escapeHtml(pb.title)}</span>`;
-    html += `<span class="bdg bdg-${pb.statusColor}">${escapeHtml(pb.statusLabel)}</span></div>`;
-    html += '<div class="cd-b">';
-
-    // Cost of inaction chip
-    if (pb.costOfInaction) {
-      html += `<div class="pb-coi">`;
-      html += `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
-      html += `<span><strong>${fmt$(pb.costOfInaction.monthlyCost)}/mo</strong> — ${escapeHtml(pb.costOfInaction.description)}</span>`;
-      html += `</div>`;
+    // ═══ SUMMARY BAR ═══
+    html += '<div class="pb-summary">';
+    html += `<div class="pb-sum-progress"><div class="pb-sum-bar"><div class="pb-sum-bar-fill" style="width:${progressPct}%"></div></div><span class="pb-sum-pct">${progressPct}%</span></div>`;
+    html += `<div class="pb-sum-stats">`;
+    html += `<div class="pb-sum-stat"><span class="pb-sum-label">Steps</span><span class="pb-sum-val">${doneSteps}/${totalSteps}</span></div>`;
+    if (blockedSteps > 0) {
+      html += `<div class="pb-sum-stat pb-sum-stat-warn"><span class="pb-sum-label">Blocked</span><span class="pb-sum-val">${blockedSteps}</span></div>`;
     }
+    if (monthlyBurn > 0) {
+      html += `<div class="pb-sum-stat pb-sum-stat-cost"><span class="pb-sum-label">Delay cost</span><span class="pb-sum-val">${fmt$(monthlyBurn)}/mo</span></div>`;
+    }
+    if (nextStep) {
+      html += `<div class="pb-sum-stat"><span class="pb-sum-label">Next action</span><span class="pb-sum-val pb-sum-action">${escapeHtml(nextStep.title)}</span></div>`;
+    }
+    html += '</div></div>';
 
-    // Steps
-    html += '<div class="pbs">';
+    // ═══ STEPS ═══
+    html += '<div class="pb-steps-v2">';
 
     pb.steps.forEach((step, i) => {
       const stepState = step.state?.status || 'pending';
       const autoStatus = step.autoStatus || null;
 
-      // Determine visual status: manual state > auto-computed > pending
       let visualStatus = 'pending';
       if (stepState === 'done' || autoStatus === 'done') visualStatus = 'done';
-      else if (stepState === 'blocked' || (autoStatus === 'active' && step.blockReason)) visualStatus = 'blocked';
+      else if (stepState === 'blocked') visualStatus = 'blocked';
       else if (autoStatus === 'active' || stepState === 'active') visualStatus = 'active';
 
-      const stepClass = visualStatus === 'done' ? 'done' : visualStatus === 'active' ? 'cur' : visualStatus === 'blocked' ? 'pb-blocked' : '';
+      const isExpandable = visualStatus === 'active' || visualStatus === 'blocked';
+      const stepId = `pb-${pb.id}-${step.id}`;
 
-      html += `<div class="pb-step ${stepClass}">`;
+      // Compute progress toward threshold for active steps
+      let progressInfo = '';
+      if (step.liveValueComputed !== undefined && step.liveValue?.threshold !== undefined && visualStatus !== 'done') {
+        const current = step.liveValueComputed;
+        const target = step.liveValue.threshold;
+        const operator = step.liveValue.operator || (current < target ? '<' : '>');
+        let pct;
+        if (operator === '<' || current < target) {
+          // Lower is better (e.g., burn multiple)
+          pct = Math.min(100, Math.max(0, ((target / current) * 100)));
+        } else {
+          // Higher is better
+          pct = Math.min(100, Math.max(0, ((current / target) * 100)));
+        }
+        progressInfo = `<div class="pb-threshold-bar"><div class="pb-threshold-fill${pct >= 100 ? ' pb-threshold-good' : ''}" style="width:${Math.round(pct)}%"></div></div>`;
+      }
 
-      // Step number/icon
+      html += `<div class="pb-step-v2 pb-step-${visualStatus}" ${isExpandable ? `onclick="togglePlaybookStep('${stepId}')"` : ''}>`;
+
+      // Step connector line
+      html += `<div class="pb-step-connector${i > 0 ? ' pb-conn-has-line' : ''}">`;
       if (visualStatus === 'done') {
-        html += `<div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>`;
+        html += '<div class="pb-step-dot pb-dot-done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
+      } else if (visualStatus === 'blocked') {
+        html += '<div class="pb-step-dot pb-dot-blocked">!</div>';
+      } else if (visualStatus === 'active') {
+        html += `<div class="pb-step-dot pb-dot-active">${i + 1}</div>`;
       } else {
-        html += `<div class="pb-num">${i + 1}</div>`;
+        html += `<div class="pb-step-dot pb-dot-pending">${i + 1}</div>`;
+      }
+      html += '</div>';
+
+      // Step content
+      html += '<div class="pb-step-body">';
+      html += '<div class="pb-step-header">';
+
+      // Title + status
+      html += `<span class="pb-step-title">${escapeHtml(step.title)}</span>`;
+      if (visualStatus === 'done') {
+        html += '<span class="pb-step-badge pb-badge-done">Done</span>';
+      } else if (visualStatus === 'blocked') {
+        html += '<span class="pb-step-badge pb-badge-blocked">Blocked</span>';
+      } else if (visualStatus === 'active') {
+        html += '<span class="pb-step-badge pb-badge-active">Active</span>';
       }
 
-      html += '<div class="pb-info">';
-      html += `<div class="pb-title">${escapeHtml(step.title)}</div>`;
+      // Owner + cost inline
+      if (step.owner && visualStatus !== 'done') {
+        html += `<span class="pb-step-owner">${escapeHtml(step.owner)}</span>`;
+      }
+      if (step.costOfDelay && visualStatus !== 'done') {
+        html += `<span class="pb-step-cost">${fmt$(step.costOfDelay)}/mo at risk</span>`;
+      }
 
-      // Meta row
-      html += '<div class="pb-meta">';
+      html += '</div>'; // .pb-step-header
 
+      // Completed text or live value summary
       if (visualStatus === 'done' && step.completedText) {
-        html += `<span>${escapeHtml(step.completedText)}</span>`;
-      }
-
-      if (step.liveValueComputed !== undefined && visualStatus !== 'done') {
+        html += `<div class="pb-step-summary-done">${escapeHtml(step.completedText)}</div>`;
+      } else if (step.liveValueComputed !== undefined && visualStatus !== 'done') {
         const formatted = formatLiveValue(step.liveValueComputed, step.liveValue);
-        html += `<span class="cred">Current: ${formatted}</span>`;
+        html += `<div class="pb-step-live">`;
+        html += `<span class="pb-live-current">${formatted}</span>`;
+        if (step.targetDisplay) html += `<span class="pb-live-target"> / ${escapeHtml(step.targetDisplay)}</span>`;
+        html += '</div>';
+        if (progressInfo) html += progressInfo;
+      } else if (visualStatus === 'pending') {
+        html += `<div class="pb-step-pending-text">${step.owner ? 'Waiting on ' + escapeHtml(step.owner) : 'Not started'}</div>`;
       }
 
-      if (step.targetDisplay && visualStatus !== 'done') {
-        html += `<span>Target: ${escapeHtml(step.targetDisplay)}</span>`;
+      // Expand indicator for expandable steps
+      if (isExpandable) {
+        html += `<div class="pb-expand-hint">Click to ${visualStatus === 'blocked' ? 'resolve' : 'see options'}</div>`;
       }
 
-      if (step.owner) {
-        html += `<span class="pb-owner">${escapeHtml(step.owner)}</span>`;
-      }
+      html += '</div>'; // .pb-step-body
+      html += '</div>'; // .pb-step-v2
 
-      if (step.targetDate) {
-        html += `<span>Target: ${escapeHtml(step.targetDate)}</span>`;
-      }
+      // ═══ EXPANDED DETAIL PANEL ═══
+      if (isExpandable) {
+        html += `<div class="pb-detail" id="${stepId}-detail" style="display:none">`;
 
-      html += '</div>'; // .pb-meta
+        // Block reason
+        if (step.blockReason) {
+          html += `<div class="pb-block-reason"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg> ${escapeHtml(step.blockReason)}</div>`;
+        }
 
-      // Description / block reason
-      if (visualStatus === 'blocked' && step.blockReason) {
-        html += `<div class="pb-desc pb-desc-blocked">${escapeHtml(step.blockReason)}</div>`;
-      } else if (step.description && (visualStatus === 'active' || visualStatus === 'blocked')) {
-        html += `<div class="pb-desc">${escapeHtml(step.description)}</div>`;
-      }
+        // Description
+        if (step.description) {
+          html += `<div class="pb-detail-desc">${escapeHtml(step.description)}</div>`;
+        }
 
-      // Resolution options (for blocked steps)
-      if (visualStatus === 'blocked' && step.resolutionOptions && step.resolutionOptions.length) {
-        html += '<div class="pb-options">';
-        step.resolutionOptions.forEach(opt => {
-          const chosen = step.state?.chosenOption === opt.id;
-          html += `<div class="pb-opt${chosen ? ' pb-opt-chosen' : ''}" data-playbook="${pb.id}" data-step="${step.id}" data-option="${opt.id}">`;
-          html += `<div class="pb-opt-header">`;
-          html += `<span class="pb-opt-label">${escapeHtml(opt.label)}</span>`;
-          html += `<span class="pb-opt-impact">${escapeHtml(opt.impact)}</span>`;
-          html += `</div>`;
-          if (opt.tradeoff) {
-            html += `<div class="pb-opt-tradeoff">⚠ ${escapeHtml(opt.tradeoff)}</div>`;
-          }
-          if (!chosen) {
-            html += `<button class="pb-opt-btn" onclick="choosePlaybookOption('${pb.id}','${step.id}','${opt.id}')">Choose this path</button>`;
-          } else {
-            html += `<div class="pb-opt-chosen-badge">✓ Selected</div>`;
-          }
+        // Resolution options (for blocked)
+        if (step.resolutionOptions && step.resolutionOptions.length) {
+          html += '<div class="pb-options-v2">';
+          html += '<div class="pb-options-title">Choose a path forward:</div>';
+          step.resolutionOptions.forEach((opt, oi) => {
+            const chosen = step.state?.chosenOption === opt.id;
+            html += `<div class="pb-opt-card${chosen ? ' pb-opt-chosen' : ''}" onclick="event.stopPropagation();choosePlaybookOption('${pb.id}','${step.id}','${opt.id}')">`;
+            html += `<div class="pb-opt-num">${oi + 1}</div>`;
+            html += '<div class="pb-opt-body">';
+            html += `<div class="pb-opt-head"><span class="pb-opt-name">${escapeHtml(opt.label)}</span><span class="pb-opt-result">${escapeHtml(opt.impact)}</span></div>`;
+            html += `<div class="pb-opt-meta">`;
+            if (opt.arrCost) html += `<span class="pb-opt-tag pb-opt-cost">${escapeHtml(opt.arrCost)}</span>`;
+            if (opt.timeCost) html += `<span class="pb-opt-tag pb-opt-time">${escapeHtml(opt.timeCost)}</span>`;
+            html += '</div>';
+            if (opt.tradeoff) html += `<div class="pb-opt-trade">\u26a0 ${escapeHtml(opt.tradeoff)}</div>`;
+            html += '</div>';
+            if (chosen) html += '<div class="pb-opt-check">\u2713</div>';
+            html += '</div>';
+          });
           html += '</div>';
-        });
+        }
+
+        // Recommendations (for active)
+        if (step.recommendations && step.recommendations.length) {
+          html += '<div class="pb-recs-v2">';
+          html += '<div class="pb-options-title">Recommended actions:</div>';
+          step.recommendations.forEach(rec => {
+            html += '<div class="pb-rec-card">';
+            html += '<div class="pb-rec-head"><span class="pb-rec-name">' + escapeHtml(rec.label) + '</span><span class="pb-rec-impact">' + escapeHtml(rec.impact) + '</span></div>';
+            html += `<div class="pb-rec-meta">`;
+            if (rec.runwayImpact) html += `<span class="pb-opt-tag pb-opt-good">${escapeHtml(rec.runwayImpact)}</span>`;
+            if (rec.arrImpact) html += `<span class="pb-opt-tag pb-opt-arr">${escapeHtml(rec.arrImpact)}</span>`;
+            html += '</div>';
+            html += `<div class="pb-rec-detail">${escapeHtml(rec.detail)}</div>`;
+            html += '</div>';
+          });
+          html += '</div>';
+        }
+
+        // Cross-portal link
+        if (step.crossPortalLink) {
+          const link = step.crossPortalLink;
+          html += `<a href="${escapeHtml(link.portal)}" class="pb-cross-link-v2" onclick="event.stopPropagation()">`;
+          html += `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+          html += escapeHtml(link.label);
+          html += '</a>';
+        }
+
+        // Action row
+        html += '<div class="pb-actions">';
+        if (step.statusRule?.manual && visualStatus !== 'done') {
+          html += `<button class="pb-act-btn pb-act-done" onclick="event.stopPropagation();markPlaybookStepDone('${pb.id}','${step.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Mark complete</button>`;
+        }
+        html += `<button class="pb-act-btn pb-act-note" onclick="event.stopPropagation();togglePlaybookNote('${stepId}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Add note</button>`;
         html += '</div>';
-      }
 
-      // Cross-portal link
-      if (step.crossPortalLink) {
-        const link = step.crossPortalLink;
-        html += `<div class="pb-cross-link"><a href="${escapeHtml(link.portal)}" class="pb-link">${escapeHtml(link.label)} →</a></div>`;
-      }
-
-      // Recommendations (for active steps)
-      if (visualStatus === 'active' && step.recommendations && step.recommendations.length) {
-        html += '<div class="pb-recs">';
-        step.recommendations.forEach(rec => {
-          html += `<div class="pb-rec">`;
-          html += `<div class="pb-rec-header"><span class="pb-rec-label">${escapeHtml(rec.label)}</span><span class="pb-rec-impact">${escapeHtml(rec.impact)}</span></div>`;
-          html += `<div class="pb-rec-detail">${escapeHtml(rec.detail)}</div>`;
-          html += `</div>`;
-        });
+        // Note input area (hidden by default)
+        html += `<div class="pb-note-area" id="${stepId}-note" style="display:none">`;
+        html += `<textarea placeholder="Add a note about this step..." onevent="event.stopPropagation()"></textarea>`;
+        html += `<button onclick="event.stopPropagation();savePlaybookNote('${pb.id}','${step.id}','${stepId}')">Save</button>`;
         html += '</div>';
-      }
 
-      // Mark complete button (for manual steps that aren't done)
-      if (step.statusRule?.manual && visualStatus !== 'done') {
-        html += `<button class="pb-mark-done" onclick="markPlaybookStepDone('${pb.id}','${step.id}')">Mark complete</button>`;
-      }
+        // Existing note
+        if (step.state?.note) {
+          html += `<div class="pb-note-existing"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> ${escapeHtml(step.state.note)}</div>`;
+        }
 
-      html += '</div>'; // .pb-info
-      html += '</div>'; // .pb-step
+        html += '</div>'; // .pb-detail
+      }
     });
 
-    html += '</div>'; // .pbs
+    html += '</div>'; // .pb-steps-v2
 
-    // Last updated
+    // Footer
     if (pb.state?.lastUpdated) {
-      html += `<div class="pb-updated">Updated ${timeAgo(pb.state.lastUpdated)}</div>`;
+      html += `<div class="pb-footer">Updated ${timeAgo(pb.state.lastUpdated)} \u00b7 ${pb.steps.length} steps \u00b7 ${pb.costOfInaction ? fmt$(pb.costOfInaction.monthlyCost) + '/mo at risk' : ''}</div>`;
     }
-
-    html += '</div>'; // .cd-b
-    html += '</div>'; // .cd
 
     container.innerHTML = html;
   });
 }
 
+function togglePlaybookStep(stepId) {
+  const detail = document.getElementById(stepId + '-detail');
+  if (!detail) return;
+  const isHidden = detail.style.display === 'none';
+  // Close all other open details in the same playbook
+  const parent = detail.closest('.pb-steps-v2');
+  if (parent) {
+    parent.querySelectorAll('.pb-detail').forEach(d => { d.style.display = 'none'; });
+    parent.querySelectorAll('.pb-step-v2').forEach(s => s.classList.remove('pb-step-expanded'));
+  }
+  if (isHidden) {
+    detail.style.display = 'block';
+    const step = detail.previousElementSibling;
+    if (step) step.classList.add('pb-step-expanded');
+  }
+}
+
+function togglePlaybookNote(stepId) {
+  const note = document.getElementById(stepId + '-note');
+  if (note) note.style.display = note.style.display === 'none' ? 'flex' : 'none';
+}
+
+async function savePlaybookNote(playbookId, stepId, containerStepId) {
+  const noteArea = document.getElementById(containerStepId + '-note');
+  if (!noteArea) return;
+  const textarea = noteArea.querySelector('textarea');
+  if (!textarea || !textarea.value.trim()) return;
+  try {
+    await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note: textarea.value.trim() })
+    });
+  } catch(e) {}
+  renderPlaybooks(document.documentElement.getAttribute('data-portal'));
+}
+
 function formatLiveValue(val, config) {
   if (!config) return String(val);
-  if (config.format === 'number') {
-    return Number(val).toFixed(1) + (config.suffix || '');
-  }
-  if (config.format === 'currency') {
-    return fmt$(val);
-  }
-  if (config.format === 'percent') {
-    return val + '%';
-  }
+  if (config.format === 'number') return Number(val).toFixed(1) + (config.suffix || '');
+  if (config.format === 'currency') return fmt$(val);
+  if (config.format === 'percent') return val + '%';
   return String(val) + (config.suffix || '');
 }
 
@@ -468,32 +575,24 @@ function escapeHtml(str) {
 
 async function choosePlaybookOption(playbookId, stepId, optionId) {
   try {
-    const res = await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
+    await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ chosenOption: optionId, status: 'active', note: 'Option selected: ' + optionId })
     });
-    if (res.ok) {
-      renderPlaybooks(document.documentElement.getAttribute('data-portal'));
-    }
-  } catch (e) {
-    console.warn('Failed to choose option:', e);
-  }
+  } catch(e) {}
+  renderPlaybooks(document.documentElement.getAttribute('data-portal'));
 }
 
 async function markPlaybookStepDone(playbookId, stepId) {
   try {
-    const res = await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
+    await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'done' })
     });
-    if (res.ok) {
-      renderPlaybooks(document.documentElement.getAttribute('data-portal'));
-    }
-  } catch (e) {
-    console.warn('Failed to mark step done:', e);
-  }
+  } catch(e) {}
+  renderPlaybooks(document.documentElement.getAttribute('data-portal'));
 }
 
 // ── Auto-init on DOMContentLoaded ──
