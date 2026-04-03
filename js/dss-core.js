@@ -241,6 +241,51 @@ document.documentElement.setAttribute('data-portal',
 
 // ── Playbook Renderer ──
 // Renders data-driven playbooks from /api/playbooks into .pb-container elements
+// ── Playbook Fallback Data (works without server) ──
+var PLAYBOOK_FALLBACK = {
+  playbooks: [
+    {
+      id: "fundraising-trigger", portal: "ceo", title: "Fundraising Trigger", subtitle: "Series C preparation pipeline",
+      statusLabel: "Active | Monitor", statusColor: "amber",
+      costOfInaction: { monthlyCost: 42000, description: "Delayed Series C = $42K/mo in valuation gap growth" },
+      steps: [
+        { id:"s1", title:"ARR hits $15M", autoStatus:"done", state:{status:"done"}, completedText:"Triggered 3 months ago" },
+        { id:"s2", title:"Board approves Series C prep", autoStatus:"done", state:{status:"done"}, completedText:"Approved Feb 2026" },
+        { id:"s3", title:"Fix burn multiple below 2×", autoStatus:"active", state:{status:"active"}, liveValueComputed:2.1, liveValue:{format:"number",suffix:"×"}, targetDisplay:"<1.8×", owner:"CFO", costOfDelay:42000,
+          description:"Reduce SMB acquisition spend. Focus on enterprise where LTV:CAC is 6.2× vs SMB\u2019s 2.8×",
+          recommendations:[
+            {label:"Cut SMB acquisition budget 30%",impact:"Burn multiple drops to 1.7×",detail:"SMB CAC payback is 22mo vs Enterprise\u2019s 8mo. Redirect $126K/yr to enterprise channel."},
+            {label:"Shift 2 SDRs from SMB to Enterprise",impact:"Burn multiple drops to 1.8×",detail:"Enterprise pipeline coverage improves from 2.8× to 3.4×."},
+            {label:"Raise SMB pricing 20%",impact:"Burn multiple drops to 1.9×, some churn risk",detail:"SMB NRR is 96%. Price-sensitive segment, expect 8-12% churn spike."}
+          ]},
+        { id:"s4", title:"Build investor deck", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO" },
+        { id:"s5", title:"Begin conversations", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", targetDate:"Q3 2026" }
+      ]
+    },
+    {
+      id: "hiring-trigger", portal: "ceo", title: "Hiring Trigger", subtitle: "Sales team expansion gate",
+      statusLabel: "Blocked", statusColor: "red",
+      costOfInaction: { monthlyCost: 144000, description: "3 unfilled reps × $48K/mo revenue capacity = $144K/mo lost" },
+      steps: [
+        { id:"s1", title:"Pipeline coverage > 3×", autoStatus:"done", state:{status:"done"}, completedText:"Hit 3.2× last month", owner:"CRO" },
+        { id:"s2", title:"Rep productivity > 85% quota", autoStatus:"done", state:{status:"done"}, completedText:"Current: 91%", owner:"CRO" },
+        { id:"s3", title:"CFO scenario check", autoStatus:"active", state:{status:"blocked"}, liveValueComputed:11.8, liveValue:{format:"number",suffix:"mo"}, targetDisplay:"≥12mo", owner:"CFO", costOfDelay:144000,
+          blockReason:"Bear scenario shows 11.8mo runway with Plan hiring. Below 12mo minimum.",
+          resolutionOptions:[
+            {id:"opt1",label:"Defer hiring 8 weeks",impact:"Runway becomes 12.4mo ✓",tradeoff:"Pipeline coverage may drop to 2.6× without new reps"},
+            {id:"opt2",label:"Hire 2 instead of 3",impact:"Runway becomes 12.1mo ✓",tradeoff:"Slower revenue ramp, ~$180K/yr less new ARR capacity"},
+            {id:"opt3",label:"Cut marketing spend 15%",impact:"Runway becomes 12.6mo ✓",tradeoff:"Top-of-funnel lead volume drops ~20% in 2 months"}
+          ],
+          crossPortalLink:{portal:"cfo",section:"scenarios",label:"View CFO scenario calculator"}
+        },
+        { id:"s4", title:"CEO approval", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", dependencies:["s3"] },
+        { id:"s5", title:"Post roles + hire", state:{status:"pending"}, statusRule:{manual:true}, owner:"HR", targetDate:"30-day search target" }
+      ]
+    }
+  ],
+  lastUpdated: new Date().toISOString()
+};
+
 async function renderPlaybooks(portal) {
   const containers = document.querySelectorAll('.pb-container[data-playbook]');
   if (!containers.length) return;
@@ -248,11 +293,11 @@ async function renderPlaybooks(portal) {
   let playbooksData;
   try {
     const res = await fetch(`/api/playbooks?portal=${portal || 'ceo'}`);
-    if (!res.ok) throw new Error('Failed to load playbooks');
+    if (!res.ok) throw new Error('API returned ' + res.status);
     playbooksData = await res.json();
   } catch (e) {
-    console.warn('renderPlaybooks: Could not load playbooks API, falling back to static', e);
-    return; // graceful fallback — static HTML remains
+    console.warn('renderPlaybooks: API unavailable, using fallback data', e.message);
+    playbooksData = PLAYBOOK_FALLBACK;
   }
 
   const playbooks = playbooksData.playbooks || [];
