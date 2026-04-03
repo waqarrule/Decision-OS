@@ -132,6 +132,31 @@
         }
       },
       "lastUpdated": "2026-03-29T07:30:00+08:00"
+    },
+    "ma-evaluation": {
+      "steps": {
+        "s1": {
+          "status": "active",
+          "note": "Evaluating 3 acquisition types: technology (offline/mobile gap), talent (engineering velocity), customers (market share). Mobile capability losing 23% of Enterprise deals."
+        },
+        "s2": {
+          "status": "pending",
+          "note": null
+        },
+        "s3": {
+          "status": "pending",
+          "note": null
+        },
+        "s4": {
+          "status": "pending",
+          "note": null
+        },
+        "s5": {
+          "status": "pending",
+          "note": null
+        }
+      },
+      "lastUpdated": "2026-03-29T07:30:00+08:00"
     }
   }
 }

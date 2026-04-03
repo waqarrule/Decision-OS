@@ -355,6 +355,30 @@ var PLAYBOOK_FALLBACK = {
           crossPortalLink:{portal:"cfo",section:"scenarios",label:"Model expansion cost against runway scenarios"} },
         { id:"s5", title:"Board approval + launch plan", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:21, dependencies:["s4"] }
       ]
+    },
+    {
+      id: "ma-evaluation", portal: "ceo", title: "M&A / Acquisition", subtitle: "Buy vs build decision framework", category: "strategy",
+      statusLabel: "Opportunistic", statusColor: "blue",
+      costOfInaction: { monthlyCost: 120000, description: "Competitor acquires the target first = $120K/mo in lost competitive position" },
+      steps: [
+        { id:"s1", title:"Strategic rationale: what are we buying?", state:{status:"active", note:"Evaluating 3 types: technology (offline gap loses 23% deals), talent (15 eng = 9mo hiring), customers ($4M ARR competitor)."}, statusRule:{manual:true}, owner:"CEO",
+          description:"Not \u2018a company\u2019 \u2014 a capability. What specific gap does this fill?",
+          recommendations:[
+            {label:"Acquire for technology (feature gap)",impact:"Close 18-month product gap in 3 months",detail:"Losing 23% of Enterprise deals for missing offline/mobile. CTO estimates 14mo to build. Acquisition = 90 days.",runwayImpact:"-3.2mo cost, +4.8mo at retention",arrImpact:"+$1.4M ARR from retained deals"},
+            {label:"Acquire for talent (team lift)",impact:"Instant 15-person engineering team",detail:"Hiring 15 senior engineers takes 9+ months. Acqui-hire delivers day-one productivity.",runwayImpact:"-2.1mo premium, +1.8mo velocity",arrImpact:"+$800K ARR from faster delivery"},
+            {label:"Acquire for customers (market share)",impact:"Instant 200+ customers + $4M ARR",detail:"Absorb a smaller competitor\u2019s base. Cross-sell our platform. Expect 20% churn during migration.",runwayImpact:"-6.8mo cost, +8.2mo post-integration",arrImpact:"+$3.2M net ARR after churn"}
+          ]},
+        { id:"s2", title:"Target identification + initial diligence", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:30, dependencies:["s1"] },
+        { id:"s3", title:"Financial modeling: buy vs build", state:{status:"pending"}, statusRule:{manual:true}, owner:"CFO", dependencies:["s2"],
+          crossPortalLink:{portal:"cfo",section:"scenarios",label:"Model acquisition cost against bear/base/bull"},
+          resolutionOptions:[
+            {id:"opt1",label:"All-cash deal",impact:"Cleanest execution, highest runway impact",tradeoff:"Burns cash reserves, bear scenario drops to 9.2mo",arrCost:"-$4.2M cash",timeCost:"Immediate"},
+            {id:"opt2",label:"Cash + equity (60/40)",impact:"Balanced risk, dilutes 8-12%",tradeoff:"Founders dilute but preserves runway",arrCost:"-$2.5M cash + 10% dilution",timeCost:"Immediate"},
+            {id:"opt3",label:"Earnout structure",impact:"Pay for performance, lowest upfront",tradeoff:"Seller misalignment, integration friction, 18mo earnout",arrCost:"-$1.5M upfront + $3M earnout",timeCost:"18 months"}
+          ]},
+        { id:"s4", title:"Integration plan", state:{status:"pending"}, statusRule:{manual:true}, owner:"COO", estimatedDays:21, dependencies:["s3"] },
+        { id:"s5", title:"Board vote + close", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:14, dependencies:["s4"] }
+      ]
     }
   ],
   lastUpdated: new Date().toISOString()

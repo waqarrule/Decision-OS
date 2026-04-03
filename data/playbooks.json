@@ -665,6 +665,142 @@
           "estimatedDays": 21
         }
       ]
+    },
+    {
+      "id": "ma-evaluation",
+      "portal": "ceo",
+      "title": "M&A / Acquisition",
+      "subtitle": "Buy vs build decision framework",
+      "category": "strategy",
+      "statusLabel": "Opportunistic",
+      "statusColor": "blue",
+      "description": "When a feature gap, talent need, or competitive threat surfaces \u2014 should you acquire or build? This playbook evaluates targets, models integration cost, and gates the go/no-go with board-level rigor.",
+      "dataSources": [
+        "company",
+        "financials",
+        "pipeline"
+      ],
+      "costOfInaction": {
+        "monthlyCost": 120000,
+        "description": "Competitor acquires the target first = $120K/mo in lost competitive position",
+        "basis": "Feature gap causing deal losses + competitor consolidation risk"
+      },
+      "steps": [
+        {
+          "id": "s1",
+          "title": "Strategic rationale: what are we buying?",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CEO",
+          "description": "Not 'a company' \u2014 a capability. What specific gap does this fill? Technology, talent, customer base, or market position? If you can't articulate it in one sentence, don't proceed.",
+          "recommendations": [
+            {
+              "label": "Acquire for technology (feature gap)",
+              "impact": "Close 18-month product gap in 3 months",
+              "detail": "We're losing 23% of Enterprise deals because of missing offline/mobile capability. CTO estimates 14 months to build. Acquisition could deliver in 90 days.",
+              "runwayImpact": "-3.2mo (acquisition cost), +4.8mo at retention",
+              "arrImpact": "+$1.4M ARR from retained deals"
+            },
+            {
+              "label": "Acquire for talent (team lift)",
+              "impact": "Instant 15-person engineering team",
+              "detail": "Hiring 15 senior engineers takes 9+ months. Acqui-hire delivers day-one productivity. Premium: 30-50% above individual hire cost.",
+              "runwayImpact": "-2.1mo (premium cost), +1.8mo from velocity",
+              "arrImpact": "+$800K ARR from faster feature delivery"
+            },
+            {
+              "label": "Acquire for customers (market share)",
+              "impact": "Instant 200+ customers + $4M ARR",
+              "detail": "Absorb a smaller competitor's customer base. Cross-sell our platform to their users. Risk: churn during migration.",
+              "runwayImpact": "-6.8mo (acquisition cost), +8.2mo post-integration",
+              "arrImpact": "+$4M gross, expect 20% churn = +$3.2M net"
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "title": "Target identification + initial diligence",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CEO",
+          "description": "Shortlist 3-5 targets. Initial financial health check, product demo, team assessment. Kill any with >2 red flags.",
+          "dependencies": [
+            "s1"
+          ],
+          "estimatedDays": 30
+        },
+        {
+          "id": "s3",
+          "title": "Financial modeling: buy vs build",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CFO",
+          "description": "Full 3-year model: acquisition cost + integration + retention vs organic build cost + time-to-market. The bear scenario must still show >12mo runway post-acquisition.",
+          "dependencies": [
+            "s2"
+          ],
+          "resolutionOptions": [
+            {
+              "id": "opt1",
+              "label": "All-cash deal",
+              "impact": "Cleanest execution, highest runway impact",
+              "tradeoff": "Burns cash reserves, bear scenario drops to 9.2mo",
+              "arrCost": "-$4.2M cash",
+              "timeCost": "Immediate"
+            },
+            {
+              "id": "opt2",
+              "label": "Cash + equity (60/40)",
+              "impact": "Balanced risk, dilutes 8-12%",
+              "tradeoff": "Founders/shareholders dilute, but preserves runway",
+              "arrCost": "-$2.5M cash + 10% dilution",
+              "timeCost": "Immediate"
+            },
+            {
+              "id": "opt3",
+              "label": "Earnout structure",
+              "impact": "Pay for performance, lowest upfront cost",
+              "tradeoff": "Seller misalignment, integration friction, 18mo earnout period",
+              "arrCost": "-$1.5M upfront + $3M earnout",
+              "timeCost": "18 months earnout"
+            }
+          ],
+          "crossPortalLink": {
+            "portal": "cfo",
+            "section": "scenarios",
+            "label": "Model acquisition cost against bear/base/bull scenarios"
+          }
+        },
+        {
+          "id": "s4",
+          "title": "Integration plan",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "COO",
+          "description": "Day-1 integration plan: org structure, systems migration, customer communication, retention packages for key talent. 70% of acquisitions fail at integration, not valuation.",
+          "dependencies": [
+            "s3"
+          ],
+          "estimatedDays": 21
+        },
+        {
+          "id": "s5",
+          "title": "Board vote + close",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CEO",
+          "description": "Final board presentation: rationale, target, valuation, integration plan, risk factors. Unanimous approval required for deals >$2M.",
+          "dependencies": [
+            "s4"
+          ],
+          "estimatedDays": 14
+        }
+      ]
     }
   ]
 }
