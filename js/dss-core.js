@@ -331,6 +331,30 @@ var PLAYBOOK_FALLBACK = {
           ]},
         { id:"s5", title:"Board approval + launch", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:30, dependencies:["s4"] }
       ]
+    },
+    {
+      id: "market-expansion", portal: "ceo", title: "Market Expansion", subtitle: "Enter new segments or geographies", category: "growth",
+      statusLabel: "Evaluate", statusColor: "blue",
+      costOfInaction: { monthlyCost: 95000, description: "Every month delayed = $95K in first-mover advantage lost to competitors" },
+      steps: [
+        { id:"s1", title:"Core market saturation analysis", state:{status:"active", note:"Enterprise penetration at ~28% of TAM. Core segment has headroom but growth decelerating."}, statusRule:{manual:true}, owner:"CRO",
+          description:"How much headroom is left? If enterprise penetration is <30% of TAM, expand there first.",
+          recommendations:[
+            {label:"Expand to mid-market Enterprise (500-2000 emp)",impact:"TAM adds $4.2B addressable",detail:"Our ICP is 2000+ employees. The 500-2000 segment has similar needs but shorter sales cycles.",runwayImpact:"-1.2mo investment, +3.4mo at scale",arrImpact:"+$3.8M ARR within 18 months"},
+            {label:"Go international \u2014 UK/EU first",impact:"TAM adds $6.1B addressable",detail:"UK is easiest (English, similar buying patterns). EU requires localization. $480K setup, 6 months to first revenue.",runwayImpact:"-2.4mo setup, +4.1mo at scale",arrImpact:"+$5.2M ARR within 24 months"},
+            {label:"Vertical expansion \u2014 add healthcare",impact:"TAM adds $2.8B addressable",detail:"Healthcare has compliance requirements (HIPAA) but pays 2\u00d7 ARPU. Need product work but zero GTM changes.",runwayImpact:"-1.8mo compliance build, +2.6mo at scale",arrImpact:"+$2.4M ARR within 12 months"}
+          ]},
+        { id:"s2", title:"TAM/SAM/SOM validation", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:30, dependencies:["s1"] },
+        { id:"s3", title:"GTM readiness assessment", state:{status:"pending"}, statusRule:{manual:true}, owner:"CRO", dependencies:["s2"],
+          resolutionOptions:[
+            {id:"opt1",label:"Piggyback on existing GTM",impact:"Fastest path, lowest cost",tradeoff:"Only works for adjacent segments, not new geos or verticals",arrCost:"-$50K incremental",timeCost:"2 months"},
+            {id:"opt2",label:"Build dedicated expansion team",impact:"Full focus, higher success rate",tradeoff:"Requires 4-6 new hires, $720K annual cost",arrCost:"-$720K/yr team cost",timeCost:"4 months to hire + ramp"},
+            {id:"opt3",label:"Partner/distributor model",impact:"Low cost, fast geo coverage",tradeoff:"Less control, margin sharing (30-40%), brand dilution risk",arrCost:"-30% margin share",timeCost:"3 months to partner setup"}
+          ]},
+        { id:"s4", title:"Resource commitment + budget", state:{status:"pending"}, statusRule:{manual:true}, owner:"CFO", dependencies:["s3"],
+          crossPortalLink:{portal:"cfo",section:"scenarios",label:"Model expansion cost against runway scenarios"} },
+        { id:"s5", title:"Board approval + launch plan", state:{status:"pending"}, statusRule:{manual:true}, owner:"CEO", estimatedDays:21, dependencies:["s4"] }
+      ]
     }
   ],
   lastUpdated: new Date().toISOString()

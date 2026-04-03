@@ -528,6 +528,143 @@
           "estimatedDays": 30
         }
       ]
+    },
+    {
+      "id": "market-expansion",
+      "portal": "ceo",
+      "title": "Market Expansion",
+      "subtitle": "Enter new segments or geographies",
+      "category": "growth",
+      "statusLabel": "Evaluate",
+      "statusColor": "blue",
+      "description": "When your core market saturates or growth decelerates, expansion unlocks the next S-curve. This playbook gates the decision with TAM validation, GTM readiness, and resource commitment.",
+      "dataSources": [
+        "company",
+        "financials",
+        "revenue-mix",
+        "revenue-trend",
+        "pipeline"
+      ],
+      "costOfInaction": {
+        "monthlyCost": 95000,
+        "description": "Every month delayed = $95K in first-mover advantage lost to competitors",
+        "basis": "Competitor expansion velocity vs our growth ceiling in current segments"
+      },
+      "steps": [
+        {
+          "id": "s1",
+          "title": "Core market saturation analysis",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CRO",
+          "description": "How much headroom is left? If enterprise penetration is <30% of TAM, expand there first. If core is >60% penetrated, new market is the play.",
+          "recommendations": [
+            {
+              "label": "Expand Enterprise to mid-market Enterprise (500-2000 employees)",
+              "impact": "TAM adds $4.2B addressable",
+              "detail": "Our ICP is 2000+ employees. The 500-2000 segment has similar needs but shorter sales cycles. Product is ready, GTM needs adaptation.",
+              "runwayImpact": "-1.2mo (investment), +3.4mo at scale",
+              "arrImpact": "+$3.8M ARR potential within 18 months"
+            },
+            {
+              "label": "Go international \u2014 UK/EU first",
+              "impact": "TAM adds $6.1B addressable",
+              "detail": "UK is easiest (English, similar buying patterns). EU requires localization. Total cost: $480K setup, 6 months to first revenue.",
+              "runwayImpact": "-2.4mo (setup cost), +4.1mo at scale",
+              "arrImpact": "+$5.2M ARR potential within 24 months"
+            },
+            {
+              "label": "Vertical expansion \u2014 add healthcare vertical",
+              "impact": "TAM adds $2.8B addressable",
+              "detail": "Healthcare has compliance requirements (HIPAA) but pays 2\u00d7 ARPU. Need product work but zero GTM changes.",
+              "runwayImpact": "-1.8mo (compliance build), +2.6mo at scale",
+              "arrImpact": "+$2.4M ARR potential within 12 months"
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "title": "TAM/SAM/SOM validation",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CEO",
+          "description": "Validate the market size with bottom-up analysis. Not analyst reports \u2014 actual customer conversations, competitive mapping, and willingness-to-pay data.",
+          "dependencies": [
+            "s1"
+          ],
+          "estimatedDays": 30
+        },
+        {
+          "id": "s3",
+          "title": "GTM readiness assessment",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CRO",
+          "description": "Do we have the sales motion, marketing channels, and CS capacity for this expansion? Or do we need to build from scratch?",
+          "dependencies": [
+            "s2"
+          ],
+          "resolutionOptions": [
+            {
+              "id": "opt1",
+              "label": "Piggyback on existing GTM",
+              "impact": "Fastest path, lowest cost",
+              "tradeoff": "Only works for adjacent segments, not new geos or verticals",
+              "arrCost": "-$50K incremental",
+              "timeCost": "2 months"
+            },
+            {
+              "id": "opt2",
+              "label": "Build dedicated expansion team",
+              "impact": "Full focus, higher success rate",
+              "tradeoff": "Requires 4-6 new hires, $720K annual cost",
+              "arrCost": "-$720K/yr team cost",
+              "timeCost": "4 months to hire + ramp"
+            },
+            {
+              "id": "opt3",
+              "label": "Partner/distributor model",
+              "impact": "Low cost, fast geo coverage",
+              "tradeoff": "Less control, margin sharing (30-40%), brand dilution risk",
+              "arrCost": "-30% margin share",
+              "timeCost": "3 months to partner setup"
+            }
+          ]
+        },
+        {
+          "id": "s4",
+          "title": "Resource commitment + budget",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CFO",
+          "description": "How much runway are we spending on this? The bear scenario must stay above 12 months with expansion investment included.",
+          "dependencies": [
+            "s3"
+          ],
+          "crossPortalLink": {
+            "portal": "cfo",
+            "section": "scenarios",
+            "label": "Model expansion cost against runway scenarios"
+          }
+        },
+        {
+          "id": "s5",
+          "title": "Board approval + launch plan",
+          "statusRule": {
+            "manual": true
+          },
+          "owner": "CEO",
+          "description": "90-day launch plan with weekly milestones. First revenue target within 6 months. Kill switch if no traction at 9 months.",
+          "dependencies": [
+            "s4"
+          ],
+          "estimatedDays": 21
+        }
+      ]
     }
   ]
 }
