@@ -516,6 +516,21 @@ tr.good td{background:var(--green-soft)!important}
 }
 
 
+
+/* ═══ PLAYBOOK SUB-NAV ═══ */
+.pb-subnav{display:flex;gap:4px;padding:0 0 16px;overflow-x:auto;position:sticky;top:102px;z-index:50;background:var(--bg)}
+.pb-subnav::-webkit-scrollbar{display:none}
+.pb-subtab{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:var(--surface);font-size:11px;font-weight:600;color:var(--ink2);cursor:pointer;font-family:var(--sans);white-space:nowrap;transition:all .15s}
+.pb-subtab:hover{border-color:var(--ink4);background:var(--bg2)}
+.pb-subtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pb-subdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.pb-subdot-amber{background:var(--amber)}
+.pb-subdot-red{background:var(--red)}
+.pb-subdot-green{background:var(--green)}
+.pb-subdot-blue{background:var(--blue)}
+.pb-subtab.on .pb-subdot{box-shadow:0 0 4px rgba(255,255,255,.5)}
+.pb-grid-single{grid-template-columns:1fr!important;max-width:800px}
+
 /* ═══ PLAYBOOK v2: Decision Dashboard ═══ */
 
 /* Card wrapper */

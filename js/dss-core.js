@@ -441,6 +441,19 @@ async function renderPlaybooks(portal) {
 
   const playbooks = playbooksData.playbooks || [];
 
+  // Populate sub-nav
+  const subnav = document.getElementById('pb-subnav');
+  if (subnav) {
+    let subHtml = '<button class="pb-subtab on" onclick="filterPlaybook(\'all\',this)">All</button>';
+    playbooks.forEach(pb => {
+      subHtml += '<button class="pb-subtab" onclick="filterPlaybook(\'' + pb.id + '\',this)" data-pb-id="' + pb.id + '">';
+      subHtml += '<span class="pb-subdot pb-subdot-' + pb.statusColor + '"></span>';
+      subHtml += escapeHtml(pb.title);
+      subHtml += '</button>';
+    });
+    subnav.innerHTML = subHtml;
+  }
+
   containers.forEach(container => {
     const pbId = container.getAttribute('data-playbook');
     const pb = playbooks.find(p => p.id === pbId);
@@ -686,6 +699,28 @@ async function renderPlaybooks(portal) {
     html += '</div>'; // .pb-card
     container.innerHTML = html;
   });
+}
+
+
+function filterPlaybook(pbId, btn) {
+  // Update sub-tab active state
+  document.querySelectorAll('.pb-subtab').forEach(t => t.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+
+  const grid = document.getElementById('pb-grid');
+  if (!grid) return;
+  const containers = grid.querySelectorAll('.pb-container[data-playbook]');
+  if (pbId === 'all') {
+    containers.forEach(c => c.style.display = '');
+    grid.classList.remove('pb-grid-single');
+  } else {
+    containers.forEach(c => {
+      c.style.display = c.getAttribute('data-playbook') === pbId ? '' : 'none';
+    });
+    grid.classList.add('pb-grid-single');
+  }
+  // Scroll to top of playbooks section
+  document.getElementById('s-playbooks')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function togglePlaybookStep(stepId) {

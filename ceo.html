@@ -558,7 +558,11 @@ table {width:100%;border-collapse:collapse;font-size:12px}
     <div class="sh-sub">When to hire, when to fundraise, when to pivot. Every trigger has a threshold and a playbook.</div>
   </div>
 
-  <div class="g2">
+  <div class="pb-subnav" id="pb-subnav">
+    <button class="pb-subtab on" onclick="filterPlaybook('all',this)">All</button>
+  </div>
+
+  <div class="g2" id="pb-grid">
     <div class="pb-container" data-playbook="fundraising-trigger">
       <!-- Fallback: rendered by JS via renderPlaybooks(). If JS fails, load from API directly. -->
     </div>
