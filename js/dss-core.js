@@ -245,7 +245,7 @@ document.documentElement.setAttribute('data-portal',
 var PLAYBOOK_FALLBACK = {
   playbooks: [
     {
-      id: "fundraising-trigger", portal: "ceo", title: "Fundraising Trigger", subtitle: "Series C preparation pipeline",
+      id: "fundraising-trigger", portal: "ceo", title: "Fundraising Trigger", subtitle: "Series C preparation pipeline", category: "capital",
       statusLabel: "Active | Monitor", statusColor: "amber",
       costOfInaction: { monthlyCost: 42000, description: "Delayed Series C = $42K/mo in valuation gap growth" },
       steps: [
@@ -263,7 +263,7 @@ var PLAYBOOK_FALLBACK = {
       ]
     },
     {
-      id: "hiring-trigger", portal: "ceo", title: "Hiring Trigger", subtitle: "Sales team expansion gate",
+      id: "hiring-trigger", portal: "ceo", title: "Hiring Trigger", subtitle: "Sales team expansion gate", category: "growth",
       statusLabel: "Blocked", statusColor: "red",
       costOfInaction: { monthlyCost: 144000, description: "3 unfilled reps \u00d7 $48K/mo revenue capacity = $144K/mo lost" },
       steps: [
@@ -317,6 +317,19 @@ async function renderPlaybooks(portal) {
     const monthlyBurn = pb.costOfInaction?.monthlyCost || 0;
 
     let html = '';
+
+    // ═══ CARD HEADER ═══
+    html += '<div class="pb-card">';
+    html += '<div class="pb-card-header">';
+    html += '<div class="pb-card-title-row">';
+    html += '<span class="pb-card-title">' + escapeHtml(pb.title) + '</span>';
+    html += '<span class="bdg bdg-' + pb.statusColor + '">' + escapeHtml(pb.statusLabel) + '</span>';
+    html += '</div>';
+    if (pb.subtitle) html += '<div class="pb-card-sub">' + escapeHtml(pb.subtitle) + '</div>';
+    html += '<div class="pb-card-meta">';
+    html += '<span class="pb-card-portal">CEO \u00b7 ' + escapeHtml(pb.category === 'capital' ? 'Capital' : 'Growth') + ' Layer</span>';
+    html += '</div>';
+    html += '</div>';
 
     // ═══ SUMMARY BAR ═══
     html += '<div class="pb-summary">';
@@ -519,6 +532,7 @@ async function renderPlaybooks(portal) {
       html += `<div class="pb-footer">Updated ${timeAgo(pb.state.lastUpdated)} \u00b7 ${pb.steps.length} steps \u00b7 ${pb.costOfInaction ? fmt$(pb.costOfInaction.monthlyCost) + '/mo at risk' : ''}</div>`;
     }
 
+    html += '</div>'; // .pb-card
     container.innerHTML = html;
   });
 }
