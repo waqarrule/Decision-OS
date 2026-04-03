@@ -9,8 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/dss-shared.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script id="chart-fallback">document.addEventListener("DOMContentLoaded",function(){window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})})</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+</script>
+<script id="chart-fallback">document.addEventListener("DOMContentLoaded",function(){window.Chart||document.querySelectorAll("canvas").forEach(function(c){var p=c.parentElement;if(p){c.style.display="none";var d=document.createElement("div");d.style.cssText="display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#a8a59e;font-size:12px;font-family:Inter,sans-serif;text-align:center";d.innerHTML="\u26A0 Charts unavailable";p.appendChild(d)}})})
+</script>
 <style>*,*::before,*::after {box-sizing:border-box;margin:0;padding:0}
 :root{--accent:#3b82f6}
 body {font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
@@ -549,7 +551,7 @@ table {width:100%;border-collapse:collapse;font-size:12px}
   <div class="cl cl-amber">Biggest risk: <strong>team retention (4/10)</strong>. Acquirers worry about key-person dependency. If you're thinking about M&A in the next 18 months, invest in documentation and bench strength first.</div>
 </div>
 
-<!-- PLAYBOOKS -->
+<!-- PLAYBOOKS (data-driven) -->
 <div id="s-playbooks" class="scr">  <div class="sh">
     <div class="sh-over">CEO · Strategy Layer · Playbooks</div>
     <h2>Pre-built <em>decision flows.</em></h2>
@@ -557,29 +559,10 @@ table {width:100%;border-collapse:collapse;font-size:12px}
   </div>
 
   <div class="g2">
-    <div class="cd">
-      <div class="cd-h"><span class="cd-t">Fundraising trigger</span><span class="bdg bdg-amber">Active | Monitor</span></div>
-      <div class="cd-b">
-        <div class="pbs">
-          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">ARR hits $15M</div><div class="pb-meta"><span>Triggered 3 months ago</span></div></div></div>
-          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Board approves Series C prep</div><div class="pb-meta"><span>Approved Feb 2026</span></div></div></div>
-          <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">Fix burn multiple below 2×</div><div class="pb-meta"><span class="cred">Current: 2.1×</span><span>Target: <1.8×</span></div><div class="pb-desc">Reduce SMB acquisition spend. Focus on enterprise where LTV:CAC is 6.2× vs SMB's 2.8×</div></div></div>
-          <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">Build investor deck</div><div class="pb-meta"><span>Not started</span></div></div></div>
-          <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Begin conversations</div><div class="pb-meta"><span>Target: Q3 2026</span></div></div></div>
-        </div>
-      </div>
+    <div class="pb-container" data-playbook="fundraising-trigger">
+      <!-- Fallback: rendered by JS via renderPlaybooks(). If JS fails, load from API directly. -->
     </div>
-    <div class="cd">
-      <div class="cd-h"><span class="cd-t">Hiring trigger</span><span class="bdg bdg-red">Blocked</span></div>
-      <div class="cd-b">
-        <div class="pbs">
-          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Pipeline coverage > 3×</div><div class="pb-meta"><span>Hit 3.2× last month</span></div></div></div>
-          <div class="pb-step done"><div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="pb-info"><div class="pb-title">Rep productivity > 85% quota</div><div class="pb-meta"><span>Current: 91%</span></div></div></div>
-          <div class="pb-step cur"><div class="pb-num">3</div><div class="pb-info"><div class="pb-title">CFO scenario check</div><div class="pb-meta"><span class="cred">BLOCKED</span></div><div class="pb-desc">Bear scenario shows 11.8mo runway with Plan hiring. Below 12mo minimum. Deferred 8 weeks.</div></div></div>
-          <div class="pb-step"><div class="pb-num">4</div><div class="pb-info"><div class="pb-title">CEO approval</div><div class="pb-meta"><span>Waiting on Step 3</span></div></div></div>
-          <div class="pb-step"><div class="pb-num">5</div><div class="pb-info"><div class="pb-title">Post roles + hire</div><div class="pb-meta"><span>30-day search target</span></div></div></div>
-        </div>
-      </div>
+    <div class="pb-container" data-playbook="hiring-trigger">
     </div>
   </div>
 </div>
@@ -645,6 +628,7 @@ function show(id,el){
   document.getElementById('s-'+id).classList.add('on');
   if(el)el.classList.add('on');
   loadRevenueTrend();
+  if(id==='playbooks')renderPlaybooks('ceo');
 }
 
 function setScenario(type,btn){
@@ -1183,9 +1167,12 @@ loadRevenueTrend();
 loadRevenueMix();
 </script>
 
-<script src="auth.js"></script>
-<script src="js/dss-core.js"></script>
-<script src="js/dss-data.js"></script>
+<script src="auth.js">
+</script>
+<script src="js/dss-core.js">
+</script>
+<script src="js/dss-data.js">
+</script>
 <script>
 
 // ── Breadcrumbs ──
@@ -1233,7 +1220,12 @@ if (typeof DSLAuth !== 'undefined') {
 </script>
 
 
-<script src="dark-mode.js"></script>
-<script src="js/live-update.js"></script>
+<script src="dark-mode.js">
+</script>
+<script src="js/live-update.js">
+
+/* ═══ Playbook Init ═══ */
+document.addEventListener("DOMContentLoaded",()=>{if(document.getElementById("s-playbooks")?.classList.contains("on"))renderPlaybooks("ceo");});
+</script>
 </body>
 </html>

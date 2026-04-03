@@ -435,6 +435,7 @@ tr.good td{background:var(--green-soft)!important}
 .pb-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.35}
 .pb-meta{font-size:11px;color:var(--ink3);margin-top:4px;display:flex;flex-wrap:wrap;gap:8px}
 .pb-desc{font-size:12px;color:var(--ink2);margin-top:8px;line-height:1.5;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+.pb-desc-blocked{border-color:rgba(220,38,38,.25);background:var(--red-soft);color:var(--red-text)}
 .dflow{display:flex;flex-direction:column;gap:4px;margin:14px 0}
 .df-node{padding:12px 16px;font-size:12px;line-height:1.55;border-radius:8px;background:var(--surface);border:1px solid var(--border)}
 .df-node.warn{border-left:3px solid var(--amber);background:var(--amber-soft)}
@@ -513,3 +514,48 @@ tr.good td{background:var(--green-soft)!important}
   .rp{width:100%;border-left:none;border-top:1px solid var(--border)}
   .tabs{overflow-x:auto}
 }
+
+
+/* ═══ PLAYBOOK v2: Interactive Elements ═══ */
+.pb-blocked{border-left-color:var(--red)!important;background:var(--red-soft)!important}
+.pb-blocked .pb-num{background:var(--red)!important;color:#fff!important}
+
+/* Cost of inaction chip */
+.pb-coi{display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:12px;background:var(--red-soft);border:1px solid rgba(220,38,38,.15);border-radius:8px;font-size:12px;color:var(--red-text);line-height:1.45}
+.pb-coi svg{flex-shrink:0;margin-top:1px}
+
+/* Owner badge */
+.pb-owner{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;background:var(--ink4);color:#fff}
+
+/* Resolution options */
+.pb-options{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pb-opt{padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);cursor:pointer;transition:border-color .15s,background .15s}
+.pb-opt:hover{border-color:var(--amber);background:var(--amber-soft)}
+.pb-opt-chosen{border-color:var(--green)!important;background:var(--green-soft)!important;cursor:default}
+.pb-opt-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pb-opt-label{font-size:12px;font-weight:600;color:var(--ink)}
+.pb-opt-impact{font-size:11px;font-weight:700;color:var(--green-text);white-space:nowrap}
+.pb-opt-tradeoff{font-size:11px;color:var(--amber-text);margin-top:6px;line-height:1.4}
+.pb-opt-btn{margin-top:8px;padding:5px 12px;border-radius:6px;border:1px solid var(--amber);background:var(--amber);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:background .15s}
+.pb-opt-btn:hover{background:#d97706}
+.pb-opt-chosen-badge{margin-top:6px;font-size:11px;font-weight:700;color:var(--green-text)}
+
+/* Recommendations */
+.pb-recs{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pb-rec{padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg)}
+.pb-rec-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.pb-rec-label{font-size:12px;font-weight:600;color:var(--ink)}
+.pb-rec-impact{font-size:11px;font-weight:600;color:var(--green-text);white-space:nowrap}
+.pb-rec-detail{font-size:11px;color:var(--ink3);margin-top:4px;line-height:1.45}
+
+/* Cross-portal link */
+.pb-cross-link{margin-top:10px}
+.pb-link{font-size:11px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.pb-link:hover{text-decoration:underline}
+
+/* Mark complete button */
+.pb-mark-done{margin-top:10px;padding:6px 14px;border-radius:6px;border:1px solid var(--green);background:transparent;color:var(--green-text);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.pb-mark-done:hover{background:var(--green);color:#fff}
+
+/* Last updated */
+.pb-updated{font-size:10px;color:var(--ink5);text-align:right;margin-top:8px}

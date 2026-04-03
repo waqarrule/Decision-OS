@@ -1,0 +1,60 @@
+{
+  "playbooks": {
+    "fundraising-trigger": {
+      "steps": {
+        "s1": {
+          "status": "done",
+          "completedAt": "2026-01-03T00:00:00+08:00",
+          "note": "ARR crossed $15M in January"
+        },
+        "s2": {
+          "status": "done",
+          "completedAt": "2026-02-01T00:00:00+08:00",
+          "note": "Board approved Series C prep"
+        },
+        "s3": {
+          "status": "active",
+          "chosenOption": null,
+          "note": null
+        },
+        "s4": {
+          "status": "pending",
+          "note": null
+        },
+        "s5": {
+          "status": "pending",
+          "note": null
+        }
+      },
+      "lastUpdated": "2026-03-29T07:30:00+08:00"
+    },
+    "hiring-trigger": {
+      "steps": {
+        "s1": {
+          "status": "done",
+          "completedAt": "2026-02-28T00:00:00+08:00",
+          "note": "Pipeline coverage hit 3.2\u00d7"
+        },
+        "s2": {
+          "status": "done",
+          "completedAt": "2026-03-15T00:00:00+08:00",
+          "note": "Top AE at 91% quota attainment"
+        },
+        "s3": {
+          "status": "blocked",
+          "chosenOption": null,
+          "note": "Bear runway 11.8mo, need \u226512mo"
+        },
+        "s4": {
+          "status": "pending",
+          "note": null
+        },
+        "s5": {
+          "status": "pending",
+          "note": null
+        }
+      },
+      "lastUpdated": "2026-04-03T00:11:16.918Z"
+    }
+  }
+}

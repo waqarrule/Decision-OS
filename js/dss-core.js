@@ -237,6 +237,220 @@ document.documentElement.setAttribute('data-portal',
   setInterval(checkForUpdates, 10000);
 })();
 
+
+
+// ── Playbook Renderer ──
+// Renders data-driven playbooks from /api/playbooks into .pb-container elements
+async function renderPlaybooks(portal) {
+  const containers = document.querySelectorAll('.pb-container[data-playbook]');
+  if (!containers.length) return;
+
+  let playbooksData;
+  try {
+    const res = await fetch(`/api/playbooks?portal=${portal || 'ceo'}`);
+    if (!res.ok) throw new Error('Failed to load playbooks');
+    playbooksData = await res.json();
+  } catch (e) {
+    console.warn('renderPlaybooks: Could not load playbooks API, falling back to static', e);
+    return; // graceful fallback — static HTML remains
+  }
+
+  const playbooks = playbooksData.playbooks || [];
+
+  containers.forEach(container => {
+    const pbId = container.getAttribute('data-playbook');
+    const pb = playbooks.find(p => p.id === pbId);
+    if (!pb) return;
+
+    let html = '';
+
+    // Header card
+    html += '<div class="cd">';
+    html += `<div class="cd-h"><span class="cd-t">${escapeHtml(pb.title)}</span>`;
+    html += `<span class="bdg bdg-${pb.statusColor}">${escapeHtml(pb.statusLabel)}</span></div>`;
+    html += '<div class="cd-b">';
+
+    // Cost of inaction chip
+    if (pb.costOfInaction) {
+      html += `<div class="pb-coi">`;
+      html += `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+      html += `<span><strong>${fmt$(pb.costOfInaction.monthlyCost)}/mo</strong> — ${escapeHtml(pb.costOfInaction.description)}</span>`;
+      html += `</div>`;
+    }
+
+    // Steps
+    html += '<div class="pbs">';
+
+    pb.steps.forEach((step, i) => {
+      const stepState = step.state?.status || 'pending';
+      const autoStatus = step.autoStatus || null;
+
+      // Determine visual status: manual state > auto-computed > pending
+      let visualStatus = 'pending';
+      if (stepState === 'done' || autoStatus === 'done') visualStatus = 'done';
+      else if (stepState === 'blocked' || (autoStatus === 'active' && step.blockReason)) visualStatus = 'blocked';
+      else if (autoStatus === 'active' || stepState === 'active') visualStatus = 'active';
+
+      const stepClass = visualStatus === 'done' ? 'done' : visualStatus === 'active' ? 'cur' : visualStatus === 'blocked' ? 'pb-blocked' : '';
+
+      html += `<div class="pb-step ${stepClass}">`;
+
+      // Step number/icon
+      if (visualStatus === 'done') {
+        html += `<div class="pb-num" style="background:var(--green)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>`;
+      } else {
+        html += `<div class="pb-num">${i + 1}</div>`;
+      }
+
+      html += '<div class="pb-info">';
+      html += `<div class="pb-title">${escapeHtml(step.title)}</div>`;
+
+      // Meta row
+      html += '<div class="pb-meta">';
+
+      if (visualStatus === 'done' && step.completedText) {
+        html += `<span>${escapeHtml(step.completedText)}</span>`;
+      }
+
+      if (step.liveValueComputed !== undefined && visualStatus !== 'done') {
+        const formatted = formatLiveValue(step.liveValueComputed, step.liveValue);
+        html += `<span class="cred">Current: ${formatted}</span>`;
+      }
+
+      if (step.targetDisplay && visualStatus !== 'done') {
+        html += `<span>Target: ${escapeHtml(step.targetDisplay)}</span>`;
+      }
+
+      if (step.owner) {
+        html += `<span class="pb-owner">${escapeHtml(step.owner)}</span>`;
+      }
+
+      if (step.targetDate) {
+        html += `<span>Target: ${escapeHtml(step.targetDate)}</span>`;
+      }
+
+      html += '</div>'; // .pb-meta
+
+      // Description / block reason
+      if (visualStatus === 'blocked' && step.blockReason) {
+        html += `<div class="pb-desc pb-desc-blocked">${escapeHtml(step.blockReason)}</div>`;
+      } else if (step.description && (visualStatus === 'active' || visualStatus === 'blocked')) {
+        html += `<div class="pb-desc">${escapeHtml(step.description)}</div>`;
+      }
+
+      // Resolution options (for blocked steps)
+      if (visualStatus === 'blocked' && step.resolutionOptions && step.resolutionOptions.length) {
+        html += '<div class="pb-options">';
+        step.resolutionOptions.forEach(opt => {
+          const chosen = step.state?.chosenOption === opt.id;
+          html += `<div class="pb-opt${chosen ? ' pb-opt-chosen' : ''}" data-playbook="${pb.id}" data-step="${step.id}" data-option="${opt.id}">`;
+          html += `<div class="pb-opt-header">`;
+          html += `<span class="pb-opt-label">${escapeHtml(opt.label)}</span>`;
+          html += `<span class="pb-opt-impact">${escapeHtml(opt.impact)}</span>`;
+          html += `</div>`;
+          if (opt.tradeoff) {
+            html += `<div class="pb-opt-tradeoff">⚠ ${escapeHtml(opt.tradeoff)}</div>`;
+          }
+          if (!chosen) {
+            html += `<button class="pb-opt-btn" onclick="choosePlaybookOption('${pb.id}','${step.id}','${opt.id}')">Choose this path</button>`;
+          } else {
+            html += `<div class="pb-opt-chosen-badge">✓ Selected</div>`;
+          }
+          html += '</div>';
+        });
+        html += '</div>';
+      }
+
+      // Cross-portal link
+      if (step.crossPortalLink) {
+        const link = step.crossPortalLink;
+        html += `<div class="pb-cross-link"><a href="${escapeHtml(link.portal)}" class="pb-link">${escapeHtml(link.label)} →</a></div>`;
+      }
+
+      // Recommendations (for active steps)
+      if (visualStatus === 'active' && step.recommendations && step.recommendations.length) {
+        html += '<div class="pb-recs">';
+        step.recommendations.forEach(rec => {
+          html += `<div class="pb-rec">`;
+          html += `<div class="pb-rec-header"><span class="pb-rec-label">${escapeHtml(rec.label)}</span><span class="pb-rec-impact">${escapeHtml(rec.impact)}</span></div>`;
+          html += `<div class="pb-rec-detail">${escapeHtml(rec.detail)}</div>`;
+          html += `</div>`;
+        });
+        html += '</div>';
+      }
+
+      // Mark complete button (for manual steps that aren't done)
+      if (step.statusRule?.manual && visualStatus !== 'done') {
+        html += `<button class="pb-mark-done" onclick="markPlaybookStepDone('${pb.id}','${step.id}')">Mark complete</button>`;
+      }
+
+      html += '</div>'; // .pb-info
+      html += '</div>'; // .pb-step
+    });
+
+    html += '</div>'; // .pbs
+
+    // Last updated
+    if (pb.state?.lastUpdated) {
+      html += `<div class="pb-updated">Updated ${timeAgo(pb.state.lastUpdated)}</div>`;
+    }
+
+    html += '</div>'; // .cd-b
+    html += '</div>'; // .cd
+
+    container.innerHTML = html;
+  });
+}
+
+function formatLiveValue(val, config) {
+  if (!config) return String(val);
+  if (config.format === 'number') {
+    return Number(val).toFixed(1) + (config.suffix || '');
+  }
+  if (config.format === 'currency') {
+    return fmt$(val);
+  }
+  if (config.format === 'percent') {
+    return val + '%';
+  }
+  return String(val) + (config.suffix || '');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function choosePlaybookOption(playbookId, stepId, optionId) {
+  try {
+    const res = await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chosenOption: optionId, status: 'active', note: 'Option selected: ' + optionId })
+    });
+    if (res.ok) {
+      renderPlaybooks(document.documentElement.getAttribute('data-portal'));
+    }
+  } catch (e) {
+    console.warn('Failed to choose option:', e);
+  }
+}
+
+async function markPlaybookStepDone(playbookId, stepId) {
+  try {
+    const res = await fetch(`/api/playbooks/${playbookId}/step/${stepId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'done' })
+    });
+    if (res.ok) {
+      renderPlaybooks(document.documentElement.getAttribute('data-portal'));
+    }
+  } catch (e) {
+    console.warn('Failed to mark step done:', e);
+  }
+}
+
 // ── Auto-init on DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
   // Render auth nav if available

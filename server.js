@@ -181,6 +181,107 @@ app.get('/api/scenarios/:type', (req, res) => {
   res.json(scenario);
 });
 
+// ── Playbooks ──
+
+// Get all playbooks (optionally filter by portal) with merged live data + state
+app.get('/api/playbooks', (req, res) => {
+  const portal = req.query.portal;
+  const playbooks = loadDataFile('playbooks');
+  const state = loadDataFile('playbook-state');
+  const financials = loadDataFile('financials');
+  const company = loadDataFile('company');
+  const pipeline = loadDataFile('pipeline');
+  if (!playbooks) return res.status(404).json({ error: 'playbooks.json not found' });
+
+  let list = playbooks.playbooks || [];
+  if (portal) list = list.filter(p => p.portal === portal);
+
+  // Merge live data into each step's liveValue
+  const dataMap = { financials, company, pipeline };
+  list = list.map(pb => {
+    const pbState = state?.playbooks?.[pb.id] || {};
+    const steps = pb.steps.map(step => {
+      const stepState = pbState.steps?.[step.id] || { status: 'pending' };
+      const merged = { ...step, state: stepState };
+
+      // Compute live value if defined
+      if (step.liveValue) {
+        const src = dataMap[step.liveValue.source];
+        if (src) {
+          const val = getNestedValue(src, step.liveValue.path);
+          if (val !== undefined) {
+            merged.liveValueComputed = val;
+          }
+        }
+      }
+
+      // Auto-compute status from data rule
+      if (step.statusRule && !step.statusRule.manual) {
+        const src = dataMap[step.statusRule.source];
+        if (src) {
+          const val = getNestedValue(src, step.statusRule.path);
+          if (val !== undefined) {
+            const autoStatus = evaluateRule(val, step.statusRule);
+            merged.autoStatus = autoStatus;
+          }
+        }
+      }
+
+      return merged;
+    });
+    return { ...pb, steps, state: pbState };
+  });
+
+  res.json({ playbooks: list, lastUpdated: new Date().toISOString() });
+});
+
+// Update a playbook step
+app.patch('/api/playbooks/:playbookId/step/:stepId', (req, res) => {
+  const { playbookId, stepId } = req.params;
+  const { status, note, chosenOption } = req.body;
+  const statePath = path.join(__dirname, 'data', 'playbook-state.json');
+  if (!fs.existsSync(statePath)) return res.status(404).json({ error: 'State file not found' });
+
+  try {
+    const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+    if (!state.playbooks[playbookId]) state.playbooks[playbookId] = { steps: {} };
+    if (!state.playbooks[playbookId].steps[stepId]) state.playbooks[playbookId].steps[stepId] = {};
+
+    const step = state.playbooks[playbookId].steps[stepId];
+    if (status) step.status = status;
+    if (note !== undefined) step.note = note;
+    if (chosenOption !== undefined) step.chosenOption = chosenOption;
+    if (status === 'done') step.completedAt = new Date().toISOString();
+    state.playbooks[playbookId].lastUpdated = new Date().toISOString();
+
+    fs.writeFileSync(statePath, JSON.stringify(state, null, 2));
+    cache.del('playbook-state');
+
+    io.emit('playbook-update', { playbookId, stepId, status, timestamp: new Date().toISOString() });
+
+    res.json({ ok: true, step });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to update state' });
+  }
+});
+
+// ── Helpers ──
+
+function getNestedValue(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : undefined, obj);
+}
+
+function evaluateRule(value, rule) {
+  switch (rule.operator) {
+    case '>=': return value >= rule.threshold ? 'done' : 'active';
+    case '>': return value > rule.threshold ? 'done' : 'active';
+    case '<': return value < rule.threshold ? 'done' : 'active';
+    case '<=': return value <= rule.threshold ? 'done' : 'active';
+    case 'equals': return value === rule.value ? 'done' : 'active';
+    default: return 'active';
+  }
+}
+
 // ── Helper: Load JSON with cache ──
 function loadDataFile(name) {
   const cached = cache.get(name);
