@@ -799,6 +799,36 @@ async function markPlaybookStepDone(playbookId, stepId) {
   renderPlaybooks(document.documentElement.getAttribute('data-portal'));
 }
 
+// ── Playbook Dropdown Hover ──
+(function(){
+  var dd = document.getElementById('pb-dropdown-menu');
+  var trigger = document.getElementById('tab-pb-dropdown');
+  if (!dd || !trigger) return;
+
+  // Move dropdown to body so no parent overflow clips it
+  if (dd.parentElement !== document.body) {
+    document.body.appendChild(dd);
+  }
+
+  var hideTimer;
+  function showDD() {
+    clearTimeout(hideTimer);
+    var rect = trigger.querySelector('.tab').getBoundingClientRect();
+    dd.style.position = 'fixed';
+    dd.style.top = (rect.bottom + 4) + 'px';
+    dd.style.left = rect.left + 'px';
+    dd.classList.add('show');
+  }
+  function hideDD() {
+    hideTimer = setTimeout(function(){ dd.classList.remove('show'); }, 200);
+  }
+
+  trigger.addEventListener('mouseenter', showDD);
+  trigger.addEventListener('mouseleave', hideDD);
+  dd.addEventListener('mouseenter', function(){ clearTimeout(hideTimer); });
+  dd.addEventListener('mouseleave', hideDD);
+})();
+
 // ── Auto-init on DOMContentLoaded ──
 document.addEventListener('DOMContentLoaded', () => {
   // Render auth nav if available
