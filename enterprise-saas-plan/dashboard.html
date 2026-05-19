@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Decision System - Enterprise Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid #2563eb;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Cards */
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 12px 0;
+        }
+
+        .card-change {
+            font-size: 14px;
+            color: #059669;
+            font-weight: 500;
+        }
+
+        .card-change.negative {
+            color: #dc2626;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table th {
+            font-weight: 600;
+            color: #1a1a1a;
+            background-color: #f9fafb;
+        }
+
+        .data-table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-outline:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        /* Charts Placeholder */
+        .chart-placeholder {
+            height: 200px;
+            background-color: #f9fafb;
+            border: 1px dashed #d1d5db;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #d1fae5;
+            color: #059669;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 20px 0;
+            margin-top: 40px;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo">DecisionOS Enterprise</div>
+                <nav class="nav-links">
+                    <a href="#">Dashboard</a>
+                    <a href="#">Analytics</a>
+                    <a href="#">Reports</a>
+                    <a href="#">Settings</a>
+                    <a href="#">Profile</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Key Metrics -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Revenue</h3>
+                </div>
+                <div class="card-value">$2,847,392</div>
+                <div class="card-change">+12.5% from last month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Active Users</h3>
+                </div>
+                <div class="card-value">18,492</div>
+                <div class="card-change">+8.2% from last month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Conversion Rate</h3>
+                </div>
+                <div class="card-value">3.24%</div>
+                <div class="card-change negative">-0.8% from last month</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Customer Satisfaction</h3>
+                </div>
+                <div class="card-value">94.2%</div>
+                <div class="card-change">+2.1% from last month</div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr;">
+            <!-- Revenue Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Revenue Trend</h3>
+                    <button class="btn btn-outline">Export</button>
+                </div>
+                <div class="chart-placeholder">
+                    [Interactive Revenue Chart Would Render Here]
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Activity</h3>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sarah Johnson</td>
+                            <td>New subscription</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Michael Chen</td>
+                            <td>Plan upgrade</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>Emma Wilson</td>
+                            <td>Account created</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>James Brown</td>
+                            <td>Subscription cancelled</td>
+                            <td><span class="status-badge status-inactive">Inactive</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Performance Table -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Regional Performance</h3>
+                <button class="btn">View All Regions</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Revenue</th>
+                        <th>Growth</th>
+                        <th>Customers</th>
+                        <th>Avg. Deal Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>North America</td>
+                        <td>$1,247,892</td>
+                        <td class="card-change">+15.2%</td>
+                        <td>8,492</td>
+                        <td>$147</td>
+                    </tr>
+                    <tr>
+                        <td>Europe</td>
+                        <td>$892,451</td>
+                        <td class="card-change">+11.8%</td>
+                        <td>5,231</td>
+                        <td>$171</td>
+                    </tr>
+                    <tr>
+                        <td>Asia Pacific</td>
+                        <td>$547,823</td>
+                        <td class="card-change negative">-3.2%</td>
+                        <td>3,847</td>
+                        <td>$142</td>
+                    </tr>
+                    <tr>
+                        <td>Latin America</td>
+                        <td>$159,226</td>
+                        <td class="card-change">+22.4%</td>
+                        <td>922</td>
+                        <td>$173</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 16px; margin-top: 30px;">
+            <button class="btn">Generate Report</button>
+            <button class="btn btn-outline">Schedule Meeting</button>
+            <button class="btn btn-outline">Export Data</button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 DecisionOS Enterprise. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
